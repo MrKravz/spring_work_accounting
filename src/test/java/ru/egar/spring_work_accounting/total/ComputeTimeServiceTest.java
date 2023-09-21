@@ -36,11 +36,11 @@ public class ComputeTimeServiceTest {
     @Test
     @Order(1)
     public void computeTimeTest() {
-        when(employeeRepository.findEmployeeById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
-        when(timeSheetRepository.findAllByDateAndEmployee(any(), any(), any())).thenReturn(TIME_SHEETS);
+        when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
+        when(timeSheetRepository.findAllByEmployeeAndDateBetween(any(), any(), any())).thenReturn(TIME_SHEETS);
         var result = computeTimeService.computeTime(EMPLOYEE_ID, TIME_STATUS_TURNOUT, DATE_START, DATE_END);
-        verify(employeeRepository, times(1)).findEmployeeById(EMPLOYEE_ID);
-        verify(timeSheetRepository, times(1)).findAllByDateAndEmployee(EMPLOYEE, DATE_START, DATE_END);
-        assertEquals(EXPECTED_TIME, result); // TODO change to variable
+        verify(employeeRepository, times(1)).findById(EMPLOYEE_ID);
+        verify(timeSheetRepository, times(1)).findAllByEmployeeAndDateBetween(EMPLOYEE, DATE_START, DATE_END);
+        assertEquals(EXPECTED_TIME, result);
     }
 }

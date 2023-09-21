@@ -40,8 +40,8 @@ public class ComputeTotalServiceTest {
     public void computeHoursSalaryTest() {
         when(computeSalaryService.computeHoursSalary(any(), anyInt(), any())).thenReturn(EXPECTED_SALARY);
         when(computeTimeService.computeTime(any(), any(), any(), any())).thenReturn(EXPECTED_TIME);
-        when(employeeRepository.findEmployeeById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
-        when(timeSheetRepository.findDistinctTimeStatuses()).thenReturn(DISTINCT_TIME_STATUSES);
+        when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
+        when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(DISTINCT_TIME_STATUSES);
         var result = computeTotalService.computeTotal(EMPLOYEE_ID, DATE_START, DATE_END);
         assertEquals(TOTAL.getTotalWorkedTime(), result.getTotalWorkedTime());
         assertEquals(TOTAL.getTotalSalary(), result.getTotalSalary());
