@@ -1,5 +1,8 @@
 package ru.egar.spring_work_accounting.total;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
@@ -8,13 +11,12 @@ import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
  * Serves as sub service for ComputeTotalServiceImpl.
  * Uses DefineComputeStrategyService for computing depending on time status.
  **/
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 class ComputeSalaryService {
 
     private final DefineComputeStrategyService defineComputeStrategyService;
-
-    public ComputeSalaryService(DefineComputeStrategyService defineComputeStrategyService) {
-        this.defineComputeStrategyService = defineComputeStrategyService;
-    }
 
     public Float computeHoursSalary(Rate rate, int hours, TimeStatus timeStatus) {
         var strategy = defineComputeStrategyService.defineComputeStrategy(timeStatus);

@@ -1,6 +1,9 @@
 package ru.egar.spring_work_accounting.total;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
@@ -14,6 +17,8 @@ import java.util.UUID;
  * Uses both ComputeTimeService for computing spent time and
  * ComputeSalaryService for computing salary by that time and employee rate.
  **/
+@Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ComputeTotalService {
 
@@ -26,11 +31,11 @@ public class ComputeTotalService {
     private int kpiPercentage;
 
     public Total computeTotal(UUID employeeId, LocalDate dateStart, LocalDate dateEnd) {
-        var employee = employeeRepository.findEmployeeById(employeeId);
+        var employee = employeeRepository.findById(employeeId);
         if (employee.isEmpty()) {
-            throw new RuntimeException();
+            throw new EmployeeNotFoundException();
         }
-        var timeStatuses = timeSheetRepository.findDistinctTimeStatuses();
+        var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
         for (var timeStatus : timeStatuses) {
             var timeSpan = computeTotalTime(timeStatus, employeeId, dateStart, dateEnd);
             computeTotalSalary(employee.get().getRate(), timeSpan, timeStatus);

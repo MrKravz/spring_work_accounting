@@ -1,10 +1,10 @@
 package ru.egar.spring_work_accounting.employee;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.UUID;
 
-public class EmployeeRepository {
-    public Optional<Employee> findEmployeeById(UUID id){
-        return Optional.empty();
-    }
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 }
