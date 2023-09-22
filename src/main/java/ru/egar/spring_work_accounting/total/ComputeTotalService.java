@@ -49,6 +49,10 @@ public class ComputeTotalService {
      **/
     private int computeTotalTime(TimeStatus timeStatus, UUID id, LocalDate dateStart, LocalDate dateEnd) {
         var timeSpan = computeTimeService.computeTime(id, timeStatus, dateStart, dateEnd);
+        if (timeStatus.equals(TimeStatus.Absence) || timeStatus.equals(TimeStatus.SickDays) ||
+        timeStatus.equals(TimeStatus.Vacation)) {
+            return timeSpan;
+        }
         totalWorkedTime += timeSpan;
         return timeSpan;
     }

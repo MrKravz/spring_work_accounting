@@ -7,7 +7,7 @@ import ru.egar.spring_work_accounting.employee.Employee;
 import java.util.UUID;
 
 @Entity
-@Table(name = "rates")
+@Table(name = "hour_rates")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

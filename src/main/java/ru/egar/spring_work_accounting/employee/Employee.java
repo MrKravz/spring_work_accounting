@@ -1,10 +1,9 @@
 package ru.egar.spring_work_accounting.employee;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import ru.egar.spring_work_accounting.kpi_rate.KpiRate;
+import ru.egar.spring_work_accounting.rate.PaymentSystem;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.task.Task;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
@@ -32,8 +31,23 @@ public class Employee {
     @Column(name = "date_of_birthday")
     private LocalDate dateOfBirthDay;
 
+    @Column(name = "date_of_birthday")
+    @Enumerated(EnumType.STRING)
+    private Position employeePosition;
+
+    @Column(name = "date_of_birthday")
+    @Enumerated(EnumType.STRING)
+    private Grade employeeGrade;
+
+    @Column(name = "date_of_birthday")
+    @Enumerated(EnumType.STRING)
+    private PaymentSystem paymentSystem;
+
     @OneToOne(mappedBy = "employee")
     private Rate rate;
+
+    @OneToOne(mappedBy = "employee")
+    private KpiRate kpiRate;
 
     @OneToMany(mappedBy = "employee")
     private Set<Task> tasks;

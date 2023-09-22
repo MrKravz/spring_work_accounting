@@ -16,17 +16,20 @@ public class Task {
     @Column(name = "id")
     private UUID id;
 
-    @Column()
+    @Column(name = "short_name")
     private String shortName;
 
-    @Column()
+    @Column(name = "description")
     private String description;
 
-    @Column()
+    @Column(name = "date_time_start")
     private LocalDateTime dateTimeStart;
 
-    @Column()
+    @Column(name = "date_time_end")
     private LocalDateTime dateTimeEnd;
+
+    @Column(name = "task_points_number")
+    private int taskPointsNumber;
 
     @ManyToOne
     @JoinColumn(
