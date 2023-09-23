@@ -3,6 +3,7 @@ package ru.egar.spring_work_accounting.total;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.egar.spring_work_accounting.compute.kpi.ComputeKpiService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.define.salary_strategy.DefineComputeSalaryService;
 import ru.egar.spring_work_accounting.employee.Employee;
@@ -24,11 +25,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ComputeTotalService {
     private final ComputeTimeService computeTimeService;
+    private final ComputeKpiService computeKpiService;
     private final EmployeeRepository employeeRepository;
     private final DefineComputeSalaryService defineComputeSalaryService;
     private final TimeSheetRepository timeSheetRepository;
     private final int totalAbsentTime = 0;
-    private int kpiPercentage;
 
     public Total computeTotal(UUID employeeId, LocalDate dateStart, LocalDate dateEnd) {
         var employee = employeeRepository.findById(employeeId);
@@ -41,7 +42,8 @@ public class ComputeTotalService {
             totalWorkedTime += computeTotalTime(timeStatus, employee.get(), dateStart, dateEnd);
         }
         var strategy = defineComputeSalaryService.defineStrategy(employee.get().getPaymentSystem());
-        float totalSalary = strategy.computeSalary(employee.get(), dateStart, dateEnd);
+        final float totalSalary = strategy.computeSalary(employee.get(), dateStart, dateEnd);
+        final int kpiPercentage = computeKpiService.computeKpi(employee.get(), dateStart, dateEnd);
         return new Total(UUID.randomUUID(), totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee.get());
     }
 
@@ -57,5 +59,4 @@ public class ComputeTotalService {
         }
         return timeSpan;
     }
-
 }

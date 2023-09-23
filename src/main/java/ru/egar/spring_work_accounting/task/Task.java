@@ -31,6 +31,8 @@ public class Task {
     @Column(name = "task_points_number")
     private int taskPointsNumber;
 
+    private TaskStatus taskStatus;
+
     @ManyToOne
     @JoinColumn(
             name = "employee_id",
