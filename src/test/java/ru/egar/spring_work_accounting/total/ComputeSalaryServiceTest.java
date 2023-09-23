@@ -3,7 +3,9 @@ package ru.egar.spring_work_accounting.total;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.egar.spring_work_accounting.compute_strategy.ComputeTurnoutStrategy;
+import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
+import ru.egar.spring_work_accounting.define.payment_strategy.ComputeTurnoutStrategy;
+import ru.egar.spring_work_accounting.define.payment_strategy.DefineComputePaymentService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,10 +18,10 @@ import static ru.egar.spring_work_accounting.util.TestModels.RATE;
 public class ComputeSalaryServiceTest {
 
     @Mock
-    private DefineComputeStrategyService defineComputeStrategyService;
+    private DefineComputePaymentService defineComputePaymentService;
 
     @InjectMocks
-    private ComputeSalaryService computeSalaryService;
+    private ComputeHoursSalaryService computeHoursSalaryService;
 
     @BeforeEach
     public void setUp() {
@@ -29,8 +31,8 @@ public class ComputeSalaryServiceTest {
     @Test
     @Order(1)
     public void computeHoursSalaryTest() {
-        when(defineComputeStrategyService.defineComputeStrategy(any())).thenReturn(new ComputeTurnoutStrategy());
-        var result = computeSalaryService.computeHoursSalary(RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT);
+        when(defineComputePaymentService.defineStrategy(any())).thenReturn(new ComputeTurnoutStrategy());
+        var result = computeHoursSalaryService.computeHoursSalary(RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT);
         assertEquals(EXPECTED_SALARY, result);
     }
 }

@@ -1,10 +1,11 @@
-package ru.egar.spring_work_accounting.total;
+package ru.egar.spring_work_accounting.compute.salary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
+import ru.egar.spring_work_accounting.define.payment_strategy.DefineComputePaymentService;
 
 /**
  * Service computes and returns salary by rate, time status and number of hours spent.
@@ -14,12 +15,12 @@ import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-class ComputeSalaryService {
+public class ComputeHoursSalaryService {
 
-    private final DefineComputeStrategyService defineComputeStrategyService;
+    private final DefineComputePaymentService defineComputePaymentService;
 
     public Float computeHoursSalary(Rate rate, int hours, TimeStatus timeStatus) {
-        var strategy = defineComputeStrategyService.defineComputeStrategy(timeStatus);
+        var strategy = defineComputePaymentService.defineStrategy(timeStatus);
         return strategy.computeSalary(rate, hours);
     }
 

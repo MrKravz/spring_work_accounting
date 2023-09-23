@@ -1,8 +1,7 @@
-package ru.egar.spring_work_accounting.total;
+package ru.egar.spring_work_accounting.define.payment_strategy;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.egar.spring_work_accounting.compute_strategy.*;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 /**
@@ -11,9 +10,9 @@ import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
  **/
 @Service
 @Transactional(readOnly = true)
-class DefineComputeStrategyService {
+public class DefineComputePaymentService {
 
-    public ComputeSalaryStrategy defineComputeStrategy(TimeStatus timeStatus) {
+    public ComputePaymentStrategy defineStrategy(TimeStatus timeStatus) {
         return switch(timeStatus) {
             case Turnout -> new ComputeTurnoutStrategy();
             case BusinessTrip -> new ComputeBusinessTripStrategy();

@@ -1,7 +1,7 @@
 package ru.egar.spring_work_accounting.util;
 
-import ru.egar.spring_work_accounting.compute_strategy.ComputeSalaryStrategy;
-import ru.egar.spring_work_accounting.compute_strategy.ComputeTurnoutStrategy;
+import ru.egar.spring_work_accounting.define.payment_strategy.ComputePaymentStrategy;
+import ru.egar.spring_work_accounting.define.payment_strategy.ComputeTurnoutStrategy;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
@@ -20,7 +20,7 @@ public class TestModels {
     public final static Rate RATE;
     public final static TimeSheet TIME_SHEET;
     public final static Total TOTAL;
-    public final static ComputeSalaryStrategy EXPECTED_STRATEGY;
+    public final static ComputePaymentStrategy EXPECTED_STRATEGY;
     public final static Set<TimeSheet> TIME_SHEETS;
     public final static Set<TimeStatus> DISTINCT_TIME_STATUSES;
 

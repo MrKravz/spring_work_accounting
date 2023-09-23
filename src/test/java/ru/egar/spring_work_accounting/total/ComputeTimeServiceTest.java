@@ -3,6 +3,7 @@ package ru.egar.spring_work_accounting.total;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 
@@ -38,7 +39,7 @@ public class ComputeTimeServiceTest {
     public void computeTimeTest() {
         when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
         when(timeSheetRepository.findAllByEmployeeAndDateBetween(any(), any(), any())).thenReturn(TIME_SHEETS);
-        var result = computeTimeService.computeTime(EMPLOYEE_ID, TIME_STATUS_TURNOUT, DATE_START, DATE_END);
+        var result = computeTimeService.computeTime(EMPLOYEE, TIME_STATUS_TURNOUT, DATE_START, DATE_END);
         verify(employeeRepository, times(1)).findById(EMPLOYEE_ID);
         verify(timeSheetRepository, times(1)).findAllByEmployeeAndDateBetween(EMPLOYEE, DATE_START, DATE_END);
         assertEquals(EXPECTED_TIME, result);

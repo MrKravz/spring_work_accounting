@@ -1,8 +1,8 @@
-package ru.egar.spring_work_accounting.compute_strategy;
+package ru.egar.spring_work_accounting.define.payment_strategy;
 
 import ru.egar.spring_work_accounting.rate.Rate;
 
-public class ComputeAbsenceStrategy implements  ComputeSalaryStrategy {
+public class ComputeAbsenceStrategy implements ComputePaymentStrategy {
 
     @Override
     public float computeSalary(Rate rate, int hours) {

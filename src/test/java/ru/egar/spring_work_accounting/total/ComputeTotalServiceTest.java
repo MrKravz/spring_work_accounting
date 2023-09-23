@@ -3,6 +3,8 @@ package ru.egar.spring_work_accounting.total;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
+import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 
@@ -19,7 +21,7 @@ import static ru.egar.spring_work_accounting.util.TestModels.*;
 public class ComputeTotalServiceTest {
 
     @Mock
-    private ComputeSalaryService computeSalaryService;
+    private ComputeHoursSalaryService computeHoursSalaryService;
     @Mock
     private ComputeTimeService computeTimeService;
     @Mock
@@ -38,7 +40,7 @@ public class ComputeTotalServiceTest {
     @Test
     @Order(1)
     public void computeHoursSalaryTest() {
-        when(computeSalaryService.computeHoursSalary(any(), anyInt(), any())).thenReturn(EXPECTED_SALARY);
+        when(computeHoursSalaryService.computeHoursSalary(any(), anyInt(), any())).thenReturn(EXPECTED_SALARY);
         when(computeTimeService.computeTime(any(), any(), any(), any())).thenReturn(EXPECTED_TIME);
         when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
         when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(DISTINCT_TIME_STATUSES);
