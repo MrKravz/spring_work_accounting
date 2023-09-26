@@ -23,13 +23,14 @@ public class ComputeHourlySalaryService implements ComputeSalary {
 
     @Override
     public float computeSalary(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
-        float totalSalary = 0;
         var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
-        for (var timeStatus : timeStatuses) {
-            var timeSpan = computeTotalTime(timeStatus, employee, dateStart, dateEnd);
-            totalSalary += computeTotalSalary(employee.getRate(), timeSpan, timeStatus);
-        }
-        return totalSalary;
+        return (float) timeStatuses
+                .stream()
+                .mapToDouble(timeStatus -> {
+                    var timeSpan = computeTotalTime(timeStatus, employee, dateStart, dateEnd);
+                    return computeTotalSalary(employee.getRate(), timeSpan, timeStatus);
+                })
+                .sum();
     }
 
     private int computeTotalTime(TimeStatus timeStatus, Employee employee, LocalDate dateStart, LocalDate dateEnd) {

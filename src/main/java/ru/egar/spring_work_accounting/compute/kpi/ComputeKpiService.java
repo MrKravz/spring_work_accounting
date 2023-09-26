@@ -9,6 +9,7 @@ import ru.egar.spring_work_accounting.task.TaskStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,33 +20,26 @@ public class ComputeKpiService {
 
 
     public int computeKpi(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
-        final int percentMultiplier = 100;
-        final int hours = 0;
-        final int minutes = 0;
-        var dateTimeStart = LocalDateTime.of(dateStart.getYear(), dateStart.getMonth(),
-                dateStart.getDayOfYear() - 1, hours, minutes);
-        var dateTimeEnd = LocalDateTime.of(dateEnd.getYear(), dateEnd.getMonth(),
-                dateEnd.getDayOfYear() + 1, hours, minutes);
+        final float percentMultiplier = 100;
+        var dateTimeStart = LocalDateTime.of(dateStart, LocalTime.NOON);
+        var dateTimeEnd = LocalDateTime.of(dateEnd, LocalTime.NOON);
         Set<Task> finishedTasks = getFinishedTasks(employee, dateTimeStart, dateTimeEnd);
-        int totalKpiPoints = getTotalKpiPoints(finishedTasks);
-        return totalKpiPoints / employee.getKpiRate().getAgreedTasksPointQuantity() * percentMultiplier;
+        float totalKpiPoints = getTotalKpiPoints(finishedTasks);
+        return (int) (totalKpiPoints / employee.getKpiRate().getAgreedTasksPointQuantity() * percentMultiplier);
     }
 
     private Set<Task> getFinishedTasks(Employee employee, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
         return employee.getTasks()
                 .stream()
                 .filter(x -> x.getTaskStatus().equals(TaskStatus.Finished))
-                .filter(x -> x.getDateTimeStart().isAfter(dateTimeStart)
-                        && x.getDateTimeEnd().isBefore(dateTimeEnd))
+                .filter(x -> (x.getDateTimeStart().isAfter(dateTimeStart) || x.getDateTimeStart().isEqual(dateTimeStart))
+                        && (x.getDateTimeEnd().isBefore(dateTimeEnd) || x.getDateTimeEnd().isEqual(dateTimeEnd)))
                 .collect(Collectors.toSet());
     }
 
+
     private int getTotalKpiPoints(Set<Task> finishedTasks) {
-        int totalKpiPoints = 0;
-        for (var finishedTask : finishedTasks) {
-            totalKpiPoints += finishedTask.getTaskPointsNumber();
-        }
-        return totalKpiPoints;
+        return finishedTasks.stream().mapToInt(Task::getTaskPointsNumber).sum();
     }
 
 }

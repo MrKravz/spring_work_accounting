@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
@@ -21,19 +20,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ComputeTimeService {
 
-    private final EmployeeRepository employeeRepository;
     private final TimeSheetRepository timeSheetRepository;
-    private int totalTime = 0;
 
     public int computeTime(Employee employee, TimeStatus timeStatus, LocalDate dateStart, LocalDate dateEnd) {
         List<TimeSheet> timeSheets = timeSheetRepository.findAllByEmployeeAndDateBetween(employee, dateStart, dateEnd)
                 .stream()
                 .filter(x -> x.getTimeStatus().equals(timeStatus))
                 .toList();
-        for (var timeSheet : timeSheets) {
-            totalTime += timeSheet.getTimeSpan();
-        }
-        return totalTime;
+        return timeSheets
+                .stream()
+                .mapToInt(TimeSheet::getTimeSpan)
+                .sum();
     }
 
 }

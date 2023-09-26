@@ -19,7 +19,7 @@ public class ComputeHoursSalaryService {
 
     private final DefineComputePaymentService defineComputePaymentService;
 
-    public Float computeHoursSalary(Rate rate, int hours, TimeStatus timeStatus) {
+    public float computeHoursSalary(Rate rate, int hours, TimeStatus timeStatus) {
         var strategy = defineComputePaymentService.defineStrategy(timeStatus);
         return strategy.computeSalary(rate, hours);
     }

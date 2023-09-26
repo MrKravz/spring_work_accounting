@@ -1,8 +1,11 @@
 package ru.egar.spring_work_accounting.util;
 
+import ru.egar.spring_work_accounting.task.TaskStatus;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class TestConstants {
@@ -12,10 +15,22 @@ public class TestConstants {
     public static final UUID TIME_SHEET_ID = UUID.randomUUID();
     public static final TimeStatus TIME_STATUS_TURNOUT = TimeStatus.Turnout;
     public static final LocalDate DATE_START = LocalDate.of(2023, 6, 1);
+    public static final LocalDateTime DATE_TIME_START = LocalDateTime.of(DATE_START, LocalTime.NOON);
     public static final LocalDate DATE_END = LocalDate.of(2023, 7, 1);
+    public static final LocalDateTime DATE_TIME_END = LocalDateTime.of(DATE_END, LocalTime.NOON);
     public static final UUID RATE_ID = UUID.randomUUID();
+    public static final UUID KPI_RATE_ID = UUID.randomUUID();
+    public static final float KPI_RATE_AGREED_SALARY = 2000.0f;
+    public static final int KPI_RATE_AGREED_TASKS_POINT_QUANTITY = 280;
+    public static final int EXPECTED_TOTAL_KPI = 12;
+    public static final float EXPECTED_TOTAL_SALARY = 600;
+    public static final UUID TASK_ID = UUID.randomUUID();
+    public static final String TASK_NAME = "Fix bug's";
+    public static final String TASK_DESCRIPTION = "Fix bug's in services";
+    public static final int TASK_POINTS_NUMBER = 35;
+    public static final TaskStatus TASK_STATUS_FINISHED = TaskStatus.Finished;
     public static final UUID TOTAL_ID = UUID.randomUUID();
-    public static final int KPI_PERCENTAGE = 100;
+    public static final int KPI_PERCENTAGE = 12;
     public static final int EXPECTED_TIME = 8;
     public static final float EXPECTED_SALARY = 840;
     public static final int TURNOUT_RATE = 105;

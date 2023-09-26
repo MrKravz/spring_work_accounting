@@ -24,23 +24,20 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ComputeTotalService {
+
     private final ComputeTimeService computeTimeService;
     private final ComputeKpiService computeKpiService;
     private final EmployeeRepository employeeRepository;
     private final DefineComputeSalaryService defineComputeSalaryService;
     private final TimeSheetRepository timeSheetRepository;
-    private final int totalAbsentTime = 0;
 
     public Total computeTotal(UUID employeeId, LocalDate dateStart, LocalDate dateEnd) {
         var employee = employeeRepository.findById(employeeId);
         if (employee.isEmpty()) {
             throw new EmployeeNotFoundException();
         }
-        int totalWorkedTime = 0;
         var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
-        for (var timeStatus : timeStatuses) {
-            totalWorkedTime += computeTotalTime(timeStatus, employee.get(), dateStart, dateEnd);
-        }
+        int totalWorkedTime = timeStatuses.stream().mapToInt(x -> computeTotalTime(x, employee.get(), dateStart, dateEnd)).sum();
         var strategy = defineComputeSalaryService.defineStrategy(employee.get().getPaymentSystem());
         final float totalSalary = strategy.computeSalary(employee.get(), dateStart, dateEnd);
         final int kpiPercentage = computeKpiService.computeKpi(employee.get(), dateStart, dateEnd);
@@ -52,6 +49,7 @@ public class ComputeTotalService {
      * Set total times and returns them depending on time status.
      **/
     private int computeTotalTime(TimeStatus timeStatus, Employee employee, LocalDate dateStart, LocalDate dateEnd) {
+        final int totalAbsentTime = 0;
         var timeSpan = computeTimeService.computeTime(employee, timeStatus, dateStart, dateEnd);
         if (timeStatus.equals(TimeStatus.Absence) || timeStatus.equals(TimeStatus.SickDays) ||
         timeStatus.equals(TimeStatus.Vacation)) {

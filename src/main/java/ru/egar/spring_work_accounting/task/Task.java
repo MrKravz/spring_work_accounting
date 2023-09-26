@@ -1,8 +1,7 @@
 package ru.egar.spring_work_accounting.task;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDateTime;
@@ -11,6 +10,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "tasks")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
     @Id
     @Column(name = "id")
