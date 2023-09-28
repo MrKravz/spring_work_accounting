@@ -2,9 +2,9 @@ package ru.egar.spring_work_accounting.employee;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.egar.spring_work_accounting.time_sheet.kpi_rate.KpiRate;
-import ru.egar.spring_work_accounting.rate.PaymentSystem;
-import ru.egar.spring_work_accounting.rate.Rate;
+import ru.egar.spring_work_accounting.kpi_rate.KpiRate;
+import ru.egar.spring_work_accounting.hour_rate.PaymentSystem;
+import ru.egar.spring_work_accounting.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.task.Task;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
 import ru.egar.spring_work_accounting.total.Total;
@@ -44,7 +44,7 @@ public class Employee {
     private PaymentSystem paymentSystem;
 
     @OneToOne(mappedBy = "employee")
-    private Rate rate;
+    private HourRate hourRate;
 
     @OneToOne(mappedBy = "employee")
     private KpiRate kpiRate;

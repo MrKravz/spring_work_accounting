@@ -1,12 +1,12 @@
 package ru.egar.spring_work_accounting.define.payment_strategy;
 
-import ru.egar.spring_work_accounting.rate.Rate;
+import ru.egar.spring_work_accounting.hour_rate.HourRate;
 
 public class ComputeSickDaysStrategy implements ComputePaymentStrategy {
 
     @Override
-    public float computeSalary(Rate rate, int hours) {
-        return hours * rate.getSickDaysRate();
+    public float computeSalary(HourRate hourRate, int hours) {
+        return hours * hourRate.getSickDaysRate();
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.rate.Rate;
+import ru.egar.spring_work_accounting.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
@@ -28,7 +28,7 @@ public class ComputeHourlySalaryService implements ComputeSalary {
                 .stream()
                 .mapToDouble(timeStatus -> {
                     var timeSpan = computeTotalTime(timeStatus, employee, dateStart, dateEnd);
-                    return computeTotalSalary(employee.getRate(), timeSpan, timeStatus);
+                    return computeTotalSalary(employee.getHourRate(), timeSpan, timeStatus);
                 })
                 .sum();
     }
@@ -37,7 +37,7 @@ public class ComputeHourlySalaryService implements ComputeSalary {
         return computeTimeService.computeTime(employee, timeStatus, dateStart, dateEnd);
     }
 
-    private float computeTotalSalary(Rate rate, int time, TimeStatus timeStatus) {
-        return computeHoursSalaryService.computeHoursSalary(rate, time, timeStatus);
+    private float computeTotalSalary(HourRate hourRate, int time, TimeStatus timeStatus) {
+        return computeHoursSalaryService.computeHoursSalary(hourRate, time, timeStatus);
     }
 }

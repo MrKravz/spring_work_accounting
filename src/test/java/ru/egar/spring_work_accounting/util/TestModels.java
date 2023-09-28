@@ -3,9 +3,9 @@ package ru.egar.spring_work_accounting.util;
 import ru.egar.spring_work_accounting.define.payment_strategy.ComputePaymentStrategy;
 import ru.egar.spring_work_accounting.define.payment_strategy.ComputeTurnoutStrategy;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.time_sheet.kpi_rate.KpiRate;
-import ru.egar.spring_work_accounting.rate.PaymentSystem;
-import ru.egar.spring_work_accounting.rate.Rate;
+import ru.egar.spring_work_accounting.kpi_rate.KpiRate;
+import ru.egar.spring_work_accounting.hour_rate.PaymentSystem;
+import ru.egar.spring_work_accounting.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.task.Task;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
@@ -19,7 +19,7 @@ import static ru.egar.spring_work_accounting.util.TestConstants.*;
 
 public class TestModels {
     public final static Employee EMPLOYEE;
-    public final static Rate RATE;
+    public final static HourRate HOUR_RATE;
     public final static KpiRate KPI_RATE;
     public final static TimeSheet TIME_SHEET;
     public final static Task TASK;
@@ -30,7 +30,7 @@ public class TestModels {
     public final static Set<Task> TASKS;
 
     static {
-        RATE = Rate.builder()
+        HOUR_RATE = HourRate.builder()
                 .id(RATE_ID)
                 .turnoutRate(TURNOUT_RATE)
                 .vacationRate(VACATION_RATE)
@@ -65,7 +65,7 @@ public class TestModels {
                 .id(EMPLOYEE_ID)
                 .name(EMPLOYEE_NAME)
                 .dateOfBirthDay(DATE_OF_BIRTHDAY)
-                .rate(RATE)
+                .hourRate(HOUR_RATE)
                 .kpiRate(KPI_RATE)
                 .tasks(TASKS)
                 .timeSheets(TIME_SHEETS)

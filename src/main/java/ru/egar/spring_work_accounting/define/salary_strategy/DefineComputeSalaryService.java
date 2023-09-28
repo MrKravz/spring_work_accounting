@@ -3,7 +3,7 @@ package ru.egar.spring_work_accounting.define.salary_strategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.egar.spring_work_accounting.rate.PaymentSystem;
+import ru.egar.spring_work_accounting.hour_rate.PaymentSystem;
 
 
 /**

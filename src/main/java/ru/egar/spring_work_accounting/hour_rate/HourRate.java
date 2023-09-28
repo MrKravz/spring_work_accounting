@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.rate;
+package ru.egar.spring_work_accounting.hour_rate;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Rate {
+public class HourRate {
 
     @Id
     @Column(name = "id")

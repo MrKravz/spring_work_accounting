@@ -11,7 +11,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.*;
-import static ru.egar.spring_work_accounting.util.TestModels.RATE;
+import static ru.egar.spring_work_accounting.util.TestModels.HOUR_RATE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ComputeHoursSalaryServiceTest {
@@ -31,7 +31,7 @@ class ComputeHoursSalaryServiceTest {
     @Order(1)
     void computeHoursSalary() {
         when(defineComputePaymentService.defineStrategy(any())).thenReturn(new ComputeTurnoutStrategy());
-        var result = computeHoursSalaryService.computeHoursSalary(RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT);
+        var result = computeHoursSalaryService.computeHoursSalary(HOUR_RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT);
         assertEquals(EXPECTED_SALARY, result);
     }
 
