@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 /**
- * Service defines and returns strategy depending on passed
- * status(all strategies must implement ComputeSalaryStrategy).
+ * Service defines and returns ComputePaymentStrategy depending on passed
+ * TimeStatus(all strategies must implement ComputePaymentStrategy).
  **/
 @Service
 @Transactional(readOnly = true)

@@ -17,8 +17,8 @@ import java.util.UUID;
 
 /**
  * Compute total for employee between start and end dates.
- * Uses both ComputeTimeService for computing spent time and
- * ComputeSalaryService for computing salary by that time and employee rate.
+ * Use services for computing kpi and time and then depending on PaymentSystem
+ * computes salary.
  **/
 @Service
 @Transactional(readOnly = true)

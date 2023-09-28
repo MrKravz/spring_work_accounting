@@ -13,6 +13,11 @@ import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This service purpose is to count kpi value of employee.
+ * It counts it in a percentage value that depends on getAgreedTasksPointQuantity amount
+ * compared to totalPoints.
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,8 +29,8 @@ public class ComputeKpiService {
         var dateTimeStart = LocalDateTime.of(dateStart, LocalTime.NOON);
         var dateTimeEnd = LocalDateTime.of(dateEnd, LocalTime.NOON);
         Set<Task> finishedTasks = getFinishedTasks(employee, dateTimeStart, dateTimeEnd);
-        float totalKpiPoints = getTotalKpiPoints(finishedTasks);
-        return (int) (totalKpiPoints / employee.getKpiRate().getAgreedTasksPointQuantity() * percentMultiplier);
+        float totalPoints = getTotalPoints(finishedTasks);
+        return (int) (totalPoints / employee.getKpiRate().getAgreedTasksPointQuantity() * percentMultiplier);
     }
 
     private Set<Task> getFinishedTasks(Employee employee, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
@@ -38,7 +43,7 @@ public class ComputeKpiService {
     }
 
 
-    private int getTotalKpiPoints(Set<Task> finishedTasks) {
+    private int getTotalPoints(Set<Task> finishedTasks) {
         return finishedTasks.stream().mapToInt(Task::getTaskPointsNumber).sum();
     }
 

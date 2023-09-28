@@ -5,6 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.rate.PaymentSystem;
 
+
+/**
+ * Service defines and returns ComputeSalary depending on passed
+ * PaymentSystem(all services must implement ComputeSalary).
+ **/
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

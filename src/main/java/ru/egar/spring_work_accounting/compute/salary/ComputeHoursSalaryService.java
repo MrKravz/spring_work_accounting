@@ -9,7 +9,6 @@ import ru.egar.spring_work_accounting.define.payment_strategy.DefineComputePayme
 
 /**
  * Service computes and returns salary by rate, time status and number of hours spent.
- * Serves as sub service for ComputeTotalServiceImpl.
  * Uses DefineComputeStrategyService for computing depending on time status.
  **/
 @Service

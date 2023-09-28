@@ -2,7 +2,7 @@ package ru.egar.spring_work_accounting.employee;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.egar.spring_work_accounting.kpi_rate.KpiRate;
+import ru.egar.spring_work_accounting.time_sheet.kpi_rate.KpiRate;
 import ru.egar.spring_work_accounting.rate.PaymentSystem;
 import ru.egar.spring_work_accounting.rate.Rate;
 import ru.egar.spring_work_accounting.task.Task;
