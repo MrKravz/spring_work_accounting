@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.kpi_rate;
+package ru.egar.spring_work_accounting.rate.kpi_rate;
 
 import jakarta.persistence.*;
 import lombok.*;

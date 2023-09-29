@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.hour_rate.HourRate;
+import ru.egar.spring_work_accounting.rate.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 

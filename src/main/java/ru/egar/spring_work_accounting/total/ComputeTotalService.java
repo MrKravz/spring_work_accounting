@@ -7,8 +7,6 @@ import ru.egar.spring_work_accounting.compute.kpi.ComputeKpiService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.define.salary_strategy.DefineComputeSalaryService;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
-import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
@@ -27,21 +25,16 @@ public class ComputeTotalService {
 
     private final ComputeTimeService computeTimeService;
     private final ComputeKpiService computeKpiService;
-    private final EmployeeRepository employeeRepository;
     private final DefineComputeSalaryService defineComputeSalaryService;
     private final TimeSheetRepository timeSheetRepository;
 
-    public Total computeTotal(UUID employeeId, LocalDate dateStart, LocalDate dateEnd) {
-        var employee = employeeRepository.findById(employeeId);
-        if (employee.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
+    public Total computeTotal(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
         var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
-        int totalWorkedTime = timeStatuses.stream().mapToInt(x -> computeTotalTime(x, employee.get(), dateStart, dateEnd)).sum();
-        var strategy = defineComputeSalaryService.defineStrategy(employee.get().getPaymentSystem());
-        final float totalSalary = strategy.computeSalary(employee.get(), dateStart, dateEnd);
-        final int kpiPercentage = computeKpiService.computeKpi(employee.get(), dateStart, dateEnd);
-        return new Total(UUID.randomUUID(), totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee.get());
+        int totalWorkedTime = timeStatuses.stream().mapToInt(x -> computeTotalTime(x, employee, dateStart, dateEnd)).sum();
+        var strategy = defineComputeSalaryService.defineStrategy(employee.getPaymentSystem());
+        final float totalSalary = strategy.computeSalary(employee, dateStart, dateEnd);
+        final int kpiPercentage = computeKpiService.computeKpi(employee, dateStart, dateEnd);
+        return new Total(UUID.randomUUID(), totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee);
     }
 
     /**

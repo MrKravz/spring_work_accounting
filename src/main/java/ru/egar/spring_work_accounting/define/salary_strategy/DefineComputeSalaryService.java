@@ -3,7 +3,7 @@ package ru.egar.spring_work_accounting.define.salary_strategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.egar.spring_work_accounting.hour_rate.PaymentSystem;
+import ru.egar.spring_work_accounting.rate.hour_rate.PaymentSystem;
 
 
 /**
@@ -20,8 +20,8 @@ public class DefineComputeSalaryService {
 
     public ComputeSalary defineStrategy(PaymentSystem paymentSystem) {
         return switch (paymentSystem) {
-            case KPI_Payment -> computeKpiSalaryService;
-            case Hour_Payment -> computeHourlySalaryService;
+            case KPI_PAYMENT -> computeKpiSalaryService;
+            case HOUR_PAYMENT -> computeHourlySalaryService;
         };
     }
 

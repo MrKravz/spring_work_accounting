@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.hour_rate;
+package ru.egar.spring_work_accounting.rate.hour_rate;
 
 import lombok.Data;
 

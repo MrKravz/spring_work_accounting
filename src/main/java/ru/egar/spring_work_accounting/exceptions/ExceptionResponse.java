@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting;
+package ru.egar.spring_work_accounting.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

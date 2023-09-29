@@ -36,7 +36,7 @@ public class ComputeKpiService {
     private Set<Task> getFinishedTasks(Employee employee, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
         return employee.getTasks()
                 .stream()
-                .filter(x -> x.getTaskStatus().equals(TaskStatus.Finished))
+                .filter(x -> x.getTaskStatus().equals(TaskStatus.FINISHED))
                 .filter(x -> (x.getDateTimeStart().isAfter(dateTimeStart) || x.getDateTimeStart().isEqual(dateTimeStart))
                         && (x.getDateTimeEnd().isBefore(dateTimeEnd) || x.getDateTimeEnd().isEqual(dateTimeEnd)))
                 .collect(Collectors.toSet());

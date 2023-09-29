@@ -28,7 +28,7 @@ public class TestConstants {
     public static final String TASK_NAME = "Fix bug's";
     public static final String TASK_DESCRIPTION = "Fix bug's in services";
     public static final int TASK_POINTS_NUMBER = 35;
-    public static final TaskStatus TASK_STATUS_FINISHED = TaskStatus.Finished;
+    public static final TaskStatus TASK_STATUS_FINISHED = TaskStatus.FINISHED;
     public static final UUID TOTAL_ID = UUID.randomUUID();
     public static final int KPI_PERCENTAGE = 12;
     public static final int EXPECTED_TIME = 8;

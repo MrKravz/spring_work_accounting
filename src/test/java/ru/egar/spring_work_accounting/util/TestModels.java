@@ -3,9 +3,9 @@ package ru.egar.spring_work_accounting.util;
 import ru.egar.spring_work_accounting.define.payment_strategy.ComputePaymentStrategy;
 import ru.egar.spring_work_accounting.define.payment_strategy.ComputeTurnoutStrategy;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.kpi_rate.KpiRate;
-import ru.egar.spring_work_accounting.hour_rate.PaymentSystem;
-import ru.egar.spring_work_accounting.hour_rate.HourRate;
+import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRate;
+import ru.egar.spring_work_accounting.rate.hour_rate.PaymentSystem;
+import ru.egar.spring_work_accounting.rate.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.task.Task;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
@@ -13,6 +13,7 @@ import ru.egar.spring_work_accounting.total.Total;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import static ru.egar.spring_work_accounting.util.TestConstants.*;
@@ -27,7 +28,8 @@ public class TestModels {
     public final static ComputePaymentStrategy EXPECTED_STRATEGY;
     public final static Set<TimeSheet> TIME_SHEETS;
     public final static Set<TimeStatus> DISTINCT_TIME_STATUSES;
-    public final static Set<Task> TASKS;
+    public final static Set<Task> TASK_SET;
+    public final static List<Task> TASKS_LIST;
 
     static {
         HOUR_RATE = HourRate.builder()
@@ -60,16 +62,17 @@ public class TestModels {
                 .dateTimeEnd(DATE_TIME_END)
                 .build();
         TIME_SHEETS = Collections.singleton(TIME_SHEET);
-        TASKS = Collections.singleton(TASK);
+        TASK_SET = Collections.singleton(TASK);
+        TASKS_LIST = Collections.singletonList(TASK);
         EMPLOYEE = Employee.builder()
                 .id(EMPLOYEE_ID)
                 .name(EMPLOYEE_NAME)
                 .dateOfBirthDay(DATE_OF_BIRTHDAY)
                 .hourRate(HOUR_RATE)
                 .kpiRate(KPI_RATE)
-                .tasks(TASKS)
+                .tasks(TASK_SET)
                 .timeSheets(TIME_SHEETS)
-                .paymentSystem(PaymentSystem.KPI_Payment)
+                .paymentSystem(PaymentSystem.KPI_PAYMENT)
                 .totals(Collections.emptySet())
                 .build();
         EXPECTED_STRATEGY = new ComputeTurnoutStrategy();

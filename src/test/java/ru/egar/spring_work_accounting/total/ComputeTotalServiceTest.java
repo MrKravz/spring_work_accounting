@@ -7,10 +7,7 @@ import ru.egar.spring_work_accounting.compute.kpi.ComputeKpiService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.define.salary_strategy.ComputeKpiSalaryService;
 import ru.egar.spring_work_accounting.define.salary_strategy.DefineComputeSalaryService;
-import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,9 +29,6 @@ class ComputeTotalServiceTest {
     private ComputeKpiService computeKpiService;
 
     @Mock
-    private EmployeeRepository employeeRepository;
-
-    @Mock
     private DefineComputeSalaryService defineComputeSalaryService;
 
     @Mock
@@ -52,14 +46,12 @@ class ComputeTotalServiceTest {
     @Test
     @Order(1)
     void computeTotal() {
-        when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
         when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(DISTINCT_TIME_STATUSES);
         when(defineComputeSalaryService.defineStrategy(any())).thenReturn(new ComputeKpiSalaryService(computeKpiService));
         when(computeKpiSalaryService.computeSalary(any(), any(), any())).thenReturn(EXPECTED_SALARY);
         when(computeKpiService.computeKpi(any(), any(), any())).thenReturn(EXPECTED_TOTAL_KPI);
         when(computeTimeService.computeTime(any(), any(), any(), any())).thenReturn(EXPECTED_TIME);
-        var result = computeTotalService.computeTotal(EMPLOYEE_ID, DATE_START, DATE_END);
-        verify(employeeRepository, times(1)).findById(EMPLOYEE_ID);
+        var result = computeTotalService.computeTotal(EMPLOYEE, DATE_START, DATE_END);
         verify(timeSheetRepository, times(1)).findDistinctByTimeStatus();
         assertEquals(TOTAL.getTotalWorkedTime(), result.getTotalWorkedTime());
         assertEquals(TOTAL.getKpiPercentage(), result.getKpiPercentage());
