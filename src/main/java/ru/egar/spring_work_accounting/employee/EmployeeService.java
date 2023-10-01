@@ -3,7 +3,7 @@ package ru.egar.spring_work_accounting.employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.egar.spring_work_accounting.services.CrudService;
+import ru.egar.spring_work_accounting.abstraction.services.CrudService;
 
 import java.util.UUID;
 

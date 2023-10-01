@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.exceptions.ExceptionResponse;
+import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.UUID;
 
@@ -32,7 +32,7 @@ public class EmployeeController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable UUID id) {
-       employeeService.delete(id);
+        employeeService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

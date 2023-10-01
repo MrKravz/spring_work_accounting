@@ -7,7 +7,9 @@ import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRate;
 import ru.egar.spring_work_accounting.rate.hour_rate.PaymentSystem;
 import ru.egar.spring_work_accounting.rate.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.task.Task;
+import ru.egar.spring_work_accounting.task.TaskRequest;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
+import ru.egar.spring_work_accounting.time_sheet.TimeSheetRequest;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 import ru.egar.spring_work_accounting.total.Total;
 
@@ -23,7 +25,9 @@ public class TestModels {
     public final static HourRate HOUR_RATE;
     public final static KpiRate KPI_RATE;
     public final static TimeSheet TIME_SHEET;
+    public final static TimeSheetRequest TIME_SHEET_REQUEST = null; // TODO actually initialize with data
     public final static Task TASK;
+    public final static TaskRequest TASK_REQUEST = null; // TODO actually initialize with data
     public final static Total TOTAL;
     public final static ComputePaymentStrategy EXPECTED_STRATEGY;
     public final static Set<TimeSheet> TIME_SHEETS;

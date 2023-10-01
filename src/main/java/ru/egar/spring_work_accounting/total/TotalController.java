@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.exceptions.ExceptionResponse;
+import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 
 import java.util.UUID;
@@ -17,7 +17,7 @@ public class TotalController {
     private final TotalService totalService;
 
     @GetMapping("{id}")
-    private ResponseEntity<Total> findTotalById(@PathVariable UUID id) {
+    private ResponseEntity<TotalResponse> findTotalById(@PathVariable UUID id) {
         return ResponseEntity.ok(totalService.findById(id));
     }
 

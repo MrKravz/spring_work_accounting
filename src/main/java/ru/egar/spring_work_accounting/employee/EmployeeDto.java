@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Data
 public class EmployeeDto {
+
     private UUID id;
     private String name;
     private LocalDate dateOfBirthDay;
@@ -18,4 +19,5 @@ public class EmployeeDto {
     private PaymentSystem paymentSystem;
     private HourRateDto hourRate;
     private KpiRateDto kpiRate;
+
 }

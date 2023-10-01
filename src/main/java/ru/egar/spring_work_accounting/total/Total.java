@@ -38,4 +38,5 @@ public class Total {
     )
     @ToString.Exclude
     private Employee employee;
+
 }

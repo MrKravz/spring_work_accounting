@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.mappers;
+package ru.egar.spring_work_accounting.abstraction.mappers;
 
 public interface OneSidedMapper<E, D> {
 

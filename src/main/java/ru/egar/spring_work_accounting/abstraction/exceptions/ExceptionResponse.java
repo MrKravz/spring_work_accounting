@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.exceptions;
+package ru.egar.spring_work_accounting.abstraction.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

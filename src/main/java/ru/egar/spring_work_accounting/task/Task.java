@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Task {
+
     @Id
     @Column(name = "id")
     private UUID id;
@@ -42,4 +43,5 @@ public class Task {
     )
     @ToString.Exclude
     private Employee employee;
+
 }

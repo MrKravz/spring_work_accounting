@@ -17,9 +17,11 @@ public class TotalService {
     private final ComputeTotalService computeTotalService;
     private final EmployeeRepository employeeRepository;
     private final TotalRepository totalRepository;
+    private final TotalResponseMapper totalResponseMapper;
 
-    public Total findById(UUID id) {
-        return totalRepository.findById(id).orElseThrow(TotalNotFoundException::new);
+    public TotalResponse findById(UUID id) {
+        var result = totalRepository.findById(id).orElseThrow(TotalNotFoundException::new);
+        return totalResponseMapper.map(result);
     }
 
     @Transactional

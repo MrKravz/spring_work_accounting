@@ -57,4 +57,5 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee")
     private Set<Total> totals;
+
 }

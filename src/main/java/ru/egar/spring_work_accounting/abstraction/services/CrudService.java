@@ -1,4 +1,4 @@
-package ru.egar.spring_work_accounting.services;
+package ru.egar.spring_work_accounting.abstraction.services;
 
 public interface CrudService<T, ID> {
 

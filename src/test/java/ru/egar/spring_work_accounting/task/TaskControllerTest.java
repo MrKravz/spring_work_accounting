@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.TASK_ID;
-import static ru.egar.spring_work_accounting.util.TestModels.TASK;
-import static ru.egar.spring_work_accounting.util.TestModels.TASKS_LIST;
+import static ru.egar.spring_work_accounting.util.TestModels.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TaskControllerTest {
@@ -44,7 +43,7 @@ class TaskControllerTest {
     @DisplayName("Create task")
     public void createTaskTest() {
         when(taskService.save(TASK)).thenReturn(TASK_ID);
-        var response = taskController.createTask(TASK);
+        var response = taskController.createTask(TASK_REQUEST);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(TASK_ID, response.getBody());
         verify(taskService, times(1)).save(TASK);
@@ -68,7 +67,7 @@ class TaskControllerTest {
     @DisplayName("Update task")
     public void updateTaskTest() {
         when(taskService.update(TASK, TASK_ID)).thenReturn(TASK_ID);
-        var response = taskController.updateTask(TASK, TASK_ID);
+        var response = taskController.updateTask(TASK_REQUEST, TASK_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(TASK_ID, response.getBody());
         verify(taskService, times(1)).update(TASK, TASK_ID);

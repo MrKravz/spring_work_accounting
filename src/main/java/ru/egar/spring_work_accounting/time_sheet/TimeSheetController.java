@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.exceptions.ExceptionResponse;
+import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.UUID;
 
@@ -13,27 +13,27 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TimeSheetController {
 
-    private final TimeSheetService timeSheetService;
+    private final TimeSheetAdapterService timeSheetAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<TimeSheet> findTimeSheetById(@PathVariable UUID id) {
-        return ResponseEntity.ok(timeSheetService.findById(id));
+    public ResponseEntity<TimeSheetResponse> findTimeSheetById(@PathVariable UUID id) {
+        return ResponseEntity.ok(timeSheetAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createTimeSheet(@RequestBody TimeSheet timeSheet) {
-        return new ResponseEntity<>(timeSheetService.save(timeSheet), HttpStatus.CREATED);
+    public ResponseEntity<UUID> createTimeSheet(@RequestBody TimeSheetRequest timeSheetRequest) {
+        return new ResponseEntity<>(timeSheetAdapterService.save(timeSheetRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateTimeSheet(@RequestBody TimeSheet timeSheet, @PathVariable UUID id) {
-        var result = timeSheetService.update(timeSheet, id);
+    public ResponseEntity<UUID> updateTimeSheet(@RequestBody TimeSheetRequest timeSheetRequest, @PathVariable UUID id) {
+        var result = timeSheetAdapterService.update(timeSheetRequest, id);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<UUID> deleteTimeSheet(@PathVariable UUID id) {
-        timeSheetService.delete(id);
+        timeSheetAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

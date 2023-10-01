@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.exceptions.ExceptionResponse;
+import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,32 +14,32 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskAdapterService taskAdapterService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> findTasks() {
-        return ResponseEntity.ok(taskService.findAll());
+    public ResponseEntity<List<TaskResponse>> findTasks() {
+        return ResponseEntity.ok(taskAdapterService.findAll());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Task> findTaskById(@PathVariable UUID id) {
-        return ResponseEntity.ok(taskService.findById(id));
+    public ResponseEntity<TaskResponse> findTaskById(@PathVariable UUID id) {
+        return ResponseEntity.ok(taskAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createTask(@RequestBody Task taskRequest) {
-        return new ResponseEntity<>(taskService.save(taskRequest), HttpStatus.CREATED);
+    public ResponseEntity<UUID> createTask(@RequestBody TaskRequest taskRequest) {
+        return new ResponseEntity<>(taskAdapterService.save(taskRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateTask(@RequestBody Task taskRequest, @PathVariable UUID id) {
-        var result = taskService.update(taskRequest, id);
+    public ResponseEntity<UUID> updateTask(@RequestBody TaskRequest taskRequest, @PathVariable UUID id) {
+        var result = taskAdapterService.update(taskRequest, id);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteTask(@PathVariable UUID id) {
-        taskService.delete(id);
+        taskAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
