@@ -1,11 +1,12 @@
 package ru.egar.spring_work_accounting.task;
 
+import lombok.Builder;
 import lombok.Data;
-import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class TaskRequest {
 
     private String shortName;
@@ -13,6 +14,5 @@ public class TaskRequest {
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
     private int taskPointsNumber;
-    private EmployeeDto employee;
 
 }

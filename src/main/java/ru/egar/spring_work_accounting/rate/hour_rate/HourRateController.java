@@ -16,23 +16,23 @@ public class HourRateController {
     private final HourRateAdapterService hourRateAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<HourRateResponse> findTimeSheetById(@PathVariable UUID id) {
+    public ResponseEntity<HourRateResponse> findHourRateById(@PathVariable UUID id) {
         return ResponseEntity.ok(hourRateAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createTimeSheet(@RequestBody HourRateRequest hourRateRequest) {
+    public ResponseEntity<UUID> createHourRate(@RequestBody HourRateRequest hourRateRequest) {
         return new ResponseEntity<>(hourRateAdapterService.save(hourRateRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateTimeSheet(@RequestBody HourRateRequest hourRateRequest, @PathVariable UUID id) {
+    public ResponseEntity<UUID> updateHourRate(@RequestBody HourRateRequest hourRateRequest, @PathVariable UUID id) {
         var result = hourRateAdapterService.update(hourRateRequest, id);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<UUID> deleteTimeSheet(@PathVariable UUID id) {
+    public ResponseEntity<UUID> deleteHourRate(@PathVariable UUID id) {
         hourRateAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

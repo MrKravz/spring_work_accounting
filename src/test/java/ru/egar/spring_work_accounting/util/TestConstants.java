@@ -1,5 +1,8 @@
 package ru.egar.spring_work_accounting.util;
 
+import ru.egar.spring_work_accounting.employee.Grade;
+import ru.egar.spring_work_accounting.employee.Position;
+import ru.egar.spring_work_accounting.rate.hour_rate.PaymentSystem;
 import ru.egar.spring_work_accounting.task.TaskStatus;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
@@ -12,13 +15,16 @@ public class TestConstants {
     public static final UUID EMPLOYEE_ID = UUID.randomUUID();
     public static final String EMPLOYEE_NAME = "Test name";
     public static final LocalDate DATE_OF_BIRTHDAY = LocalDate.of(2003, 4, 4);
+    public static final Position EMPLOYEE_POSITION_DEVELOPER = Position.DEVELOPER;
+    public static final Grade EMPLOYEE_GRADE_JUNIOR = Grade.JUNIOR;
+    public static final PaymentSystem PAYMENT_SYSTEM_KPI = PaymentSystem.KPI_PAYMENT;
     public static final UUID TIME_SHEET_ID = UUID.randomUUID();
     public static final TimeStatus TIME_STATUS_TURNOUT = TimeStatus.Turnout;
     public static final LocalDate DATE_START = LocalDate.of(2023, 6, 1);
     public static final LocalDateTime DATE_TIME_START = LocalDateTime.of(DATE_START, LocalTime.NOON);
     public static final LocalDate DATE_END = LocalDate.of(2023, 7, 1);
     public static final LocalDateTime DATE_TIME_END = LocalDateTime.of(DATE_END, LocalTime.NOON);
-    public static final UUID RATE_ID = UUID.randomUUID();
+    public static final UUID HOUR_RATE_ID = UUID.randomUUID();
     public static final UUID KPI_RATE_ID = UUID.randomUUID();
     public static final float KPI_RATE_AGREED_SALARY = 2000.0f;
     public static final int KPI_RATE_AGREED_TASKS_POINT_QUANTITY = 280;

@@ -20,6 +20,7 @@ class DefineComputePaymentServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName(value = "Define compute payment strategy")
     void defineStrategyTest() {
         var result = defineComputePaymentService.defineStrategy(TIME_STATUS_TURNOUT);
         assertEquals(ComputeTurnoutStrategy.class, result.getClass());

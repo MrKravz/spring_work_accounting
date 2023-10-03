@@ -36,8 +36,9 @@ class ComputeHourlySalaryServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName(value = "Compute hourly salary")
     void computeSalaryTest() {
-        when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(DISTINCT_TIME_STATUSES);
+        when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(TIME_STATUSES_SET);
         when(computeTimeService.computeTime(any(), any(), any(), any())).thenReturn(EXPECTED_TIME);
         when(computeHoursSalaryService.computeHoursSalary(any(), anyInt(), any())).thenReturn(EXPECTED_SALARY);
         var result = computeHourlySalaryService.computeSalary(EMPLOYEE, DATE_START, DATE_END);

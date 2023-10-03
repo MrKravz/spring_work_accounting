@@ -13,26 +13,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+    private final EmployeeAdapterService employeeAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<Employee> findEmployeeById(@PathVariable UUID id) {
-        return ResponseEntity.ok(employeeService.findById(id));
+    public ResponseEntity<EmployeeResponse> findEmployeeById(@PathVariable UUID id) {
+        return ResponseEntity.ok(employeeAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createEmployee(@RequestBody Employee employeeRequest) {
-        return new ResponseEntity<>(employeeService.save(employeeRequest), HttpStatus.CREATED);
+    public ResponseEntity<UUID> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return new ResponseEntity<>(employeeAdapterService.save(employeeRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateEmployee(@RequestBody Employee employeeRequest, @PathVariable UUID id) {
-        return ResponseEntity.ok(employeeService.update(employeeRequest, id));
+    public ResponseEntity<UUID> updateEmployee(@RequestBody EmployeeRequest employeeRequest, @PathVariable UUID id) {
+        return ResponseEntity.ok(employeeAdapterService.update(employeeRequest, id));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable UUID id) {
-        employeeService.delete(id);
+        employeeAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

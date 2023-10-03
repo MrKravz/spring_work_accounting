@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.EMPLOYEE_ID;
-import static ru.egar.spring_work_accounting.util.TestModels.EMPLOYEE;
+import static ru.egar.spring_work_accounting.util.TestModels.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EmployeeControllerTest {
 
     @Mock
-    private EmployeeService employeeService;
+    private EmployeeAdapterService employeeAdapterService;
 
     @InjectMocks
     private EmployeeController employeeController;
@@ -30,36 +30,36 @@ class EmployeeControllerTest {
     @Order(1)
     @DisplayName("Create employee")
     public void createEmployeeTest() {
-        when(employeeService.save(EMPLOYEE)).thenReturn(EMPLOYEE_ID);
-        var response = employeeController.createEmployee(EMPLOYEE);
+        when(employeeAdapterService.save(any())).thenReturn(EMPLOYEE_ID);
+        var response = employeeController.createEmployee(EMPLOYEE_REQUEST);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(EMPLOYEE_ID, response.getBody());
-        verify(employeeService, times(1)).save(EMPLOYEE);
-        verifyNoMoreInteractions(employeeService);
+        verify(employeeAdapterService, times(1)).save(EMPLOYEE_REQUEST);
+        verifyNoMoreInteractions(employeeAdapterService);
     }
 
     @Test
     @Order(2)
     @DisplayName("Find employee by id")
     public void findEmployeeByIdTest() {
-        when(employeeService.findById(EMPLOYEE_ID)).thenReturn(EMPLOYEE);
+        when(employeeAdapterService.findById(any())).thenReturn(EMPLOYEE_RESPONSE);
         var response = employeeController.findEmployeeById(EMPLOYEE_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(EMPLOYEE, response.getBody());
-        verify(employeeService, times(1)).findById(EMPLOYEE_ID);
-        verifyNoMoreInteractions(employeeService);
+        assertEquals(EMPLOYEE_RESPONSE, response.getBody());
+        verify(employeeAdapterService, times(1)).findById(EMPLOYEE_ID);
+        verifyNoMoreInteractions(employeeAdapterService);
     }
 
     @Test
     @Order(3)
     @DisplayName("Update employee")
     public void updateEmployeeTest() {
-        when(employeeService.update(EMPLOYEE, EMPLOYEE_ID)).thenReturn(EMPLOYEE_ID);
-        var response = employeeController.updateEmployee(EMPLOYEE, EMPLOYEE_ID);
+        when(employeeAdapterService.update(any(), any())).thenReturn(EMPLOYEE_ID);
+        var response = employeeController.updateEmployee(EMPLOYEE_REQUEST, EMPLOYEE_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(EMPLOYEE_ID, response.getBody());
-        verify(employeeService, times(1)).update(EMPLOYEE, EMPLOYEE_ID);
-        verifyNoMoreInteractions(employeeService);
+        verify(employeeAdapterService, times(1)).update(EMPLOYEE_REQUEST, EMPLOYEE_ID);
+        verifyNoMoreInteractions(employeeAdapterService);
     }
 
     @Test
@@ -68,8 +68,8 @@ class EmployeeControllerTest {
     public void deleteEmployeeTest() {
         var response = employeeController.deleteEmployee(EMPLOYEE_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(employeeService, times(1)).delete(EMPLOYEE_ID);
-        verifyNoMoreInteractions(employeeService);
+        verify(employeeAdapterService, times(1)).delete(EMPLOYEE_ID);
+        verifyNoMoreInteractions(employeeAdapterService);
     }
 
     @Test

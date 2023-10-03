@@ -28,6 +28,7 @@ class ComputeKpiSalaryServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName(value = "Compute kpi salary")
     void computeSalary() {
         when(computeKpiService.computeKpi(any(), any(), any())).thenReturn(EXPECTED_TOTAL_KPI);
         var result = computeKpiSalaryService.computeSalary(EMPLOYEE, DATE_START, DATE_END);

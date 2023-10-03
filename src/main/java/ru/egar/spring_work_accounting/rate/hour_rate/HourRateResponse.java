@@ -1,11 +1,13 @@
 package ru.egar.spring_work_accounting.rate.hour_rate;
 
+import lombok.Builder;
 import lombok.Data;
 import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
 import java.util.UUID;
 
 @Data
+@Builder
 public class HourRateResponse {
 
     private UUID id;

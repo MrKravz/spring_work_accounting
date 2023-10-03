@@ -1,5 +1,6 @@
 package ru.egar.spring_work_accounting.time_sheet;
 
+import lombok.Builder;
 import lombok.Data;
 import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
+@Builder
 public class TimeSheetResponse {
 
     private UUID id;

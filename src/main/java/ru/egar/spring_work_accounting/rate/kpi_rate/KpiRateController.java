@@ -16,23 +16,23 @@ public class KpiRateController {
     private final KpiRateAdapterService kpiRateAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<KpiRateResponse> findTimeSheetById(@PathVariable UUID id) {
+    public ResponseEntity<KpiRateResponse> findKpiRateById(@PathVariable UUID id) {
         return ResponseEntity.ok(kpiRateAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createTimeSheet(@RequestBody KpiRateRequest kpiRateRequest) {
+    public ResponseEntity<UUID> createKpiRate(@RequestBody KpiRateRequest kpiRateRequest) {
         return new ResponseEntity<>(kpiRateAdapterService.save(kpiRateRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateTimeSheet(@RequestBody KpiRateRequest kpiRateRequest, @PathVariable UUID id) {
+    public ResponseEntity<UUID> updateKpiRate(@RequestBody KpiRateRequest kpiRateRequest, @PathVariable UUID id) {
         var result = kpiRateAdapterService.update(kpiRateRequest, id);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<UUID> deleteTimeSheet(@PathVariable UUID id) {
+    public ResponseEntity<UUID> deleteKpiRate(@PathVariable UUID id) {
         kpiRateAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

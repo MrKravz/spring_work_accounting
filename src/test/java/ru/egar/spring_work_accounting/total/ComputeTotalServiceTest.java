@@ -45,8 +45,9 @@ class ComputeTotalServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName(value = "Compute total")
     void computeTotal() {
-        when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(DISTINCT_TIME_STATUSES);
+        when(timeSheetRepository.findDistinctByTimeStatus()).thenReturn(TIME_STATUSES_SET);
         when(defineComputeSalaryService.defineStrategy(any())).thenReturn(new ComputeKpiSalaryService(computeKpiService));
         when(computeKpiSalaryService.computeSalary(any(), any(), any())).thenReturn(EXPECTED_SALARY);
         when(computeKpiService.computeKpi(any(), any(), any())).thenReturn(EXPECTED_TOTAL_KPI);

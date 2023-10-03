@@ -27,6 +27,7 @@ class DefineComputeSalaryServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName(value = "Define compute salary strategy")
     void defineStrategyTest() {
         var result = defineComputeSalaryService.defineStrategy(PaymentSystem.KPI_PAYMENT);
         assertEquals(ComputeKpiSalaryService.class, result.getClass());
