@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("kpi_rate")
 @RequiredArgsConstructor
@@ -16,23 +14,23 @@ public class KpiRateController {
     private final KpiRateAdapterService kpiRateAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<KpiRateResponse> findKpiRateById(@PathVariable UUID id) {
+    public ResponseEntity<KpiRateResponse> findKpiRateById(@PathVariable Long id) {
         return ResponseEntity.ok(kpiRateAdapterService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createKpiRate(@RequestBody KpiRateRequest kpiRateRequest) {
+    public ResponseEntity<Long> createKpiRate(@RequestBody KpiRateRequest kpiRateRequest) {
         return new ResponseEntity<>(kpiRateAdapterService.save(kpiRateRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<UUID> updateKpiRate(@RequestBody KpiRateRequest kpiRateRequest, @PathVariable UUID id) {
+    public ResponseEntity<Long> updateKpiRate(@RequestBody KpiRateRequest kpiRateRequest, @PathVariable Long id) {
         var result = kpiRateAdapterService.update(kpiRateRequest, id);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<UUID> deleteKpiRate(@PathVariable UUID id) {
+    public ResponseEntity<Long> deleteKpiRate(@PathVariable Long id) {
         kpiRateAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

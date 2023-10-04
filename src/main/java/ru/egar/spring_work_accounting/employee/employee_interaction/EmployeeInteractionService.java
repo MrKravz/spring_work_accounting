@@ -10,7 +10,6 @@ import ru.egar.spring_work_accounting.task.TaskService;
 import ru.egar.spring_work_accounting.task.TaskStatus;
 
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +32,7 @@ public class EmployeeInteractionService {
         return (Set<TaskResponse>) taskResponseMapper.iterableMap(startedTasks);
     }
 
-    public UUID startTask(EmployeeInteractionRequest employeeInteractionRequest) {
+    public long startTask(EmployeeInteractionRequest employeeInteractionRequest) {
         var task = taskService.findById(employeeInteractionRequest.getTaskId());
         if (task.getEmployee() != null) {
             final String exceptionMessage = "This task has already been started";
@@ -46,7 +45,7 @@ public class EmployeeInteractionService {
         return taskService.update(task, task.getId());
     }
 
-    public UUID finishTask(EmployeeInteractionRequest employeeInteractionRequest) {
+    public long finishTask(EmployeeInteractionRequest employeeInteractionRequest) {
         var task = taskService.findById(employeeInteractionRequest.getTaskId());
         final TaskStatus taskStatusFinished = TaskStatus.FINISHED;
         if (task.getTaskStatus().equals(taskStatusFinished)) {

@@ -7,10 +7,9 @@ import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.UUID;
 
 @Repository
-public interface TimeSheetRepository extends JpaRepository<TimeSheet, UUID> {
+public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
 
     @Query("SELECT t.timeStatus FROM TimeSheet t" +
             " WHERE NOT EXISTS (SELECT 1 FROM TimeSheet t1\n" +

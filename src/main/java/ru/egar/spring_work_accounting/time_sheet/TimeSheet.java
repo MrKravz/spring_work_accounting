@@ -5,7 +5,6 @@ import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "time_sheets")
@@ -17,7 +16,8 @@ public class TimeSheet {
 
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "time_span")
     private int timeSpan;

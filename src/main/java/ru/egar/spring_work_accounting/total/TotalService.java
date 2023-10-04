@@ -7,7 +7,7 @@ import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
 
-import java.util.UUID;
+import java.time.LocalDate;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,32 +19,41 @@ public class TotalService {
     private final TotalRepository totalRepository;
     private final TotalResponseMapper totalResponseMapper;
 
-    public TotalResponse findById(UUID id) {
+    public TotalResponse findById(Long id) {
         var result = totalRepository.findById(id).orElseThrow(TotalNotFoundException::new);
         return totalResponseMapper.map(result);
     }
 
     @Transactional
-    public UUID createTotal(UUID employeeId) {
-        var employee = employeeRepository.findById(employeeId);
+    public Long createTotal(TotalRequest totalRequest) {
+        var employee = employeeRepository.findById(totalRequest.getEmployeeId());
         if (employee.isEmpty()) {
             throw new EmployeeNotFoundException();
         }
         var total = generateTotal(employee.get());
-        return totalRepository.save(total).getId();
+        var savedTotal = totalRepository.save(total);
+        return savedTotal.getId();
     }
 
     private Total generateTotal(Employee employee) {
-        var lastTotal = totalRepository.findTopByEmployeeOrderByIdDesc(employee)
-                .orElseThrow(TotalNotFoundException::new);
-        final long daysIncrement = 1;
-        var startDate = lastTotal.getDate().plusDays(daysIncrement);
-        var endDate = startDate.plusDays(startDate.lengthOfMonth()); // TODO maybe consider LocalDate.now()
+        var startDate = defineStartDate(employee);
+        var endDate = LocalDate.now();
         return computeTotalService.computeTotal(employee, startDate, endDate);
     }
 
+    private LocalDate defineStartDate(Employee employee) {
+        if (!employee.getTotals().isEmpty()) {
+            var lastTotal = totalRepository.findTopByEmployeeOrderByIdDesc(employee)
+                    .orElseThrow(TotalNotFoundException::new);
+            final long daysIncrement = 1;
+            return lastTotal.getDate().plusDays(daysIncrement);
+        }
+        var timeSheets = employee.getTimeSheets().stream().findFirst();
+        return timeSheets.orElseThrow(RuntimeException::new).getDate(); // TODO to actual exception
+    }
+
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         totalRepository.deleteById(id);
     }
 

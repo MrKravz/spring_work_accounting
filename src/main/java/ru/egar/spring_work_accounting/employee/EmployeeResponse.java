@@ -11,13 +11,12 @@ import ru.egar.spring_work_accounting.total.TotalDto;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 @Builder
 public class EmployeeResponse {
 
-    private UUID id;
+    private long id;
     private String name;
     private LocalDate dateOfBirthDay;
     private Position employeePosition;

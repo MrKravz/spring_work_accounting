@@ -12,7 +12,7 @@ public class TimeSheetRequest {
 
     private int timeSpan;
     private TimeStatus timeStatus;
-    private LocalDate date;
+    private LocalDate date; // TODO when save change to localdate.now()
     private EmployeeDto employee;
 
 }

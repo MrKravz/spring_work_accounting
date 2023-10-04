@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.TIME_SHEET_ID;
-import static ru.egar.spring_work_accounting.util.TestModels.*;
+import static ru.egar.spring_work_accounting.util.TestModels.TIME_SHEET_REQUEST;
+import static ru.egar.spring_work_accounting.util.TestModels.TIME_SHEET_RESPONSE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TimeSheetControllerTest {

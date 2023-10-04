@@ -4,33 +4,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.egar.spring_work_accounting.abstraction.services.CrudAdapterService;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
-public class TimeSheetAdapterService implements CrudAdapterService<TimeSheetRequest, TimeSheetResponse, UUID> {
+public class TimeSheetAdapterService implements CrudAdapterService<TimeSheetRequest, TimeSheetResponse, Long> {
 
     private final TimeSheetService timeSheetService;
     private final TimeSheetResponseMapper timeSheetResponseMapper;
     private final TimeSheetRequestMapper timeSheetRequestMapper;
 
     @Override
-    public TimeSheetResponse findById(UUID id) {
+    public TimeSheetResponse findById(Long id) {
         return timeSheetResponseMapper.map(timeSheetService.findById(id));
     }
 
     @Override
-    public UUID save(TimeSheetRequest entity) {
+    public Long save(TimeSheetRequest entity) {
         return timeSheetService.save(timeSheetRequestMapper.map(entity));
     }
 
     @Override
-    public UUID update(TimeSheetRequest entity, UUID id) {
+    public Long update(TimeSheetRequest entity, Long id) {
         return timeSheetService.update(timeSheetRequestMapper.map(entity), id);
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         timeSheetService.delete(id);
     }
 

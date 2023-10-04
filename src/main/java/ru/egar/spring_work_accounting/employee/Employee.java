@@ -1,7 +1,10 @@
 package ru.egar.spring_work_accounting.employee;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.egar.spring_work_accounting.rate.hour_rate.HourRate;
 import ru.egar.spring_work_accounting.rate.hour_rate.PaymentSystem;
 import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRate;
@@ -10,8 +13,7 @@ import ru.egar.spring_work_accounting.time_sheet.TimeSheet;
 import ru.egar.spring_work_accounting.total.Total;
 
 import java.time.LocalDate;
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -23,7 +25,8 @@ public class Employee {
 
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -31,15 +34,15 @@ public class Employee {
     @Column(name = "date_of_birthday")
     private LocalDate dateOfBirthDay;
 
-    @Column(name = "date_of_birthday")
+    @Column(name = "employee_position")
     @Enumerated(EnumType.STRING)
     private Position employeePosition;
 
-    @Column(name = "date_of_birthday")
+    @Column(name = "employee_grade")
     @Enumerated(EnumType.STRING)
     private Grade employeeGrade;
 
-    @Column(name = "date_of_birthday")
+    @Column(name = "payment_system")
     @Enumerated(EnumType.STRING)
     private PaymentSystem paymentSystem;
 
@@ -50,12 +53,12 @@ public class Employee {
     private KpiRate kpiRate;
 
     @OneToMany(mappedBy = "employee")
-    private Set<Task> tasks;
+    private List<Task> tasks;
 
     @OneToMany(mappedBy = "employee")
-    private Set<TimeSheet> timeSheets;
+    private List<TimeSheet> timeSheets;
 
     @OneToMany(mappedBy = "employee")
-    private Set<Total> totals;
+    private List<Total> totals;
 
 }

@@ -5,13 +5,12 @@ import lombok.Data;
 import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
 public class TaskResponse {
 
-    private UUID id;
+    private long id;
     private String shortName;
     private String description;
     private LocalDateTime dateTimeStart;

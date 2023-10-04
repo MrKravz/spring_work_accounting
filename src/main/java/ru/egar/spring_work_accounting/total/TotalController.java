@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("totals")
 @RequiredArgsConstructor
@@ -17,17 +15,17 @@ public class TotalController {
     private final TotalService totalService;
 
     @GetMapping("{id}")
-    private ResponseEntity<TotalResponse> findTotalById(@PathVariable UUID id) {
+    private ResponseEntity<TotalResponse> findTotalById(@PathVariable Long id) {
         return ResponseEntity.ok(totalService.findById(id));
     }
 
-    @PostMapping("{employee_id}")
-    private ResponseEntity<UUID> createTotal(@PathVariable("employee_id") UUID employeeId) {
-        return new ResponseEntity<>(totalService.createTotal(employeeId), HttpStatus.CREATED);
+    @PostMapping
+    private ResponseEntity<Long> createTotal(@RequestBody TotalRequest totalRequest) {
+        return new ResponseEntity<>(totalService.createTotal(totalRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    private HttpStatus deleteTotal(@PathVariable UUID id) {
+    private HttpStatus deleteTotal(@PathVariable Long id) {
         totalService.delete(id);
         return HttpStatus.OK;
     }

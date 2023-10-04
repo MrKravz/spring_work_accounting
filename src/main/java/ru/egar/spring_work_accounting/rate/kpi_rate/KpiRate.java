@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "kpi_rates")
 @Data
@@ -16,7 +14,8 @@ public class KpiRate {
 
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "agreed_salary")
     private float agreedSalary;

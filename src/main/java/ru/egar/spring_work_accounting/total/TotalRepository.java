@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface TotalRepository extends JpaRepository<Total, UUID> {
+public interface TotalRepository extends JpaRepository<Total, Long> {
     Optional<Total> findTopByEmployeeOrderByIdDesc(Employee employee);
 }

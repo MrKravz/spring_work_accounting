@@ -5,7 +5,6 @@ import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "totals")
@@ -17,7 +16,8 @@ public class Total {
 
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "total_worked_time")
     private int totalWorkedTime;
@@ -39,4 +39,11 @@ public class Total {
     @ToString.Exclude
     private Employee employee;
 
+    public Total(int totalWorkedTime, int kpiPercentage, float totalSalary, LocalDate date, Employee employee) {
+        this.totalWorkedTime = totalWorkedTime;
+        this.kpiPercentage = kpiPercentage;
+        this.totalSalary = totalSalary;
+        this.date = date;
+        this.employee = employee;
+    }
 }

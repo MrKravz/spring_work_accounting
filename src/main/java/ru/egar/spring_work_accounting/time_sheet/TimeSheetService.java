@@ -5,35 +5,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.abstraction.services.CrudService;
 
-import java.util.UUID;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class TimeSheetService implements CrudService<TimeSheet, UUID> {
+public class TimeSheetService implements CrudService<TimeSheet, Long> {
 
     private final TimeSheetRepository timeSheetRepository;
 
     @Override
-    public TimeSheet findById(UUID id) {
+    public TimeSheet findById(Long id) {
         return timeSheetRepository.findById(id).orElseThrow(TimeSheetNotFoundException::new);
     }
 
     @Transactional
     @Override
-    public UUID save(TimeSheet entity) {
+    public Long save(TimeSheet entity) {
+        var timeSheet = timeSheetRepository.save(entity);
+        return timeSheet.getId();
+    }
+
+    @Transactional
+    @Override
+    public Long update(TimeSheet entity, Long id) {
         return timeSheetRepository.save(entity).getId();
     }
 
     @Transactional
     @Override
-    public UUID update(TimeSheet entity, UUID id) {
-        return timeSheetRepository.save(entity).getId();
-    }
-
-    @Transactional
-    @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         timeSheetRepository.deleteById(id);
     }
 

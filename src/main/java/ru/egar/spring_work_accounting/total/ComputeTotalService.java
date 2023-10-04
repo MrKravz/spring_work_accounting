@@ -11,7 +11,6 @@ import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 /**
  * Compute total for employee between start and end dates.
@@ -34,7 +33,7 @@ public class ComputeTotalService {
         var strategy = defineComputeSalaryService.defineStrategy(employee.getPaymentSystem());
         final float totalSalary = strategy.computeSalary(employee, dateStart, dateEnd);
         final int kpiPercentage = computeKpiService.computeKpi(employee, dateStart, dateEnd);
-        return new Total(UUID.randomUUID(), totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee);
+        return new Total(totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee);
     }
 
     /**

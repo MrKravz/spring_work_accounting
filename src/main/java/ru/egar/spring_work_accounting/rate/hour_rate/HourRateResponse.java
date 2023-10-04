@@ -4,13 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
-import java.util.UUID;
-
 @Data
 @Builder
 public class HourRateResponse {
 
-    private UUID id;
+    private long id;
     private float turnoutRate;
     private float vacationRate;
     private float sickDaysRate;

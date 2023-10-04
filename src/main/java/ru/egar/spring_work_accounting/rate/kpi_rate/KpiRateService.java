@@ -5,35 +5,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.abstraction.services.CrudService;
 
-import java.util.UUID;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class KpiRateService implements CrudService<KpiRate, UUID> {
+public class KpiRateService implements CrudService<KpiRate, Long> {
 
     private final KpiRateRepository kpiRateRepository;
 
     @Override
-    public KpiRate findById(UUID id) {
+    public KpiRate findById(Long id) {
         return kpiRateRepository.findById(id).orElseThrow(KpiRateNotFoundException::new);
     }
 
     @Override
     @Transactional
-    public UUID save(KpiRate entity) {
+    public Long save(KpiRate entity) {
         return kpiRateRepository.save(entity).getId();
     }
 
     @Override
     @Transactional
-    public UUID update(KpiRate entity, UUID id) {
+    public Long update(KpiRate entity, Long id) {
         return kpiRateRepository.save(entity).getId();
     }
 
     @Override
     @Transactional
-    public void delete(UUID id) {
+    public void delete(Long id) {
         kpiRateRepository.deleteById(id);
     }
 

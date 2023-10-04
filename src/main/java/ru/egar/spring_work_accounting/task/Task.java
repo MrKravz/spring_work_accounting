@@ -5,7 +5,6 @@ import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tasks")
@@ -17,7 +16,8 @@ public class Task {
 
     @Id
     @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "short_name")
     private String shortName;
@@ -34,6 +34,8 @@ public class Task {
     @Column(name = "task_points_number")
     private int taskPointsNumber;
 
+    @Column(name = "task_status")
+    @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
 
     @ManyToOne

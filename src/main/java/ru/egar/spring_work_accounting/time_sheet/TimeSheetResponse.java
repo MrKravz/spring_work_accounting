@@ -5,13 +5,12 @@ import lombok.Data;
 import ru.egar.spring_work_accounting.employee.EmployeeDto;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Builder
 public class TimeSheetResponse {
 
-    private UUID id;
+    private long id;
     private int timeSpan;
     private TimeStatus timeStatus;
     private LocalDate date;

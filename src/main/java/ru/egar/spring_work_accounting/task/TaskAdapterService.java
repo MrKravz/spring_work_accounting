@@ -5,11 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.egar.spring_work_accounting.abstraction.services.CrudAdapterService;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskResponse, UUID> {
+public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskResponse, Long> {
 
     private final TaskService taskService;
     private final TaskResponseMapper taskResponseMapper;
@@ -20,22 +19,22 @@ public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskR
     }
 
     @Override
-    public TaskResponse findById(UUID id) {
+    public TaskResponse findById(Long id) {
         return taskResponseMapper.map(taskService.findById(id));
     }
 
     @Override
-    public UUID save(TaskRequest entity) {
+    public Long save(TaskRequest entity) {
         return taskService.save(taskRequestMapper.map(entity));
     }
 
     @Override
-    public UUID update(TaskRequest entity, UUID id) {
+    public Long update(TaskRequest entity, Long id) {
         return taskService.update(taskRequestMapper.map(entity), id);
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         taskService.delete(id);
     }
 
