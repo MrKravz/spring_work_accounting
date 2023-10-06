@@ -10,7 +10,7 @@ import ru.egar.spring_work_accounting.time_sheet.TimeSheetDto;
 import ru.egar.spring_work_accounting.total.TotalDto;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,8 +24,8 @@ public class EmployeeResponse {
     private PaymentSystem paymentSystem;
     private HourRateDto hourRate;
     private KpiRateDto kpiRate;
-    private Set<TaskDto> tasks;
-    private Set<TimeSheetDto> timeSheets;
-    private Set<TotalDto> totals;
+    private List<TaskDto> tasks;
+    private List<TimeSheetDto> timeSheets;
+    private List<TotalDto> totals;
 
 }

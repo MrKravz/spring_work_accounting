@@ -26,7 +26,6 @@ public class TaskService implements CrudService<Task, Long> {
     @Override
     @Transactional
     public Long save(Task entity) {
-        entity.setTaskStatus(TaskStatus.NOT_STARTED);
         return taskRepository.save(entity).getId();
     }
 
@@ -41,8 +40,7 @@ public class TaskService implements CrudService<Task, Long> {
         taskToUpdate.setDateTimeStart(entity.getDateTimeStart());
         taskToUpdate.setDateTimeEnd(entity.getDateTimeEnd());
         taskToUpdate.setEmployee(entity.getEmployee());
-        var result = taskRepository.save(taskToUpdate);
-        return result.getId();
+        return taskRepository.save(taskToUpdate).getId();
     }
 
     @Override

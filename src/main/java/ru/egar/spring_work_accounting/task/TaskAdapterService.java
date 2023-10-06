@@ -25,7 +25,9 @@ public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskR
 
     @Override
     public Long save(TaskRequest entity) {
-        return taskService.save(taskRequestMapper.map(entity));
+        var task = taskRequestMapper.map(entity);
+        task.setTaskStatus(TaskStatus.NOT_STARTED);
+        return taskService.save(task);
     }
 
     @Override

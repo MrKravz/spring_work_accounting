@@ -20,7 +20,13 @@ public class EmployeeService implements CrudService<Employee, Long> {
     @Transactional
     @Override
     public Long update(Employee employee, Long id) {
-        return employeeRepository.save(employee).getId();
+        var employeeToUpdate = findById(id);
+        employeeToUpdate.setName(employee.getName());
+        employeeToUpdate.setDateOfBirthDay(employee.getDateOfBirthDay());
+        employeeToUpdate.setEmployeePosition(employee.getEmployeePosition());
+        employeeToUpdate.setEmployeeGrade(employee.getEmployeeGrade());
+        employeeToUpdate.setPaymentSystem(employee.getPaymentSystem());
+        return save(employeeToUpdate);
     }
 
 
