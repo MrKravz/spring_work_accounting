@@ -40,8 +40,8 @@ public class TestModels {
     public final static Total TOTAL;
     public final static TotalResponse TOTAL_RESPONSE;
     public final static ComputePaymentStrategy EXPECTED_STRATEGY;
-    public final static Set<TimeSheet> TIME_SHEETS_SET;
-    public final static Set<TimeStatus> TIME_STATUSES_SET;
+    public final static List<TimeSheet> TIME_SHEET_LIST;
+    public final static List<TimeStatus> TIME_STATUS_LIST;
     public final static Set<Task> TASKS_SET;
     public final static List<Task> TASKS_LIST;
     public final static List<TaskResponse> TASKS_RESPONSE_LIST;
@@ -107,7 +107,6 @@ public class TestModels {
         TIME_SHEET_REQUEST = TimeSheetRequest.builder()
                 .timeSpan(EXPECTED_TIME)
                 .timeStatus(TIME_STATUS_TURNOUT)
-                .date(LocalDate.now())
                 .build();
         TIME_SHEET_RESPONSE = TimeSheetResponse.builder()
                 .id(TIME_SHEET_ID)
@@ -149,7 +148,7 @@ public class TestModels {
                 .dateTimeStart(DATE_TIME_START)
                 .dateTimeEnd(DATE_TIME_END)
                 .build();
-        TIME_SHEETS_SET = Collections.singleton(TIME_SHEET);
+        TIME_SHEET_LIST = Collections.singletonList(TIME_SHEET);
         TASKS_SET = Collections.singleton(TASK);
         TASKS_LIST = Collections.singletonList(TASK);
         TASKS_RESPONSE_LIST = Collections.singletonList(TASK_RESPONSE);
@@ -162,10 +161,10 @@ public class TestModels {
                 .paymentSystem(PAYMENT_SYSTEM_KPI)
                 .hourRate(null)
                 .kpiRate(KPI_RATE)
-                .tasks(TASKS_SET)
-                .timeSheets(TIME_SHEETS_SET)
+                .tasks(TASKS_LIST)
+                .timeSheets(TIME_SHEET_LIST)
                 .paymentSystem(PAYMENT_SYSTEM_KPI)
-                .totals(Collections.emptySet())
+                .totals(Collections.emptyList())
                 .build();
         EMPLOYEE_REQUEST = EmployeeRequest.builder()
                 .name(EMPLOYEE_NAME)
@@ -193,7 +192,7 @@ public class TestModels {
                 .hourRate(null)
                 .build();
         EXPECTED_STRATEGY = new ComputeTurnoutStrategy();
-        TIME_STATUSES_SET = Collections.singleton(TimeStatus.Turnout);
+        TIME_STATUS_LIST = Collections.singletonList(TIME_STATUS_TURNOUT);
         TOTAL = Total.builder()
                 .id(TOTAL_ID)
                 .totalWorkedTime(EXPECTED_TIME)

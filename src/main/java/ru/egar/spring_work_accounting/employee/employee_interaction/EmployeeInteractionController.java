@@ -9,7 +9,7 @@ import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 import ru.egar.spring_work_accounting.task.TaskNotFoundException;
 import ru.egar.spring_work_accounting.task.TaskResponse;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("available_tasks")
@@ -19,16 +19,16 @@ public class EmployeeInteractionController {
     private final EmployeeInteractionService employeeInteractionService;
 
     @GetMapping
-    public ResponseEntity<Set<TaskResponse>> getAvailableTasks() {
+    public ResponseEntity<List<TaskResponse>> getAvailableTasks() {
         return ResponseEntity.ok(employeeInteractionService.getAvailableTasks());
     }
 
-    @PostMapping("/start")
+    @PatchMapping("/start")
     public ResponseEntity<Long> startTask(@RequestBody EmployeeInteractionRequest employeeInteractionRequest) {
         return ResponseEntity.ok(employeeInteractionService.startTask(employeeInteractionRequest));
     }
 
-    @PostMapping("/finish")
+    @PatchMapping("/finish")
     public ResponseEntity<Long> finishTask(EmployeeInteractionRequest employeeInteractionRequest) {
         return ResponseEntity.ok(employeeInteractionService.finishTask(employeeInteractionRequest));
     }

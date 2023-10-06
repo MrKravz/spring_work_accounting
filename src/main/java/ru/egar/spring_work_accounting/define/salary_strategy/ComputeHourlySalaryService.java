@@ -11,6 +11,7 @@ import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
+import java.util.EnumSet;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,7 +24,7 @@ public class ComputeHourlySalaryService implements ComputeSalary {
 
     @Override
     public float computeSalary(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
-        var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
+        var timeStatuses = EnumSet.allOf(TimeStatus.class);
         return (float) timeStatuses
                 .stream()
                 .mapToDouble(timeStatus -> {

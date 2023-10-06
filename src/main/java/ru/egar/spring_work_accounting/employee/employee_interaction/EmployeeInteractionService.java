@@ -9,8 +9,8 @@ import ru.egar.spring_work_accounting.task.TaskResponseMapper;
 import ru.egar.spring_work_accounting.task.TaskService;
 import ru.egar.spring_work_accounting.task.TaskStatus;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * This service purpose is to provide way for employees to interact with tasks.
@@ -24,12 +24,12 @@ public class EmployeeInteractionService {
     private final TaskService taskService;
     private final TaskResponseMapper taskResponseMapper;
 
-    public Set<TaskResponse> getAvailableTasks() {
+    public List<TaskResponse> getAvailableTasks() {
         var startedTasks = taskService.findAll()
                 .stream()
                 .filter(x->x.getEmployee() == null)
-                .collect(Collectors.toSet());
-        return (Set<TaskResponse>) taskResponseMapper.iterableMap(startedTasks);
+                .toList();
+        return (List<TaskResponse>) taskResponseMapper.iterableMap(startedTasks);
     }
 
     public long startTask(EmployeeInteractionRequest employeeInteractionRequest) {
@@ -42,6 +42,7 @@ public class EmployeeInteractionService {
         final TaskStatus taskStatusInProcess = TaskStatus.IN_PROCESS;
         task.setEmployee(employee);
         task.setTaskStatus(taskStatusInProcess);
+        task.setDateTimeStart(LocalDateTime.now());
         return taskService.update(task, task.getId());
     }
 

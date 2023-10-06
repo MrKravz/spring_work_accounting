@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.abstraction.services.CrudService;
 
+import java.time.LocalDate;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class TimeSheetService implements CrudService<TimeSheet, Long> {
     @Transactional
     @Override
     public Long save(TimeSheet entity) {
+        entity.setDate(LocalDate.now());
         var timeSheet = timeSheetRepository.save(entity);
         return timeSheet.getId();
     }

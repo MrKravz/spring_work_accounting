@@ -23,21 +23,30 @@ public class TaskService implements CrudService<Task, Long> {
         return taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Long save(Task entity) {
         entity.setTaskStatus(TaskStatus.NOT_STARTED);
         return taskRepository.save(entity).getId();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Long update(Task entity, Long id) {
-        return taskRepository.save(entity).getId();
+        var taskToUpdate = findById(id);
+        taskToUpdate.setShortName(entity.getShortName());
+        taskToUpdate.setDescription(entity.getDescription());
+        taskToUpdate.setTaskStatus(entity.getTaskStatus());
+        taskToUpdate.setTaskPointsNumber(entity.getTaskPointsNumber());
+        taskToUpdate.setDateTimeStart(entity.getDateTimeStart());
+        taskToUpdate.setDateTimeEnd(entity.getDateTimeEnd());
+        taskToUpdate.setEmployee(entity.getEmployee());
+        var result = taskRepository.save(taskToUpdate);
+        return result.getId();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void delete(Long id) {
         taskRepository.deleteById(id);
     }

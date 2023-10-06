@@ -6,16 +6,18 @@ import org.springframework.stereotype.Repository;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Repository
 public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
-
+/*
     @Query("SELECT t.timeStatus FROM TimeSheet t" +
             " WHERE NOT EXISTS (SELECT 1 FROM TimeSheet t1\n" +
             "                   WHERE t.timeStatus=t1.timeStatus)")
-    Set<TimeStatus> findDistinctByTimeStatus();
+    List<TimeStatus> findDistinctByTimeStatus();*/
 
-    Set<TimeSheet> findAllByEmployeeAndDateBetween(Employee employee, LocalDate dateStart, LocalDate dateEnd);
+    @Query("SELECT t FROM TimeSheet t" +
+            " WHERE t.employee = :employee AND t.date BETWEEN :dateStart AND :dateEnd")
+    List<TimeSheet> findAllByEmployeeAndDateBetween(Employee employee, LocalDate dateStart, LocalDate dateEnd);
 
 }

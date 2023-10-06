@@ -10,8 +10,7 @@ import ru.egar.spring_work_accounting.task.TaskStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * This service purpose is to count kpi value of employee.
@@ -28,22 +27,22 @@ public class ComputeKpiService {
         final float percentMultiplier = 100;
         var dateTimeStart = LocalDateTime.of(dateStart, LocalTime.NOON);
         var dateTimeEnd = LocalDateTime.of(dateEnd, LocalTime.NOON);
-        Set<Task> finishedTasks = getFinishedTasks(employee, dateTimeStart, dateTimeEnd);
+        List<Task> finishedTasks = getFinishedTasks(employee, dateTimeStart, dateTimeEnd);
         float totalPoints = getTotalPoints(finishedTasks);
         return (int) (totalPoints / employee.getKpiRate().getAgreedTasksPointQuantity() * percentMultiplier);
     }
 
-    private Set<Task> getFinishedTasks(Employee employee, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
+    private List<Task> getFinishedTasks(Employee employee, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
         return employee.getTasks()
                 .stream()
                 .filter(x -> x.getTaskStatus().equals(TaskStatus.FINISHED))
                 .filter(x -> (x.getDateTimeStart().isAfter(dateTimeStart) || x.getDateTimeStart().isEqual(dateTimeStart))
                         && (x.getDateTimeEnd().isBefore(dateTimeEnd) || x.getDateTimeEnd().isEqual(dateTimeEnd)))
-                .collect(Collectors.toSet());
+                .toList();
     }
 
 
-    private int getTotalPoints(Set<Task> finishedTasks) {
+    private int getTotalPoints(List<Task> finishedTasks) {
         return finishedTasks.stream().mapToInt(Task::getTaskPointsNumber).sum();
     }
 

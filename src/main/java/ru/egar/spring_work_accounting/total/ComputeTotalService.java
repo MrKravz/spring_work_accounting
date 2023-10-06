@@ -7,10 +7,10 @@ import ru.egar.spring_work_accounting.compute.kpi.ComputeKpiService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.define.salary_strategy.DefineComputeSalaryService;
 import ru.egar.spring_work_accounting.employee.Employee;
-import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
+import java.util.EnumSet;
 
 /**
  * Compute total for employee between start and end dates.
@@ -25,14 +25,13 @@ public class ComputeTotalService {
     private final ComputeTimeService computeTimeService;
     private final ComputeKpiService computeKpiService;
     private final DefineComputeSalaryService defineComputeSalaryService;
-    private final TimeSheetRepository timeSheetRepository;
 
     public Total computeTotal(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
-        var timeStatuses = timeSheetRepository.findDistinctByTimeStatus();
-        int totalWorkedTime = timeStatuses.stream().mapToInt(x -> computeTotalTime(x, employee, dateStart, dateEnd)).sum();
+        var timeStatuses = EnumSet.allOf(TimeStatus.class);
+        final int totalWorkedTime = timeStatuses.stream().mapToInt(x -> computeTotalTime(x, employee, dateStart, dateEnd)).sum();
+        final int kpiPercentage = computeKpiService.computeKpi(employee, dateStart, dateEnd);
         var strategy = defineComputeSalaryService.defineStrategy(employee.getPaymentSystem());
         final float totalSalary = strategy.computeSalary(employee, dateStart, dateEnd);
-        final int kpiPercentage = computeKpiService.computeKpi(employee, dateStart, dateEnd);
         return new Total(totalWorkedTime, kpiPercentage, totalSalary, LocalDate.now(), employee);
     }
 
