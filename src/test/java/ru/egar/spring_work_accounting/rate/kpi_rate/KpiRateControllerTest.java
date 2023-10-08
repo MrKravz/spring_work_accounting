@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,8 +12,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.KPI_RATE_ID;
+import static ru.egar.spring_work_accounting.util.TestModels.KPI_RATE_DTO;
 import static ru.egar.spring_work_accounting.util.TestModels.KPI_RATE_REQUEST;
-import static ru.egar.spring_work_accounting.util.TestModels.KPI_RATE_RESPONSE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class KpiRateControllerTest {
@@ -33,7 +34,7 @@ class KpiRateControllerTest {
     @DisplayName("Create kpi rate")
     public void createHourRateTest() {
         when(kpiRateAdapterService.save(any())).thenReturn(KPI_RATE_ID);
-        var response = kpiRateController.createKpiRate(KPI_RATE_REQUEST);
+        var response = kpiRateController.createKpiRate(KPI_RATE_REQUEST, mock(BindingResult.class));
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(KPI_RATE_ID, response.getBody());
         verify(kpiRateAdapterService, times(1)).save(KPI_RATE_REQUEST);
@@ -44,10 +45,10 @@ class KpiRateControllerTest {
     @Order(2)
     @DisplayName("Find kpi rate by id")
     public void findEmployeeByIdTest() {
-        when(kpiRateAdapterService.findById(any())).thenReturn(KPI_RATE_RESPONSE);
+        when(kpiRateAdapterService.findById(any())).thenReturn(KPI_RATE_DTO);
         var response = kpiRateController.findKpiRateById(KPI_RATE_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(KPI_RATE_RESPONSE, response.getBody());
+        assertEquals(KPI_RATE_DTO, response.getBody());
         verify(kpiRateAdapterService, times(1)).findById(KPI_RATE_ID);
         verifyNoMoreInteractions(kpiRateAdapterService);
     }
@@ -57,7 +58,7 @@ class KpiRateControllerTest {
     @DisplayName("Update kpi rate")
     public void updateEmployeeTest() {
         when(kpiRateAdapterService.update(any(), any())).thenReturn(KPI_RATE_ID);
-        var response = kpiRateController.updateKpiRate(KPI_RATE_REQUEST, KPI_RATE_ID);
+        var response = kpiRateController.updateKpiRate(KPI_RATE_REQUEST, KPI_RATE_ID, mock(BindingResult.class));
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(KPI_RATE_ID, response.getBody());
         verify(kpiRateAdapterService, times(1)).update(KPI_RATE_REQUEST, KPI_RATE_ID);

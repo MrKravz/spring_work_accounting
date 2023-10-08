@@ -39,9 +39,10 @@ public class Task {
     private TaskStatus taskStatus;
 
     @ManyToOne
-    @JoinColumn(
-            name = "employee_id",
-            referencedColumnName = "id"
+    @JoinTable(
+            name = "employees_tasks",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     @ToString.Exclude
     private Employee employee;

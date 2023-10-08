@@ -3,23 +3,32 @@ package ru.egar.spring_work_accounting.employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.egar.spring_work_accounting.abstraction.services.CrudAdapterService;
+import ru.egar.spring_work_accounting.rate.hour_rate.HourRateService;
+import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRateService;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeAdapterService implements CrudAdapterService<EmployeeRequest, EmployeeResponse, Long> {
+public class EmployeeAdapterService implements CrudAdapterService<EmployeeRequest, EmployeeDto, Long> {
 
     private final EmployeeService employeeService;
+    private final HourRateService hourRateService;
+    private final KpiRateService kpiRateService;
     private final EmployeeRequestMapper employeeRequestMapper;
-    private final EmployeeResponseMapper employeeResponseMapper;
+    private final EmployeeDtoMapper employeeDtoMapper;
 
     @Override
-    public EmployeeResponse findById(Long id) {
-        return employeeResponseMapper.map(employeeService.findById(id));
+    public EmployeeDto findById(Long id) {
+        return employeeDtoMapper.map(employeeService.findById(id));
     }
 
     @Override
     public Long save(EmployeeRequest entity) {
-        return employeeService.save(employeeRequestMapper.map(entity));
+        var employee = employeeRequestMapper.map(entity);
+        var hourRate = hourRateService.findByPositionAndGrade(employee.getEmployeePosition(), employee.getEmployeeGrade());
+        var kpiRate = kpiRateService.findByPositionAndGrade(employee.getEmployeePosition(), employee.getEmployeeGrade());
+        employee.setHourRate(hourRate);
+        employee.setKpiRate(kpiRate);
+        return employeeService.save(employee);
     }
 
     @Override

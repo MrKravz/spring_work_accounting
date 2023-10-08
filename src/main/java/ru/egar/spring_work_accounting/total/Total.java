@@ -32,9 +32,10 @@ public class Total {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(
-            name = "employee_id",
-            referencedColumnName = "id"
+    @JoinTable(
+            name = "employees_totals",
+            joinColumns = @JoinColumn(name = "total_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     @ToString.Exclude
     private Employee employee;

@@ -6,15 +6,15 @@ import ru.egar.spring_work_accounting.abstraction.services.CrudAdapterService;
 
 @Service
 @RequiredArgsConstructor
-public class KpiRateAdapterService implements CrudAdapterService<KpiRateRequest, KpiRateResponse, Long> {
+public class KpiRateAdapterService implements CrudAdapterService<KpiRateRequest, KpiRateDto, Long> {
 
     private final KpiRateService kpiRateService;
     private final KpiRateRequestMapper kpiRateRequestMapper;
-    private final KpiRateResponseMapper kpiRateResponseMapper;
+    private final KpiRateDtoMapper kpiRateDtoMapper;
 
     @Override
-    public KpiRateResponse findById(Long id) {
-        return kpiRateResponseMapper.map(kpiRateService.findById(id));
+    public KpiRateDto findById(Long id) {
+        return kpiRateDtoMapper.map(kpiRateService.findById(id));
     }
 
     @Override

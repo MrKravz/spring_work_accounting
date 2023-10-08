@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
+import ru.egar.spring_work_accounting.task.TaskDto;
 import ru.egar.spring_work_accounting.task.TaskNotFoundException;
-import ru.egar.spring_work_accounting.task.TaskResponse;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class EmployeeInteractionController {
     private final EmployeeInteractionService employeeInteractionService;
 
     @GetMapping
-    public ResponseEntity<List<TaskResponse>> getAvailableTasks() {
+    public ResponseEntity<List<TaskDto>> getAvailableTasks() {
         return ResponseEntity.ok(employeeInteractionService.getAvailableTasks());
     }
 

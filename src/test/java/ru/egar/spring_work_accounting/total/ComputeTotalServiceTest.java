@@ -17,7 +17,7 @@ import static ru.egar.spring_work_accounting.util.TestConstants.*;
 import static ru.egar.spring_work_accounting.util.TestModels.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ComputeTotalServiceTest {
+class ComputeTotalServiceTest { // TODO fix test
 
     @Mock
     private ComputeTimeService computeTimeService;

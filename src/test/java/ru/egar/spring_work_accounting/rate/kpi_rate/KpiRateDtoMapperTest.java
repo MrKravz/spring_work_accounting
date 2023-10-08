@@ -1,4 +1,4 @@
 package ru.egar.spring_work_accounting.rate.kpi_rate;
 
-public class KpiRateDtoMapperTest {
+public class KpiRateDtoMapperTest { // TODO fix test
 }

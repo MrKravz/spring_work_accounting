@@ -51,8 +51,10 @@ class TaskServiceTest {
     @Order(3)
     @DisplayName(value = "Update task")
     void updateTest() {
+        when(taskRepository.findById(any())).thenReturn(Optional.ofNullable(TASK));
         when(taskRepository.save(any())).thenReturn(TASK);
         var result = taskService.update(TASK, TASK_ID);
+        verify(taskRepository, times(1)).findById(TASK_ID);
         verify(taskRepository, times(1)).save(TASK);
         assertEquals(TASK_ID, result);
     }

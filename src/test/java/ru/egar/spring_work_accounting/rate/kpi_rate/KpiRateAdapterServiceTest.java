@@ -24,7 +24,7 @@ class KpiRateAdapterServiceTest {
     private KpiRateRequestMapper kpiRateRequestMapper;
 
     @Mock
-    private KpiRateResponseMapper kpiRateResponseMapper;
+    private KpiRateDtoMapper kpiRateDtoMapper;
 
     @InjectMocks
     private KpiRateAdapterService kpiRateAdapterService;
@@ -37,11 +37,11 @@ class KpiRateAdapterServiceTest {
     @Test
     void findById() {
         when(kpiRateService.findById(any())).thenReturn(KPI_RATE);
-        when(kpiRateResponseMapper.map(any())).thenReturn(KPI_RATE_RESPONSE);
+        when(kpiRateDtoMapper.map(any())).thenReturn(KPI_RATE_DTO);
         var result = kpiRateAdapterService.findById(KPI_RATE_ID);
         verify(kpiRateService, times(1)).findById(KPI_RATE_ID);
-        verify(kpiRateResponseMapper, times(1)).map(KPI_RATE);
-        assertEquals(KPI_RATE_RESPONSE, result);
+        verify(kpiRateDtoMapper, times(1)).map(KPI_RATE);
+        assertEquals(KPI_RATE_DTO, result);
     }
 
     @Test

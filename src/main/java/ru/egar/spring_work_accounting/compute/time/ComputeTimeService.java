@@ -9,7 +9,6 @@ import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Service computes and returns time that employee spent by time status
@@ -23,8 +22,9 @@ public class ComputeTimeService {
     private final TimeSheetRepository timeSheetRepository;
 
     public int computeTime(Employee employee, TimeStatus timeStatus, LocalDate dateStart, LocalDate dateEnd) {
-        List<TimeSheet> timeSheets = timeSheetRepository.findAllByEmployeeAndDateBetween(employee, dateStart, dateEnd)
+        var timeSheets = timeSheetRepository.findAllByDateBetween(dateStart, dateEnd)
                 .stream()
+                .filter(x -> x.getEmployee() == employee)
                 .filter(x -> x.getTimeStatus().equals(timeStatus))
                 .toList();
         return timeSheets

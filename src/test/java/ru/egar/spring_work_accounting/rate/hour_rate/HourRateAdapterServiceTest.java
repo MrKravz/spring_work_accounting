@@ -24,7 +24,7 @@ class HourRateAdapterServiceTest {
     private HourRateRequestMapper hourRateRequestMapper;
 
     @Mock
-    private HourRateResponseMapper hourRateResponseMapper;
+    private HourRateDtoMapper hourRateDtoMapper;
 
     @InjectMocks
     private HourRateAdapterService hourRateAdapterService;
@@ -37,11 +37,11 @@ class HourRateAdapterServiceTest {
     @Test
     void findById() {
         when(hourRateService.findById(any())).thenReturn(HOUR_RATE);
-        when(hourRateResponseMapper.map(any())).thenReturn(HOUR_RATE_RESPONSE);
+        when(hourRateDtoMapper.map(any())).thenReturn(HOUR_RATE_DTO);
         var result = hourRateAdapterService.findById(HOUR_RATE_ID);
         verify(hourRateService, times(1)).findById(HOUR_RATE_ID);
-        verify(hourRateResponseMapper, times(1)).map(HOUR_RATE);
-        assertEquals(HOUR_RATE_RESPONSE, result);
+        verify(hourRateDtoMapper, times(1)).map(HOUR_RATE);
+        assertEquals(HOUR_RATE_DTO, result);
     }
 
     @Test

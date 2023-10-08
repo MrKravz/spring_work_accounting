@@ -46,10 +46,18 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private PaymentSystem paymentSystem;
 
-    @OneToOne(mappedBy = "employee")
+    @ManyToOne
+    @JoinColumn(
+            name = "hour_rate_id",
+            referencedColumnName = "id"
+    )
     private HourRate hourRate;
 
-    @OneToOne(mappedBy = "employee")
+    @ManyToOne
+    @JoinColumn(
+            name = "kpi_rate_id",
+            referencedColumnName = "id"
+    )
     private KpiRate kpiRate;
 
     @OneToMany(mappedBy = "employee")

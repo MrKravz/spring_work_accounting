@@ -41,8 +41,10 @@ class EmployeeServiceTest {
     @Order(2)
     @DisplayName(value = "Update employee")
     void updateTest() {
+        when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
         when(employeeRepository.save(any())).thenReturn(EMPLOYEE);
         var result = employeeService.update(EMPLOYEE, EMPLOYEE_ID);
+        verify(employeeRepository, times(1)).findById(EMPLOYEE_ID);
         verify(employeeRepository, times(1)).save(EMPLOYEE);
         assertEquals(EMPLOYEE_ID, result);
     }

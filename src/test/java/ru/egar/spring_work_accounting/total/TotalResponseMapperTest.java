@@ -8,7 +8,7 @@ import ru.egar.spring_work_accounting.employee.EmployeeDtoMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestModels.TOTAL;
-import static ru.egar.spring_work_accounting.util.TestModels.TOTAL_RESPONSE;
+import static ru.egar.spring_work_accounting.util.TestModels.TOTAL_DTO;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TotalResponseMapperTest {
@@ -17,7 +17,7 @@ public class TotalResponseMapperTest {
     private EmployeeDtoMapper employeeDtoMapper;
 
     @InjectMocks
-    private TotalResponseMapperImpl totalResponseMapper;
+    private TotalDtoMapperImpl totalDtoMapper;
 
     @BeforeEach
     void setUp() {
@@ -28,11 +28,11 @@ public class TotalResponseMapperTest {
     @Order(1)
     @DisplayName(value = "Map to response")
     public void mapTest() {
-        var result = totalResponseMapper.map(TOTAL);
-        assertEquals(TOTAL_RESPONSE.getId(), result.getId());
-        assertEquals(TOTAL_RESPONSE.getTotalSalary(), result.getTotalSalary());
-        assertEquals(TOTAL_RESPONSE.getTotalWorkedTime(), result.getTotalWorkedTime());
-        assertEquals(TOTAL_RESPONSE.getKpiPercentage(), result.getKpiPercentage());
+        var result = totalDtoMapper.map(TOTAL);
+        assertEquals(TOTAL_DTO.getId(), result.getId());
+        assertEquals(TOTAL_DTO.getTotalSalary(), result.getTotalSalary());
+        assertEquals(TOTAL_DTO.getTotalWorkedTime(), result.getTotalWorkedTime());
+        assertEquals(TOTAL_DTO.getKpiPercentage(), result.getKpiPercentage());
     }
 
 }

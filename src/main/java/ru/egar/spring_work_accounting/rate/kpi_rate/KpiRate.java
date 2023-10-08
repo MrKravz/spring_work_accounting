@@ -3,6 +3,10 @@ package ru.egar.spring_work_accounting.rate.kpi_rate;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
+import ru.egar.spring_work_accounting.employee.Grade;
+import ru.egar.spring_work_accounting.employee.Position;
+
+import java.util.List;
 
 @Entity
 @Table(name = "kpi_rates")
@@ -23,12 +27,16 @@ public class KpiRate {
     @Column(name = "agreed_tasks_point_quantity")
     private int agreedTasksPointQuantity;
 
-    @OneToOne
-    @JoinColumn(
-            name = "employee_id",
-            referencedColumnName = "id"
-    )
+    @Column(name = "position")
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
+    @Column(name = "grade")
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
+    @OneToMany(mappedBy = "kpiRate")
     @ToString.Exclude
-    private Employee employee;
+    private List<Employee> employees;
 
 }

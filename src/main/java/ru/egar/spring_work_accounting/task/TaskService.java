@@ -40,7 +40,7 @@ public class TaskService implements CrudService<Task, Long> {
         taskToUpdate.setDateTimeStart(entity.getDateTimeStart());
         taskToUpdate.setDateTimeEnd(entity.getDateTimeEnd());
         taskToUpdate.setEmployee(entity.getEmployee());
-        return taskRepository.save(taskToUpdate).getId();
+        return save(taskToUpdate);
     }
 
     @Override

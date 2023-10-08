@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.abstraction.services.CrudService;
+import ru.egar.spring_work_accounting.employee.Grade;
+import ru.egar.spring_work_accounting.employee.Position;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,6 +17,10 @@ public class KpiRateService implements CrudService<KpiRate, Long> {
     @Override
     public KpiRate findById(Long id) {
         return kpiRateRepository.findById(id).orElseThrow(KpiRateNotFoundException::new);
+    }
+
+    public KpiRate findByPositionAndGrade(Position position, Grade grade) {
+        return kpiRateRepository.findByPositionAndGrade(position, grade).orElseThrow(KpiRateNotFoundException::new);
     }
 
     @Override

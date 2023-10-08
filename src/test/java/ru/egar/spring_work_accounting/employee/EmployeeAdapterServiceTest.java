@@ -3,6 +3,8 @@ package ru.egar.spring_work_accounting.employee;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.egar.spring_work_accounting.rate.hour_rate.HourRateService;
+import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRateService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,7 +23,12 @@ class EmployeeAdapterServiceTest {
     private EmployeeRequestMapper employeeRequestMapper;
 
     @Mock
-    private EmployeeResponseMapper employeeResponseMapper;
+    private EmployeeDtoMapper employeeDtoMapper;
+
+    @Mock
+    private HourRateService hourRateService;
+    @Mock
+    private KpiRateService kpiRateService;
 
     @InjectMocks
     private EmployeeAdapterService employeeAdapterService;
@@ -36,11 +43,11 @@ class EmployeeAdapterServiceTest {
     @DisplayName(value = "Find employee by id")
     void findByIdTest() {
         when(employeeService.findById(any())).thenReturn(EMPLOYEE);
-        when(employeeResponseMapper.map(any())).thenReturn(EMPLOYEE_RESPONSE);
+        when(employeeDtoMapper.map(any())).thenReturn(EMPLOYEE_DTO);
         var result = employeeAdapterService.findById(EMPLOYEE_ID);
         verify(employeeService, times(1)).findById(EMPLOYEE_ID);
-        verify(employeeResponseMapper, times(1)).map(EMPLOYEE);
-        assertEquals(EMPLOYEE_RESPONSE, result);
+        verify(employeeDtoMapper, times(1)).map(EMPLOYEE);
+        assertEquals(EMPLOYEE_DTO, result);
     }
 
     @Test
@@ -59,11 +66,15 @@ class EmployeeAdapterServiceTest {
     @Order(3)
     @DisplayName(value = "Save employee")
     void saveTest() {
+        when(hourRateService.findByPositionAndGrade(any(), any())).thenReturn(HOUR_RATE);
+        when(kpiRateService.findByPositionAndGrade(any(), any())).thenReturn(KPI_RATE);
         when(employeeService.save(any())).thenReturn(EMPLOYEE_ID);
         when(employeeRequestMapper.map(any())).thenReturn(EMPLOYEE);
         var result = employeeAdapterService.save(EMPLOYEE_REQUEST);
         verify(employeeService, times(1)).save(EMPLOYEE);
         verify(employeeRequestMapper, times(1)).map(EMPLOYEE_REQUEST);
+        verify(hourRateService, times(1)).findByPositionAndGrade(Position.DEVELOPER, Grade.JUNIOR);
+        verify(kpiRateService, times(1)).findByPositionAndGrade(Position.DEVELOPER, Grade.JUNIOR);
         assertEquals(EMPLOYEE_ID, result);
     }
 

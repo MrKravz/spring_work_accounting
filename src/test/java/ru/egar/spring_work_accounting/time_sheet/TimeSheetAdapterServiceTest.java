@@ -21,7 +21,7 @@ class TimeSheetAdapterServiceTest {
     private TimeSheetRequestMapper timeSheetRequestMapper;
 
     @Mock
-    private TimeSheetResponseMapper timeSheetResponseMapper;
+    private TimeSheetDtoMapper timeSheetDtoMapper;
 
     @InjectMocks
     private TimeSheetAdapterService timeSheetAdapterService;
@@ -36,11 +36,11 @@ class TimeSheetAdapterServiceTest {
     @DisplayName(value = "Find employee by id")
     void findByIdTest() {
         when(timeSheetService.findById(any())).thenReturn(TIME_SHEET);
-        when(timeSheetResponseMapper.map(any())).thenReturn(TIME_SHEET_RESPONSE);
+        when(timeSheetDtoMapper.map(any())).thenReturn(TIME_SHEET_DTO);
         var result = timeSheetAdapterService.findById(TIME_SHEET_ID);
         verify(timeSheetService, times(1)).findById(TIME_SHEET_ID);
-        verify(timeSheetResponseMapper, times(1)).map(TIME_SHEET);
-        assertEquals(TIME_SHEET_RESPONSE, result);
+        verify(timeSheetDtoMapper, times(1)).map(TIME_SHEET);
+        assertEquals(TIME_SHEET_DTO, result);
     }
 
     @Test

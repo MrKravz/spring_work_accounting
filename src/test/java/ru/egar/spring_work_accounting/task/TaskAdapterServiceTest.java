@@ -21,7 +21,7 @@ class TaskAdapterServiceTest {
     private TaskRequestMapper taskRequestMapper;
 
     @Mock
-    private TaskResponseMapper taskResponseMapper;
+    private TaskDtoMapper taskDtoMapper;
 
     @InjectMocks
     private TaskAdapterService taskAdapterService;
@@ -36,11 +36,11 @@ class TaskAdapterServiceTest {
     @DisplayName(value = "Find all tasks")
     void findAllTest() {
         when(taskService.findAll()).thenReturn(TASKS_LIST);
-        when(taskResponseMapper.iterableMap(any())).thenReturn(TASKS_RESPONSE_LIST);
+        when(taskDtoMapper.iterableMap(any())).thenReturn(TASK_DTO_LIST);
         var result = taskAdapterService.findAll();
         verify(taskService, times(1)).findAll();
-        verify(taskResponseMapper, times(1)).iterableMap(TASKS_LIST);
-        assertEquals(TASKS_RESPONSE_LIST, result);
+        verify(taskDtoMapper, times(1)).iterableMap(TASKS_LIST);
+        assertEquals(TASK_DTO_LIST, result);
     }
 
     @Test
@@ -48,11 +48,11 @@ class TaskAdapterServiceTest {
     @DisplayName(value = "Find task by id")
     void findByIdTest() {
         when(taskService.findById(any())).thenReturn(TASK);
-        when(taskResponseMapper.map(any())).thenReturn(TASK_RESPONSE);
+        when(taskDtoMapper.map(any())).thenReturn(TASK_DTO);
         var result = taskAdapterService.findById(TASK_ID);
         verify(taskService, times(1)).findById(TASK_ID);
-        verify(taskResponseMapper, times(1)).map(TASK);
-        assertEquals(TASK_RESPONSE, result);
+        verify(taskDtoMapper, times(1)).map(TASK);
+        assertEquals(TASK_DTO, result);
     }
 
     @Test

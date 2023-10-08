@@ -8,19 +8,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskResponse, Long> {
+public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskDto, Long> {
 
     private final TaskService taskService;
-    private final TaskResponseMapper taskResponseMapper;
+    private final TaskDtoMapper taskDtoMapper;
     private final TaskRequestMapper taskRequestMapper;
 
-    public List<TaskResponse> findAll() {
-        return (List<TaskResponse>) taskResponseMapper.iterableMap(taskService.findAll());
+    public List<TaskDto> findAll() {
+        return (List<TaskDto>) taskDtoMapper.iterableMap(taskService.findAll());
     }
 
     @Override
-    public TaskResponse findById(Long id) {
-        return taskResponseMapper.map(taskService.findById(id));
+    public TaskDto findById(Long id) {
+        return taskDtoMapper.map(taskService.findById(id));
     }
 
     @Override

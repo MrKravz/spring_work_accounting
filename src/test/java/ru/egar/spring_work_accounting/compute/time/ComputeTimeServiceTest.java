@@ -28,9 +28,9 @@ class ComputeTimeServiceTest {
     @Test
     @Order(1)
     void computeTimeTest() {
-        when(timeSheetRepository.findAllByEmployeeAndDateBetween(any(), any(), any())).thenReturn(TIME_SHEET_LIST);
+        when(timeSheetRepository.findAllByDateBetween(any(), any())).thenReturn(TIME_SHEET_LIST);
         var result = computeTimeService.computeTime(EMPLOYEE, TIME_STATUS_TURNOUT ,DATE_START, DATE_END);
-        verify(timeSheetRepository, times(1)).findAllByEmployeeAndDateBetween(any(), any(), any());
+        verify(timeSheetRepository, times(1)).findAllByDateBetween(any(), any());
         assertEquals(EXPECTED_TIME, result);
     }
 

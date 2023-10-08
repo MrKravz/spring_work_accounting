@@ -3,6 +3,10 @@ package ru.egar.spring_work_accounting.rate.hour_rate;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.egar.spring_work_accounting.employee.Employee;
+import ru.egar.spring_work_accounting.employee.Grade;
+import ru.egar.spring_work_accounting.employee.Position;
+
+import java.util.List;
 
 @Entity
 @Table(name = "hour_rates")
@@ -35,12 +39,16 @@ public class HourRate {
     @Column(name = "over_time_rate")
     private float overTimeRate;
 
-    @OneToOne
-    @JoinColumn(
-            name = "employee_id",
-            referencedColumnName = "id"
-    )
+    @Column(name = "position")
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
+    @Column(name = "grade")
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
+    @OneToMany(mappedBy = "hourRate")
     @ToString.Exclude
-    private Employee employee;
+    private List<Employee> employees;
 
 }

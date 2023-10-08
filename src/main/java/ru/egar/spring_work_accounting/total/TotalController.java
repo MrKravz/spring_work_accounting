@@ -15,7 +15,7 @@ public class TotalController {
     private final TotalService totalService;
 
     @GetMapping("{id}")
-    private ResponseEntity<TotalResponse> findTotalById(@PathVariable Long id) {
+    private ResponseEntity<TotalDto> findTotalById(@PathVariable Long id) {
         return ResponseEntity.ok(totalService.findById(id));
     }
 

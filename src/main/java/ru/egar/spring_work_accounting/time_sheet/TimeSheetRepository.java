@@ -10,14 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
-/*
-    @Query("SELECT t.timeStatus FROM TimeSheet t" +
-            " WHERE NOT EXISTS (SELECT 1 FROM TimeSheet t1\n" +
-            "                   WHERE t.timeStatus=t1.timeStatus)")
-    List<TimeStatus> findDistinctByTimeStatus();*/
 
     @Query("SELECT t FROM TimeSheet t" +
-            " WHERE t.employee = :employee AND t.date BETWEEN :dateStart AND :dateEnd")
-    List<TimeSheet> findAllByEmployeeAndDateBetween(Employee employee, LocalDate dateStart, LocalDate dateEnd);
+            " WHERE t.date BETWEEN :dateStart AND :dateEnd")
+    List<TimeSheet> findAllByDateBetween(LocalDate dateStart, LocalDate dateEnd);
 
 }

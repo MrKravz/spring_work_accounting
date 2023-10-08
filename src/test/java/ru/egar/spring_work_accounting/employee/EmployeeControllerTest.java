@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +32,7 @@ class EmployeeControllerTest {
     @DisplayName("Create employee")
     public void createEmployeeTest() {
         when(employeeAdapterService.save(any())).thenReturn(EMPLOYEE_ID);
-        var response = employeeController.createEmployee(EMPLOYEE_REQUEST);
+        var response = employeeController.createEmployee(EMPLOYEE_REQUEST, mock(BindingResult.class));
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(EMPLOYEE_ID, response.getBody());
         verify(employeeAdapterService, times(1)).save(EMPLOYEE_REQUEST);
@@ -42,10 +43,10 @@ class EmployeeControllerTest {
     @Order(2)
     @DisplayName("Find employee by id")
     public void findEmployeeByIdTest() {
-        when(employeeAdapterService.findById(any())).thenReturn(EMPLOYEE_RESPONSE);
+        when(employeeAdapterService.findById(any())).thenReturn(EMPLOYEE_DTO);
         var response = employeeController.findEmployeeById(EMPLOYEE_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(EMPLOYEE_RESPONSE, response.getBody());
+        assertEquals(EMPLOYEE_DTO, response.getBody());
         verify(employeeAdapterService, times(1)).findById(EMPLOYEE_ID);
         verifyNoMoreInteractions(employeeAdapterService);
     }
@@ -55,7 +56,7 @@ class EmployeeControllerTest {
     @DisplayName("Update employee")
     public void updateEmployeeTest() {
         when(employeeAdapterService.update(any(), any())).thenReturn(EMPLOYEE_ID);
-        var response = employeeController.updateEmployee(EMPLOYEE_REQUEST, EMPLOYEE_ID);
+        var response = employeeController.updateEmployee(EMPLOYEE_REQUEST, EMPLOYEE_ID, mock(BindingResult.class));
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(EMPLOYEE_ID, response.getBody());
         verify(employeeAdapterService, times(1)).update(EMPLOYEE_REQUEST, EMPLOYEE_ID);

@@ -16,7 +16,7 @@ public class TaskResponseMapperTest {
     private EmployeeDtoMapper employeeDtoMapper;
 
     @InjectMocks
-    private TaskResponseMapperImpl taskResponseMapper;
+    private TaskDtoMapperImpl taskResponseMapper;
 
     @BeforeEach
     void setUp() {
@@ -28,13 +28,13 @@ public class TaskResponseMapperTest {
     @DisplayName(value = "Map to response")
     public void mapTest() {
         var result = taskResponseMapper.map(TASK);
-        assertEquals(TASK_RESPONSE.getId(), result.getId());
-        assertEquals(TASK_RESPONSE.getShortName(), result.getShortName());
-        assertEquals(TASK_RESPONSE.getDescription(), result.getDescription());
-        assertEquals(TASK_RESPONSE.getDateTimeStart(), result.getDateTimeStart());
-        assertEquals(TASK_RESPONSE.getDateTimeEnd(), result.getDateTimeEnd());
-        assertEquals(TASK_RESPONSE.getTaskPointsNumber(), result.getTaskPointsNumber());
-        assertEquals(TASK_RESPONSE.getTaskStatus(), result.getTaskStatus());
+        assertEquals(TASK_DTO.getId(), result.getId());
+        assertEquals(TASK_DTO.getShortName(), result.getShortName());
+        assertEquals(TASK_DTO.getDescription(), result.getDescription());
+        assertEquals(TASK_DTO.getDateTimeStart(), result.getDateTimeStart());
+        assertEquals(TASK_DTO.getDateTimeEnd(), result.getDateTimeEnd());
+        assertEquals(TASK_DTO.getTaskPointsNumber(), result.getTaskPointsNumber());
+        assertEquals(TASK_DTO.getTaskStatus(), result.getTaskStatus());
     }
 
 }

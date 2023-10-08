@@ -30,9 +30,10 @@ public class TimeSheet {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(
-            name = "employee_id",
-            referencedColumnName = "id"
+    @JoinTable(
+            name = "employees_time_sheets",
+            joinColumns = @JoinColumn(name = "time_sheet_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     @ToString.Exclude
     private Employee employee;

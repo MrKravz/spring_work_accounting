@@ -6,15 +6,15 @@ import ru.egar.spring_work_accounting.abstraction.services.CrudAdapterService;
 
 @Service
 @RequiredArgsConstructor
-public class HourRateAdapterService implements CrudAdapterService<HourRateRequest, HourRateResponse, Long> {
+public class HourRateAdapterService implements CrudAdapterService<HourRateRequest, HourRateDto, Long> {
 
     private final HourRateService hourRateService;
     private final HourRateRequestMapper hourRateRequestMapper;
-    private final HourRateResponseMapper hourRateResponseMapper;
+    private final HourRateDtoMapper hourRateDto;
 
     @Override
-    public HourRateResponse findById(Long id) {
-        return hourRateResponseMapper.map(hourRateService.findById(id));
+    public HourRateDto findById(Long id) {
+        return hourRateDto.map(hourRateService.findById(id));
     }
 
     @Override

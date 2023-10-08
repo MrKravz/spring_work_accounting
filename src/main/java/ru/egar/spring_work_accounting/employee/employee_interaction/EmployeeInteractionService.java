@@ -19,33 +19,36 @@ public class EmployeeInteractionService {
 
     private final EmployeeService employeeService;
     private final TaskService taskService;
-    private final TaskResponseMapper taskResponseMapper;
+    private final TaskDtoMapper taskResponseMapper;
+    private final TaskStatus taskNotStarted = TaskStatus.NOT_STARTED;
+    private final TaskStatus taskStatusInProcess = TaskStatus.IN_PROCESS;
+    private final TaskStatus taskStatusFinished = TaskStatus.FINISHED;
 
-    public List<TaskResponse> getAvailableTasks() {
+    public List<TaskDto> getAvailableTasks() {
         var startedTasks = taskService.findAll()
                 .stream()
-                .filter(x->x.getEmployee() == null)
+                .filter(x->x.getTaskStatus().equals(taskNotStarted))
                 .toList();
-        return (List<TaskResponse>) taskResponseMapper.iterableMap(startedTasks);
+        return (List<TaskDto>) taskResponseMapper.iterableMap(startedTasks);
     }
 
+    @Transactional
     public long startTask(EmployeeInteractionRequest employeeInteractionRequest) {
         var task = taskService.findById(employeeInteractionRequest.getTaskId());
-        if (task.getEmployee() != null) {
+        if (!task.getTaskStatus().equals(taskNotStarted)) {
             final String exceptionMessage = "This task has already been started";
             throw new TaskIsAlreadyStartedException(exceptionMessage);
         }
         var employee = employeeService.findById(employeeInteractionRequest.getEmployeeId());
-        final TaskStatus taskStatusInProcess = TaskStatus.IN_PROCESS;
         task.setEmployee(employee);
         task.setTaskStatus(taskStatusInProcess);
         task.setDateTimeStart(LocalDateTime.now());
         return taskService.update(task, task.getId());
     }
 
+    @Transactional
     public long finishTask(EmployeeInteractionRequest employeeInteractionRequest) {
         var task = taskService.findById(employeeInteractionRequest.getTaskId());
-        final TaskStatus taskStatusFinished = TaskStatus.FINISHED;
         if (task.getTaskStatus().equals(taskStatusFinished)) {
             final String exceptionMessage = "This task has already been finished";
             throw new TaskIsAlreadyFinishedException(exceptionMessage);
