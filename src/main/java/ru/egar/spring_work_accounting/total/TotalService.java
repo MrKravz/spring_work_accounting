@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
+import ru.egar.spring_work_accounting.time_sheet.TimeSheetNotFoundException;
 
 import java.time.LocalDate;
 
@@ -49,7 +50,7 @@ public class TotalService {
             return lastTotal.getDate().plusDays(daysIncrement);
         }
         var timeSheets = employee.getTimeSheets().stream().findFirst();
-        return timeSheets.orElseThrow(RuntimeException::new).getDate(); // TODO to actual exception
+        return timeSheets.orElseThrow(TimeSheetNotFoundException::new).getDate();
     }
 
     @Transactional

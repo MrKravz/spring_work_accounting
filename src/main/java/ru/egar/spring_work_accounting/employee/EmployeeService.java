@@ -17,8 +17,8 @@ public class EmployeeService implements CrudService<Employee, Long> {
         return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Long update(Employee employee, Long id) {
         var employeeToUpdate = findById(id);
         employeeToUpdate.setName(employee.getName());
@@ -37,8 +37,8 @@ public class EmployeeService implements CrudService<Employee, Long> {
         return result.getId();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void delete(Long id) {
         employeeRepository.deleteById(id);
     }

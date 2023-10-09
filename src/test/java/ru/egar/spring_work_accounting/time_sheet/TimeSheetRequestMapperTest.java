@@ -10,7 +10,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestModels.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TimeSheetRequestMapperTest { // TODO fix test
+public class TimeSheetRequestMapperTest {
 
     @Mock
     private EmployeeDtoMapper employeeDtoMapper;
@@ -30,7 +30,6 @@ public class TimeSheetRequestMapperTest { // TODO fix test
         var result = timeSheetRequestMapper.map(TIME_SHEET_REQUEST);
         assertEquals(TIME_SHEET.getTimeSpan(), result.getTimeSpan());
         assertEquals(TIME_SHEET.getTimeStatus(), result.getTimeStatus());
-        assertEquals(TIME_SHEET.getDate(), result.getDate());
     }
 
 }

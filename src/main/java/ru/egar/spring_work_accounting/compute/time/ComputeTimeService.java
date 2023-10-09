@@ -22,9 +22,8 @@ public class ComputeTimeService {
     private final TimeSheetRepository timeSheetRepository;
 
     public int computeTime(Employee employee, TimeStatus timeStatus, LocalDate dateStart, LocalDate dateEnd) {
-        var timeSheets = timeSheetRepository.findAllByDateBetween(dateStart, dateEnd)
+        var timeSheets = timeSheetRepository.findAllByEmployeeAndDateBetween(employee, dateStart, dateEnd)
                 .stream()
-                .filter(x -> x.getEmployee() == employee)
                 .filter(x -> x.getTimeStatus().equals(timeStatus))
                 .toList();
         return timeSheets

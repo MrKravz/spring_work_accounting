@@ -12,7 +12,8 @@ import java.util.List;
 public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
 
     @Query("SELECT t FROM TimeSheet t" +
-            " WHERE t.date BETWEEN :dateStart AND :dateEnd")
-    List<TimeSheet> findAllByDateBetween(LocalDate dateStart, LocalDate dateEnd);
+            " WHERE t.employee = :employee AND t.date BETWEEN :dateStart AND :dateEnd")
+    List<TimeSheet> findAllByEmployeeAndDateBetween(Employee employee, LocalDate dateStart, LocalDate dateEnd);
 
 }
+

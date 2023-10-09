@@ -8,14 +8,14 @@ import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.*;
-import static ru.egar.spring_work_accounting.util.TestModels.*;
+import static ru.egar.spring_work_accounting.util.TestModels.EMPLOYEE;
+import static ru.egar.spring_work_accounting.util.TestModels.HOUR_RATE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ComputeHourlySalaryServiceTest { // TODO fix test
+class ComputeHourlySalaryServiceTest {
 
     @Mock
     private TimeSheetRepository timeSheetRepository;
@@ -38,8 +38,8 @@ class ComputeHourlySalaryServiceTest { // TODO fix test
     @Order(1)
     @DisplayName(value = "Compute hourly salary")
     void computeSalaryTest() {
-        when(computeTimeService.computeTime(any(), any(), any(), any())).thenReturn(EXPECTED_TIME);
-        when(computeHoursSalaryService.computeHoursSalary(any(), anyInt(), any())).thenReturn(EXPECTED_SALARY);
+        when(computeTimeService.computeTime(EMPLOYEE, TIME_STATUS_TURNOUT, DATE_START, DATE_END)).thenReturn(EXPECTED_TIME);
+        when(computeHoursSalaryService.computeHoursSalary(HOUR_RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT)).thenReturn(EXPECTED_SALARY);
         var result = computeHourlySalaryService.computeSalary(EMPLOYEE, DATE_START, DATE_END);
         assertEquals(EXPECTED_SALARY, result);
     }
