@@ -41,9 +41,9 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-        public String auth(@ModelAttribute("authRequest") AuthRequest authRequest) {
-        var token = authService.authenticate(authRequest);
-        logger.info(token);
+    public String auth(@ModelAttribute("authRequest") AuthRequest authRequest) {
+        boolean authenticate = authService.authenticate(authRequest);
+        logger.info(String.valueOf(authenticate));
         return "mainViews/index";
     }
 

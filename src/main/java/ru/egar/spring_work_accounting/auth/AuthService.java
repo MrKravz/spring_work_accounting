@@ -3,6 +3,8 @@ package ru.egar.spring_work_accounting.auth;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,6 @@ public class AuthService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final AuthRequestMapper authRequestMapper;
 
@@ -30,19 +31,27 @@ public class AuthService {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setRole(Role.EMPLOYEE);
         accountRepository.save(account);
-        jwtService.generateToken(account);
     }
 
-    public String authenticate(AuthRequest authRequest) {
+    public boolean authenticate(AuthRequest authRequest) {
         var account = accountRepository.findByLogin(authRequest.getLogin());
         if (account.isEmpty()) {
             final String exceptionMessage = "Account with such login not exist";
             throw new AccountNotFoundException(exceptionMessage);
         }
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword())
-        );
-        return jwtService.generateToken(account.get());
+        String storedPasswordHash = account.get().getPassword();
+        var result = passwordEncoder.matches(authRequest.getPassword(), storedPasswordHash);
+        UserDetails userDetails = account.get();
+        if (result) {
+            var authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            authenticationManager.authenticate(authenticationToken);
+            if (authenticationToken.isAuthenticated()) {
+                return authenticationToken.isAuthenticated();
+            }
+        }
+        return false;
     }
-    
+
+
 }
