@@ -2,15 +2,14 @@
 <html lang="en"  xmlns:th="http://thymeleaf.org">
 <head>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="css/styles.css">
     <meta charset="UTF-8">
     <title>WorkAccounting</title>
 </head>
 <body>
 <div class="navbar">
     <ul>
-        <li><a class="nav-text text-color-turquoise" th:href="@{login}">Логин</a></li>
-        <li><a class="nav-text text-color-turquoise" th:href="@{registration}">Регистрация</a></li>
+        <li><a class="nav-text text-color-turquoise" th:href="@{auth/login}">Логин</a></li>
+        <li><a class="nav-text text-color-turquoise" th:href="@{auth/register}">Регистрация</a></li>
     </ul>
 </div>
 <div class="content text-center">

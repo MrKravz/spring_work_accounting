@@ -19,6 +19,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final AuthRequestMapper authRequestMapper;
 
+
     @Transactional
     public void register(AuthRequest authRequest) {
         var account = authRequestMapper.map(authRequest);
@@ -32,7 +33,7 @@ public class AuthService {
         jwtService.generateToken(account);
     }
 
-    public void authenticate(AuthRequest authRequest) {
+    public String authenticate(AuthRequest authRequest) {
         var account = accountRepository.findByLogin(authRequest.getLogin());
         if (account.isEmpty()) {
             final String exceptionMessage = "Account with such login not exist";
@@ -41,7 +42,7 @@ public class AuthService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword())
         );
-        jwtService.generateToken(account.get());
+        return jwtService.generateToken(account.get());
     }
     
 }
