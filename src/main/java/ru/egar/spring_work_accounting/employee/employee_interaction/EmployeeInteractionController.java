@@ -12,7 +12,7 @@ import ru.egar.spring_work_accounting.task.TaskNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("available_tasks")
+@RequestMapping("/available_tasks")
 @RequiredArgsConstructor
 public class EmployeeInteractionController {
 

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,18 +38,11 @@ public class AuthService {
             final String exceptionMessage = "Account with such login not exist";
             throw new AccountNotFoundException(exceptionMessage);
         }
-        String storedPasswordHash = account.get().getPassword();
-        var result = passwordEncoder.matches(authRequest.getPassword(), storedPasswordHash);
-        UserDetails userDetails = account.get();
-        if (result) {
-            var authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            authenticationManager.authenticate(authenticationToken);
-            if (authenticationToken.isAuthenticated()) {
-                return authenticationToken.isAuthenticated();
-            }
-        }
-        return false;
+        var authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword(), account.get().getAuthorities())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication.isAuthenticated();
     }
 
 
