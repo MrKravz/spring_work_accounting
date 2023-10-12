@@ -3,6 +3,7 @@ package ru.egar.spring_work_accounting.auth;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ public class AuthController {
 
     @GetMapping
     public String index() {
+        logger.info(String.valueOf(SecurityContextHolder.getContext().getAuthentication()));
         return "mainViews/index";
     }
 
@@ -32,7 +34,7 @@ public class AuthController {
     @PostMapping("/auth/register")
     public String createAccount(@ModelAttribute("authRequest") AuthRequest authRequest) {
         authService.register(authRequest);
-        return "mainViews/index";
+        return "redirect:/";
     }
 
     @GetMapping("/auth/login")
@@ -44,7 +46,8 @@ public class AuthController {
     public String auth(@ModelAttribute("authRequest") AuthRequest authRequest) {
         boolean authenticate = authService.authenticate(authRequest);
         logger.info(String.valueOf(authenticate));
-        return "mainViews/index";
+        logger.info(String.valueOf(SecurityContextHolder.getContext().getAuthentication()));
+        return "redirect:/";
     }
 
 }

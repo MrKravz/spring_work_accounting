@@ -2,7 +2,9 @@ package ru.egar.spring_work_accounting.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class AuthService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationProvider authenticationProvider;
     private final AuthRequestMapper authRequestMapper;
 
 
@@ -38,10 +41,12 @@ public class AuthService {
             final String exceptionMessage = "Account with such login not exist";
             throw new AccountNotFoundException(exceptionMessage);
         }
-        var authentication = authenticationManager.authenticate(
+       var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword(), account.get().getAuthorities())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+       );
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
         return authentication.isAuthenticated();
     }
 
