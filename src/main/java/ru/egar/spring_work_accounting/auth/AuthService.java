@@ -2,10 +2,7 @@ package ru.egar.spring_work_accounting.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +16,12 @@ public class AuthService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final AuthenticationProvider authenticationProvider;
-    private final AuthRequestMapper authRequestMapper;
-
+    private final JwtService jwtService;
+    private final RegisterRequestMapper registerRequestMapper;
 
     @Transactional
-    public void register(AuthRequest authRequest) {
-        var account = authRequestMapper.map(authRequest);
+    public AuthenticationResponse register(RegisterRequest registerRequest) {
+        var account = registerRequestMapper.map(registerRequest);
         if (accountRepository.findByLogin(account.getLogin()).isPresent()) {
             final String exceptionMessage = "This user is already exist";
             throw new AccountIsAlreadyExistsException(exceptionMessage);
@@ -33,22 +29,26 @@ public class AuthService {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setRole(Role.EMPLOYEE);
         accountRepository.save(account);
+        String jwtToken = jwtService.generateToken(account);
+        return AuthenticationResponse.builder()
+                .accountId(account.getId())
+                .token(jwtToken)
+                .build();
     }
 
-    public boolean authenticate(AuthRequest authRequest) {
+    public AuthenticationResponse authenticate(AuthRequest authRequest) {
         var account = accountRepository.findByLogin(authRequest.getLogin());
         if (account.isEmpty()) {
-            final String exceptionMessage = "Account with such login not exist";
-            throw new AccountNotFoundException(exceptionMessage);
+            throw new AccountNotFoundException("");
         }
-       var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword(), account.get().getAuthorities())
-       );
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authentication);
-        SecurityContextHolder.setContext(context);
-        return authentication.isAuthenticated();
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword())
+        );
+        String jwtToken = jwtService.generateToken(account.get());
+        return AuthenticationResponse.builder()
+                .accountId(account.get().getId())
+                .token(jwtToken)
+                .build();
     }
-
 
 }

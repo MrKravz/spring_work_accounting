@@ -5,5 +5,5 @@ import org.mapstruct.MappingConstants;
 import ru.egar.spring_work_accounting.abstraction.mappers.OneSidedMapper;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface AuthRequestMapper extends OneSidedMapper<AuthRequest, Account> {
+public interface RegisterRequestMapper extends OneSidedMapper<RegisterRequest, Account> {
 }

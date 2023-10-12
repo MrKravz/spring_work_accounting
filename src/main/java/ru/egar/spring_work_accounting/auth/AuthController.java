@@ -1,53 +1,26 @@
 package ru.egar.spring_work_accounting.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
 
-    @GetMapping
-    public String index() {
-        logger.info(String.valueOf(SecurityContextHolder.getContext().getAuthentication()));
-        return "mainViews/index";
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> createAccount(@ModelAttribute("authRequest") RegisterRequest registerRequest) {
+        return new ResponseEntity<>(authService.register(registerRequest), HttpStatus.CREATED);
     }
 
-
-    @GetMapping("/auth/register")
-    public String register(@ModelAttribute AuthRequest authRequest) {
-        return "authViews/register";
-    }
-
-    @PostMapping("/auth/register")
-    public String createAccount(@ModelAttribute("authRequest") AuthRequest authRequest) {
-        authService.register(authRequest);
-        return "redirect:/";
-    }
-
-    @GetMapping("/auth/login")
-    public String login(@ModelAttribute AuthRequest authRequest) {
-        return "authViews/auth";
-    }
-
-    @PostMapping("/auth")
-    public String auth(@ModelAttribute("authRequest") AuthRequest authRequest) {
-        boolean authenticate = authService.authenticate(authRequest);
-        logger.info(String.valueOf(authenticate));
-        logger.info(String.valueOf(SecurityContextHolder.getContext().getAuthentication()));
-        return "redirect:/";
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> auth(@RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(authService.authenticate(authRequest));
     }
 
 }
