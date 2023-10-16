@@ -54,6 +54,7 @@ public class EmployeeInteractionService {
             throw new TaskIsAlreadyFinishedException(exceptionMessage);
         }
         task.setTaskStatus(taskStatusFinished);
+        task.setDateTimeEnd(LocalDateTime.now());
         return taskService.update(task, task.getId());
     }
 

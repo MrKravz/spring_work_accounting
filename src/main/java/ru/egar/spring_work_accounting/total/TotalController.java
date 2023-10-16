@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
-import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 
 @RestController
 @RequestMapping("totals")
@@ -28,16 +26,6 @@ public class TotalController {
     private HttpStatus deleteTotal(@PathVariable Long id) {
         totalService.delete(id);
         return HttpStatus.OK;
-    }
-
-    @ExceptionHandler(value = TotalNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleTotalNotFoundException(TotalNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = EmployeeNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

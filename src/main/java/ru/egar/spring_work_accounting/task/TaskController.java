@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 
@@ -68,21 +67,6 @@ public class TaskController {
     public ResponseEntity<HttpStatus> deleteTask(@PathVariable Long id) {
         taskAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = TaskNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleTaskNotCreatedException(TaskNotCreatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = TaskNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleTaskNotUpdatedException(TaskNotUpdatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = TaskNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleTaskNotFoundException(TaskNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.TASK_ID;
@@ -83,17 +82,6 @@ class TaskControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(taskAdapterService, times(1)).delete(TASK_ID);
         verifyNoMoreInteractions(taskAdapterService);
-    }
-
-    @Test
-    @Order(6)
-    @DisplayName("Handle TaskNotFoundException")
-    public void handleTaskNotFoundExceptionTest() {
-        TaskNotFoundException exception = new TaskNotFoundException();
-        var response = taskController.handleTaskNotFoundException(exception);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(exception.getMessage(), response.getBody().getMessage());
     }
 
 }

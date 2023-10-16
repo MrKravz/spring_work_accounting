@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 
@@ -63,21 +62,6 @@ public class KpiRateController {
     public ResponseEntity<Long> deleteKpiRate(@PathVariable Long id) {
         kpiRateAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = KpiRateNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleKpiRateNotFoundException(KpiRateNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = KpiRateNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleKpiRateNotCreatedException(KpiRateNotCreatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = KpiRateNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleKpiRateNotUpdatedException(KpiRateNotUpdatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

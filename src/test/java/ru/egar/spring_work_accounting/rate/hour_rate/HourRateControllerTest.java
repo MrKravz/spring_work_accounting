@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -73,17 +72,6 @@ class HourRateControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(hourRateAdapterService, times(1)).delete(HOUR_RATE_ID);
         verifyNoMoreInteractions(hourRateAdapterService);
-    }
-
-    @Test
-    @Order(5)
-    @DisplayName("Handle HourRateNotFoundException")
-    public void handleHourRateNotFoundException() {
-        HourRateNotFoundException exception = new HourRateNotFoundException();
-        var response = hourRateController.handleHourRateNotFoundException(exception);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(exception.getMessage(), response.getBody().getMessage());
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.TIME_SHEET_ID;
@@ -72,17 +71,6 @@ class TimeSheetControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(timeSheetAdapterService, times(1)).delete(TIME_SHEET_ID);
         verifyNoMoreInteractions(timeSheetAdapterService);
-    }
-
-    @Test
-    @Order(5)
-    @DisplayName("Handle TimeSheetNotFoundException")
-    public void handleTaskNotFoundExceptionTest() {
-        TimeSheetNotFoundException exception = new TimeSheetNotFoundException();
-        var response = timeSheetController.handleTimeSheetNotFoundException(exception);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(exception.getMessage(), response.getBody().getMessage());
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 
@@ -63,21 +62,6 @@ public class HourRateController {
     public ResponseEntity<Long> deleteHourRate(@PathVariable Long id) {
         hourRateAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = HourRateNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleHourRateNotFoundException(HourRateNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = HourRateNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleHourRateNotCreatedException(HourRateNotCreatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = HourRateNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleHourRateNotUpdatedException(HourRateNotUpdatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 
@@ -62,21 +61,6 @@ public class EmployeeController {
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable Long id) {
         employeeAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = EmployeeNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = EmployeeNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotCreatedException(EmployeeNotCreatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = EmployeeNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotUpdatedException(EmployeeNotUpdatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

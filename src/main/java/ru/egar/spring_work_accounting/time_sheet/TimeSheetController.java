@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.util.List;
 
@@ -63,21 +62,6 @@ public class TimeSheetController {
     public ResponseEntity<Long> deleteTimeSheet(@PathVariable Long id) {
         timeSheetAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = TimeSheetNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleTimeSheetNotFoundException(TimeSheetNotFoundException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = TimeSheetNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleTimeSheetNotCreatedException(TimeSheetNotCreatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = TimeSheetNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleTimeSheetNotUpdatedException(TimeSheetNotUpdatedException ex) {
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
 }

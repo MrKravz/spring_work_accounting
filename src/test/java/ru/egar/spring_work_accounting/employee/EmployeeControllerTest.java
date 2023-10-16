@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.EMPLOYEE_ID;
-import static ru.egar.spring_work_accounting.util.TestModels.*;
+import static ru.egar.spring_work_accounting.util.TestModels.EMPLOYEE_DTO;
+import static ru.egar.spring_work_accounting.util.TestModels.EMPLOYEE_REQUEST;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EmployeeControllerTest {
@@ -71,17 +71,6 @@ class EmployeeControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(employeeAdapterService, times(1)).delete(EMPLOYEE_ID);
         verifyNoMoreInteractions(employeeAdapterService);
-    }
-
-    @Test
-    @Order(5)
-    @DisplayName("Handle EmployeeNotFoundException")
-    public void handleEmployeeNotFoundExceptionTest() {
-        EmployeeNotFoundException exception = new EmployeeNotFoundException();
-        var response = employeeController.handleEmployeeNotFoundException(exception);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(exception.getMessage(), response.getBody().getMessage());
     }
 
 }
