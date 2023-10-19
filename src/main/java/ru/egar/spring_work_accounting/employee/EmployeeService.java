@@ -14,7 +14,11 @@ public class EmployeeService implements CrudService<Employee, Long> {
 
     @Override
     public Employee findById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        var employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        if (employee.getIsDeleted()) {
+            throw new EmployeeNotFoundException();
+        }
+        return employee;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class EmployeeService implements CrudService<Employee, Long> {
         employeeToUpdate.setEmployeePosition(employee.getEmployeePosition());
         employeeToUpdate.setEmployeeGrade(employee.getEmployeeGrade());
         employeeToUpdate.setPaymentSystem(employee.getPaymentSystem());
+        employeeToUpdate.setIsDeleted(employee.getIsDeleted());
         return save(employeeToUpdate);
     }
 
@@ -40,7 +45,9 @@ public class EmployeeService implements CrudService<Employee, Long> {
     @Override
     @Transactional
     public void delete(Long id) {
-        employeeRepository.deleteById(id);
+        var employeeToDelete = findById(id);
+        employeeToDelete.setIsDeleted(true);
+        update(employeeToDelete, id);
     }
 
 }

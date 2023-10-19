@@ -32,4 +32,5 @@ public class ComputeKpiSalaryService implements ComputeSalary {
         var incrementSalary = flexibleSalary / percentDivision * kpi - agreedKpi;
         return employee.getKpiRate().getAgreedSalary() + incrementSalary;
     }
+
 }

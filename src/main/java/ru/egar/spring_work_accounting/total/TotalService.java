@@ -3,6 +3,7 @@ package ru.egar.spring_work_accounting.total;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.egar.spring_work_accounting.abstraction.services.CrudService;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.EmployeeNotFoundException;
 import ru.egar.spring_work_accounting.employee.EmployeeRepository;
@@ -13,33 +14,54 @@ import java.time.LocalDate;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class TotalService {
+public class TotalService implements CrudService<Total, Long> {
 
     private final ComputeTotalService computeTotalService;
     private final EmployeeRepository employeeRepository;
     private final TotalRepository totalRepository;
-    private final TotalDtoMapper totalDtoMapper;
 
-    public TotalDto findById(Long id) {
+    public Total findById(Long id) {
         var result = totalRepository.findById(id).orElseThrow(TotalNotFoundException::new);
-        return totalDtoMapper.map(result);
+        if (result.getIsDeleted()) {
+            throw new TotalNotFoundException();
+        }
+        return result;
     }
 
     @Transactional
-    public Long createTotal(TotalRequest totalRequest) {
-        var employee = employeeRepository.findById(totalRequest.getEmployeeId());
+    public Long update(Total entity, Long id) {
+        var totalToUpdate = findById(id);
+        totalToUpdate.setKpiPercentage(entity.getKpiPercentage());
+        totalToUpdate.setTotalWorkedTime(entity.getTotalWorkedTime());
+        totalToUpdate.setTotalSalary(entity.getTotalSalary());
+        totalToUpdate.setIsDeleted(entity.getIsDeleted());
+        totalToUpdate.setBonus(entity.getBonus());
+        return totalRepository.save(totalToUpdate).getId();
+    }
+
+    @Transactional
+    public Long save(Total total) {
+        total.setIsDeleted(false);
+        return totalRepository.save(total).getId();
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        var result = findById(id);
+        result.setIsDeleted(true);
+        update(result, id);
+    }
+
+    @Transactional
+    Long generateTotal(GenerateTotalRequest generateTotalRequest) {
+        var employee = employeeRepository.findById(generateTotalRequest.getEmployeeId());
         if (employee.isEmpty()) {
             throw new EmployeeNotFoundException();
         }
-        var total = generateTotal(employee.get());
-        var savedTotal = totalRepository.save(total);
-        return savedTotal.getId();
-    }
-
-    private Total generateTotal(Employee employee) {
-        var startDate = defineStartDate(employee);
+        var startDate = defineStartDate(employee.get());
         var endDate = LocalDate.now();
-        return computeTotalService.computeTotal(employee, startDate, endDate);
+        Total total = computeTotalService.computeTotal(employee.get(), startDate, endDate);
+        return save(total);
     }
 
     private LocalDate defineStartDate(Employee employee) {
@@ -51,11 +73,6 @@ public class TotalService {
         }
         var timeSheets = employee.getTimeSheets().stream().findFirst();
         return timeSheets.orElseThrow(TimeSheetNotFoundException::new).getDate();
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        totalRepository.deleteById(id);
     }
 
 }

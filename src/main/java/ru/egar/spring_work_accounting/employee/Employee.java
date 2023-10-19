@@ -26,7 +26,7 @@ public class Employee {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -59,6 +59,9 @@ public class Employee {
             referencedColumnName = "id"
     )
     private KpiRate kpiRate;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     @OneToMany(mappedBy = "employee")
     private List<Task> tasks;

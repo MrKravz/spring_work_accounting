@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.egar.spring_work_accounting.employee.Employee;
+import ru.egar.spring_work_accounting.rate.kpi_rate.KpiRateNotFoundException;
 import ru.egar.spring_work_accounting.task.Task;
 import ru.egar.spring_work_accounting.task.TaskStatus;
 
@@ -24,6 +25,9 @@ public class ComputeKpiService {
 
 
     public int computeKpi(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
+        if (employee.getKpiRate() == null) {
+            throw new KpiRateNotFoundException();
+        }
         final float percentMultiplier = 100;
         var dateTimeStart = LocalDateTime.of(dateStart, LocalTime.MIN);
         var dateTimeEnd = LocalDateTime.of(dateEnd, LocalTime.MAX);

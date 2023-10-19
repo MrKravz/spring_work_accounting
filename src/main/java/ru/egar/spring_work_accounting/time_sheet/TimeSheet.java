@@ -17,10 +17,10 @@ public class TimeSheet {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "time_span")
-    private int timeSpan;
+    private Integer timeSpan;
 
     @Column(name = "time_status")
     @Enumerated(EnumType.STRING)
@@ -37,4 +37,5 @@ public class TimeSheet {
     )
     @ToString.Exclude
     private Employee employee;
+
 }

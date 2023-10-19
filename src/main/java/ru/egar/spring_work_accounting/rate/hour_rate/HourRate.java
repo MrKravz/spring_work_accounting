@@ -2,6 +2,8 @@ package ru.egar.spring_work_accounting.rate.hour_rate;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.Grade;
 import ru.egar.spring_work_accounting.employee.Position;
@@ -19,25 +21,25 @@ public class HourRate {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "turnout_rate")
-    private float turnoutRate;
+    private Float turnoutRate;
 
     @Column(name = "vacation_rate")
-    private float vacationRate;
+    private Float vacationRate;
 
     @Column(name = "sick_days_rate")
-    private float sickDaysRate;
+    private Float sickDaysRate;
 
     @Column(name = "business_trip_rate")
-    private float businessTripRate;
+    private Float businessTripRate;
 
     @Column(name = "absence_rate")
-    private float absenceRate;
+    private Float absenceRate;
 
     @Column(name = "over_time_rate")
-    private float overTimeRate;
+    private Float overTimeRate;
 
     @Column(name = "position")
     @Enumerated(EnumType.STRING)
@@ -49,6 +51,7 @@ public class HourRate {
 
     @OneToMany(mappedBy = "hourRate")
     @ToString.Exclude
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private List<Employee> employees;
 
 }

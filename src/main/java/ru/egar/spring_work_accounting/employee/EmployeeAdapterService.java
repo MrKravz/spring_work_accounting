@@ -31,6 +31,7 @@ public class EmployeeAdapterService implements CrudAdapterService<EmployeeReques
         var kpiRate = kpiRateService.findByPositionAndGrade(employee.getEmployeePosition(), employee.getEmployeeGrade());
         employee.setHourRate(hourRate);
         employee.setKpiRate(kpiRate);
+        employee.setIsDeleted(false);
         return employeeService.save(employee);
     }
 
@@ -43,7 +44,9 @@ public class EmployeeAdapterService implements CrudAdapterService<EmployeeReques
     @Override
     @Transactional
     public void delete(Long id) {
-        employeeService.delete(id);
+        var employeeToDelete = employeeService.findById(id);
+        employeeToDelete.setIsDeleted(true);
+        employeeService.update(employeeToDelete, id);
     }
 
 }

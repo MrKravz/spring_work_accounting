@@ -17,7 +17,7 @@ public class Task {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "short_name")
     private String shortName;
@@ -32,7 +32,7 @@ public class Task {
     private LocalDateTime dateTimeEnd;
 
     @Column(name = "task_points_number")
-    private int taskPointsNumber;
+    private Integer taskPointsNumber;
 
     @Column(name = "task_status")
     @Enumerated(EnumType.STRING)

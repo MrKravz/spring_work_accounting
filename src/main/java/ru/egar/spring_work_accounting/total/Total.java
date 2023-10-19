@@ -2,6 +2,7 @@ package ru.egar.spring_work_accounting.total;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.egar.spring_work_accounting.bonus.Bonus;
 import ru.egar.spring_work_accounting.employee.Employee;
 
 import java.time.LocalDate;
@@ -17,16 +18,16 @@ public class Total {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "total_worked_time")
-    private int totalWorkedTime;
+    private Integer totalWorkedTime;
 
     @Column(name = "kpi_percentage")
-    private int kpiPercentage;
+    private Integer kpiPercentage;
 
     @Column(name = "total_salary")
-    private float totalSalary;
+    private Float totalSalary;
 
     @Column(name = "date")
     private LocalDate date;
@@ -39,6 +40,16 @@ public class Total {
     )
     @ToString.Exclude
     private Employee employee;
+
+    @OneToOne
+    @JoinColumn(
+            name = "bonus_id",
+            referencedColumnName = "id"
+    )
+    private Bonus bonus;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     public Total(int totalWorkedTime, int kpiPercentage, float totalSalary, LocalDate date, Employee employee) {
         this.totalWorkedTime = totalWorkedTime;

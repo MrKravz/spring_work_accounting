@@ -28,6 +28,7 @@ public class AuthService {
         }
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setRole(Role.EMPLOYEE);
+        account.setIsDeleted(false);
         accountRepository.save(account);
         String jwtToken = jwtService.generateToken(account);
         return AuthenticationResponse.builder()
@@ -38,8 +39,9 @@ public class AuthService {
 
     public AuthenticationResponse authenticate(AuthRequest authRequest) {
         var account = accountRepository.findByLogin(authRequest.getLogin());
-        if (account.isEmpty()) {
-            throw new AccountNotFoundException("");
+        if (account.isEmpty() || account.get().getIsDeleted()) {
+            final String message = "Account with provided login not found";
+            throw new AccountNotFoundException(message);
         }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword())

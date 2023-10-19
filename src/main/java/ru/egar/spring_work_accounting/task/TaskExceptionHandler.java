@@ -2,8 +2,8 @@ package ru.egar.spring_work_accounting.task;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 import ru.egar.spring_work_accounting.employee.employee_interaction.TaskIsAlreadyFinishedException;
@@ -11,7 +11,7 @@ import ru.egar.spring_work_accounting.employee.employee_interaction.TaskIsAlread
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class TaskExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = TaskNotCreatedException.class)
