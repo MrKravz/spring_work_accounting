@@ -19,7 +19,8 @@ public class BonusInteractionService {
         var bonus = bonusService.findById(bonusInteractionRequest.getBonusId());
         var total = totalService.findById(bonusInteractionRequest.getTotalId());
         if (total.getBonus() != null) {
-            throw new BonusAlreadySetException();
+            final String message = "Bonus already had been set";
+            throw new BonusAlreadySetException(message);
         }
         total.setBonus(bonus);
         total.setTotalSalary(total.getTotalSalary() + bonus.getBonusSalary());
@@ -30,7 +31,8 @@ public class BonusInteractionService {
     public void deleteBonus(BonusInteractionRequest bonusInteractionRequest) {
         var total = totalService.findById(bonusInteractionRequest.getTotalId());
         if (total.getBonus() == null) {
-            throw new BonusIsNotSetException();
+            final String message = "Bonus not set";
+            throw new BonusIsNotSetException(message);
         }
         var bonus = total.getBonus();
         total.setTotalSalary(total.getTotalSalary() - bonus.getBonusSalary());
