@@ -2,8 +2,7 @@ package ru.egar.spring_work_accounting.rate.kpi_rate;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Cascade;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.Grade;
 import ru.egar.spring_work_accounting.employee.Position;
@@ -37,9 +36,12 @@ public class KpiRate {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    @OneToMany(mappedBy = "kpiRate")
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
+    @OneToMany(mappedBy = "kpiRate", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ToString.Exclude
-    @OnDelete(action = OnDeleteAction.SET_NULL)
     private List<Employee> employees;
 
 }

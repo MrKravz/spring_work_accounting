@@ -1,9 +1,6 @@
 package ru.egar.spring_work_accounting.rate.hour_rate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -35,7 +32,9 @@ class HourRateAdapterServiceTest {
     }
 
     @Test
-    void findById() {
+    @Order(1)
+    @DisplayName("Find hour rate by id")
+    void findByIdTest() {
         when(hourRateService.findById(any())).thenReturn(HOUR_RATE);
         when(hourRateDtoMapper.map(any())).thenReturn(HOUR_RATE_DTO);
         var result = hourRateAdapterService.findById(HOUR_RATE_ID);
@@ -45,7 +44,9 @@ class HourRateAdapterServiceTest {
     }
 
     @Test
-    void save() {
+    @Order(2)
+    @DisplayName("Save hour rate")
+    void saveTest() {
         when(hourRateService.save(any())).thenReturn(HOUR_RATE_ID);
         when(hourRateRequestMapper.map(any())).thenReturn(HOUR_RATE);
         var result = hourRateAdapterService.save(HOUR_RATE_REQUEST);
@@ -55,7 +56,9 @@ class HourRateAdapterServiceTest {
     }
 
     @Test
-    void update() {
+    @Order(3)
+    @DisplayName("Update hour rate")
+    void updateTest() {
         when(hourRateService.update(any(), any())).thenReturn(HOUR_RATE_ID);
         when(hourRateRequestMapper.map(any())).thenReturn(HOUR_RATE);
         var result = hourRateAdapterService.update(HOUR_RATE_REQUEST, HOUR_RATE_ID);
@@ -65,7 +68,9 @@ class HourRateAdapterServiceTest {
     }
 
     @Test
-    void delete() {
+    @Order(4)
+    @DisplayName("Delete hour rate")
+    void deleteTest() {
         hourRateAdapterService.delete(HOUR_RATE_ID);
         verify(hourRateService, times(1)).delete(HOUR_RATE_ID);
     }

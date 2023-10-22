@@ -27,6 +27,7 @@ class ComputeTimeServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName("Compute time")
     void computeTimeTest() {
         when(timeSheetRepository.findAllByEmployeeAndDateBetween(any(), any(), any())).thenReturn(TIME_SHEET_LIST);
         var result = computeTimeService.computeTime(EMPLOYEE, TIME_STATUS_TURNOUT, DATE_START, DATE_END);

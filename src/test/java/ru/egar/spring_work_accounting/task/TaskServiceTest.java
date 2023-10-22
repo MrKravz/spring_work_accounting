@@ -29,7 +29,7 @@ class TaskServiceTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Find all tasks")
+    @DisplayName("Find all tasks")
     void findAllTest() {
         when(taskRepository.findAll()).thenReturn(TASKS_LIST);
         var result = taskService.findAll();
@@ -39,39 +39,39 @@ class TaskServiceTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Find task by id")
+    @DisplayName("Find task by id")
     void findByIdTest() {
-        when(taskRepository.findById(any())).thenReturn(Optional.ofNullable(TASK));
+        when(taskRepository.findById(any())).thenReturn(Optional.ofNullable(FINISHED_TASK));
         var result = taskService.findById(TASK_ID);
         verify(taskRepository, times(1)).findById(TASK_ID);
-        assertEquals(TASK, result);
+        assertEquals(FINISHED_TASK, result);
     }
 
     @Test
     @Order(3)
-    @DisplayName(value = "Update task")
+    @DisplayName("Update task")
     void updateTest() {
-        when(taskRepository.findById(any())).thenReturn(Optional.ofNullable(TASK));
-        when(taskRepository.save(any())).thenReturn(TASK);
-        var result = taskService.update(TASK, TASK_ID);
+        when(taskRepository.findById(any())).thenReturn(Optional.ofNullable(FINISHED_TASK));
+        when(taskRepository.save(any())).thenReturn(FINISHED_TASK);
+        var result = taskService.update(FINISHED_TASK, TASK_ID);
         verify(taskRepository, times(1)).findById(TASK_ID);
-        verify(taskRepository, times(1)).save(TASK);
+        verify(taskRepository, times(1)).save(FINISHED_TASK);
         assertEquals(TASK_ID, result);
     }
 
     @Test
     @Order(4)
-    @DisplayName(value = "Save task")
+    @DisplayName("Save task")
     void saveTest() {
-        when(taskRepository.save(any())).thenReturn(TASK);
-        var result = taskService.save(TASK);
-        verify(taskRepository, times(1)).save(TASK);
+        when(taskRepository.save(any())).thenReturn(FINISHED_TASK);
+        var result = taskService.save(FINISHED_TASK);
+        verify(taskRepository, times(1)).save(FINISHED_TASK);
         assertEquals(TASK_ID, result);
     }
 
     @Test
     @Order(5)
-    @DisplayName(value = "Delete task by id")
+    @DisplayName("Delete task by id")
     void deleteTest() {
         taskService.delete(TASK_ID);
         verify(taskRepository).deleteById(TASK_ID);

@@ -18,13 +18,10 @@ class EmployeeAdapterServiceTest {
 
     @Mock
     private EmployeeService employeeService;
-
     @Mock
     private EmployeeRequestMapper employeeRequestMapper;
-
     @Mock
     private EmployeeDtoMapper employeeDtoMapper;
-
     @Mock
     private HourRateService hourRateService;
     @Mock

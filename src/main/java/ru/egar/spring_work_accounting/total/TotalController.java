@@ -13,19 +13,19 @@ public class TotalController {
     private final TotalAdapterService totalAdapterService;
 
     @GetMapping("{id}")
-    private ResponseEntity<TotalDto> findTotalById(@PathVariable Long id) {
+    public ResponseEntity<TotalDto> findTotalById(@PathVariable Long id) {
         return ResponseEntity.ok(totalAdapterService.findById(id));
     }
 
     @PostMapping
-    private ResponseEntity<Long> createTotal(@RequestBody GenerateTotalRequest generateTotalRequest) {
+    public ResponseEntity<Long> createTotal(@RequestBody GenerateTotalRequest generateTotalRequest) {
         return new ResponseEntity<>(totalAdapterService.generateTotal(generateTotalRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    private HttpStatus deleteTotal(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteTotal(@PathVariable Long id) {
         totalAdapterService.delete(id);
-        return HttpStatus.OK;
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }

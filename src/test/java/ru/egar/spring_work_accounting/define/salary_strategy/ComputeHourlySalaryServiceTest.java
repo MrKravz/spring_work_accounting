@@ -5,7 +5,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
-import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -16,9 +15,6 @@ import static ru.egar.spring_work_accounting.util.TestModels.HOUR_RATE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ComputeHourlySalaryServiceTest {
-
-    @Mock
-    private TimeSheetRepository timeSheetRepository;
 
     @Mock
     private ComputeTimeService computeTimeService;

@@ -13,13 +13,13 @@ public class BonusInteractionController {
     private final BonusInteractionService bonusInteractionService;
 
     @PatchMapping("set_bonus")
-    private ResponseEntity<HttpStatus> setBonus(@RequestBody BonusInteractionRequest bonusInteractionRequest) {
+    public ResponseEntity<HttpStatus> setBonus(@RequestBody BonusInteractionRequest bonusInteractionRequest) {
         bonusInteractionService.setBonus(bonusInteractionRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("delete_bonus")
-    private ResponseEntity<HttpStatus> deleteBonus(@RequestBody BonusInteractionRequest bonusInteractionRequest) {
+    public ResponseEntity<HttpStatus> deleteBonus(@RequestBody BonusInteractionRequest bonusInteractionRequest) {
         bonusInteractionService.deleteBonus(bonusInteractionRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,9 +1,6 @@
 package ru.egar.spring_work_accounting.rate.hour_rate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -31,7 +28,9 @@ class HourRateServiceTest {
     }
 
     @Test
-    void findById() {
+    @Order(1)
+    @DisplayName("Find hour rate by id")
+    void findByIdTest() {
         when(hourRateRepository.findById(any())).thenReturn(Optional.ofNullable(HOUR_RATE));
         var result = hourRateService.findById(HOUR_RATE_ID);
         verify(hourRateRepository, times(1)).findById(HOUR_RATE_ID);
@@ -39,7 +38,9 @@ class HourRateServiceTest {
     }
 
     @Test
-    void save() {
+    @Order(2)
+    @DisplayName("Save hour rate")
+    void saveTest() {
         when(hourRateRepository.save(any())).thenReturn(HOUR_RATE);
         var result = hourRateService.save(HOUR_RATE);
         verify(hourRateRepository, times(1)).save(HOUR_RATE);
@@ -47,17 +48,26 @@ class HourRateServiceTest {
     }
 
     @Test
-    void update() {
+    @Order(3)
+    @DisplayName("Update hour rate")
+    void updateTest() {
+        when(hourRateRepository.findById(any())).thenReturn(Optional.ofNullable(HOUR_RATE));
         when(hourRateRepository.save(any())).thenReturn(HOUR_RATE);
         var result = hourRateService.update(HOUR_RATE, HOUR_RATE_ID);
+        verify(hourRateRepository, times(1)).findById(HOUR_RATE_ID);
         verify(hourRateRepository, times(1)).save(HOUR_RATE);
         assertEquals(HOUR_RATE_ID, result);
     }
 
     @Test
-    void delete() {
+    @Order(4)
+    @DisplayName("Delete hour rate")
+    void deleteTest() {
+        when(hourRateRepository.findById(any())).thenReturn(Optional.ofNullable(HOUR_RATE));
+        when(hourRateRepository.save(any())).thenReturn(HOUR_RATE);
         hourRateService.delete(HOUR_RATE_ID);
-        verify(hourRateRepository, times(1)).deleteById(HOUR_RATE_ID);
+        verify(hourRateRepository, times(1)).findById(HOUR_RATE_ID);
+        verify(hourRateRepository, times(1)).save(HOUR_RATE);
     }
 
 }

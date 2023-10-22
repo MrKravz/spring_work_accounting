@@ -20,6 +20,7 @@ public class TotalService implements CrudService<Total, Long> {
     private final EmployeeRepository employeeRepository;
     private final TotalRepository totalRepository;
 
+    @Override
     public Total findById(Long id) {
         var result = totalRepository.findById(id).orElseThrow(TotalNotFoundException::new);
         if (result.getIsDeleted()) {
@@ -28,6 +29,7 @@ public class TotalService implements CrudService<Total, Long> {
         return result;
     }
 
+    @Override
     @Transactional
     public Long update(Total entity, Long id) {
         var totalToUpdate = findById(id);
@@ -39,17 +41,18 @@ public class TotalService implements CrudService<Total, Long> {
         return totalRepository.save(totalToUpdate).getId();
     }
 
+    @Override
     @Transactional
     public Long save(Total total) {
-        total.setIsDeleted(false);
         return totalRepository.save(total).getId();
     }
 
+    @Override
     @Transactional
     public void delete(Long id) {
-        var result = findById(id);
-        result.setIsDeleted(true);
-        update(result, id);
+        var totalToDelete = findById(id);
+        totalToDelete.setIsDeleted(true);
+        save(totalToDelete);
     }
 
     @Transactional
@@ -61,6 +64,7 @@ public class TotalService implements CrudService<Total, Long> {
         var startDate = defineStartDate(employee.get());
         var endDate = LocalDate.now();
         Total total = computeTotalService.computeTotal(employee.get(), startDate, endDate);
+        total.setIsDeleted(false);
         return save(total);
     }
 

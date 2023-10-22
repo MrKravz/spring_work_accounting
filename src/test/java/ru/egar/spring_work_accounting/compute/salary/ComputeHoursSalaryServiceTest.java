@@ -29,6 +29,7 @@ class ComputeHoursSalaryServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName("Compute hours salary")
     void computeHoursSalary() {
         when(defineComputePaymentService.defineStrategy(any())).thenReturn(new ComputeTurnoutStrategy());
         var result = computeHoursSalaryService.computeHoursSalary(HOUR_RATE, EXPECTED_TIME, TIME_STATUS_TURNOUT);

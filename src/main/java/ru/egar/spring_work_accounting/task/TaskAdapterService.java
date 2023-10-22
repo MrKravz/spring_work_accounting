@@ -32,7 +32,9 @@ public class TaskAdapterService implements CrudAdapterService<TaskRequest, TaskD
 
     @Override
     public Long update(TaskRequest entity, Long id) {
-        return taskService.update(taskRequestMapper.map(entity), id);
+        var task = taskRequestMapper.map(entity);
+        task.setTaskStatus(TaskStatus.NOT_STARTED);
+        return taskService.update(task, id);
     }
 
     @Override

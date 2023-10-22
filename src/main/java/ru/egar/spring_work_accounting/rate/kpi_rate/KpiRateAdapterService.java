@@ -19,12 +19,16 @@ public class KpiRateAdapterService implements CrudAdapterService<KpiRateRequest,
 
     @Override
     public Long save(KpiRateRequest entity) {
-        return kpiRateService.save(kpiRateRequestMapper.map(entity));
+        var result = kpiRateRequestMapper.map(entity);
+        result.setIsDeleted(false);
+        return kpiRateService.save(result);
     }
 
     @Override
     public Long update(KpiRateRequest entity, Long id) {
-        return kpiRateService.update(kpiRateRequestMapper.map(entity), id);
+        var result = kpiRateRequestMapper.map(entity);
+        result.setIsDeleted(false);
+        return kpiRateService.update(result, id);
     }
 
     @Override

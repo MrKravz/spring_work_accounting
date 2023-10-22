@@ -19,12 +19,16 @@ public class HourRateAdapterService implements CrudAdapterService<HourRateReques
 
     @Override
     public Long save(HourRateRequest entity) {
-        return hourRateService.save(hourRateRequestMapper.map(entity));
+        var result = hourRateRequestMapper.map(entity);
+        result.setIsDeleted(false);
+        return hourRateService.save(result);
     }
 
     @Override
     public Long update(HourRateRequest entity, Long id) {
-        return hourRateService.update(hourRateRequestMapper.map(entity), id);
+        var result = hourRateRequestMapper.map(entity);
+        result.setIsDeleted(false);
+        return hourRateService.update(result, id);
     }
 
     @Override

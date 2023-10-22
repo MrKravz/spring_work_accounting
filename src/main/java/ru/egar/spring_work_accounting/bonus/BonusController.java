@@ -17,12 +17,12 @@ public class BonusController {
     private final BonusAdapterService bonusAdapterService;
 
     @GetMapping("{id}")
-    public ResponseEntity<BonusDto> findById(@PathVariable Long id) {
+    public ResponseEntity<BonusDto> findBonusById(@PathVariable Long id) {
         return new ResponseEntity<>(bonusAdapterService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody BonusRequest bonusRequest,
+    public ResponseEntity<Long> saveBonus(@RequestBody BonusRequest bonusRequest,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
@@ -35,11 +35,11 @@ public class BonusController {
             }
             throw new BonusNotCreatedException(errorMessage.toString());
         }
-        return new ResponseEntity<>(bonusAdapterService.save(bonusRequest), HttpStatus.OK);
+        return new ResponseEntity<>(bonusAdapterService.save(bonusRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<Long> update(@RequestBody BonusRequest bonusRequest,
+    public ResponseEntity<Long> updateBonus(@RequestBody BonusRequest bonusRequest,
                                        @PathVariable Long id,
                                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -57,7 +57,7 @@ public class BonusController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteBonus(@PathVariable Long id) {
         bonusAdapterService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

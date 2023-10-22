@@ -30,15 +30,15 @@ public class BonusAdapterService implements CrudAdapterService<BonusRequest, Bon
     @Override
     @Transactional
     public Long update(BonusRequest entity, Long id) {
-        return bonusService.update(bonusRequestMapper.map(entity), id);
+        var result = bonusRequestMapper.map(entity);
+        result.setIsDeleted(false);
+        return bonusService.update(result, id);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        var bonus = bonusService.findById(id);
-        bonus.setIsDeleted(true);
-        bonusService.update(bonus, id);
+        bonusService.delete(id);
     }
 
 }

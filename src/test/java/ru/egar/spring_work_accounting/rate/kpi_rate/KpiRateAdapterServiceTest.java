@@ -1,9 +1,6 @@
 package ru.egar.spring_work_accounting.rate.kpi_rate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -35,7 +32,9 @@ class KpiRateAdapterServiceTest {
     }
 
     @Test
-    void findById() {
+    @Order(1)
+    @DisplayName("Find kpi rate by id")
+    void findByIdTest() {
         when(kpiRateService.findById(any())).thenReturn(KPI_RATE);
         when(kpiRateDtoMapper.map(any())).thenReturn(KPI_RATE_DTO);
         var result = kpiRateAdapterService.findById(KPI_RATE_ID);
@@ -45,7 +44,9 @@ class KpiRateAdapterServiceTest {
     }
 
     @Test
-    void save() {
+    @Order(2)
+    @DisplayName("Save kpi rate")
+    void saveTest() {
         when(kpiRateService.save(any())).thenReturn(KPI_RATE_ID);
         when(kpiRateRequestMapper.map(any())).thenReturn(KPI_RATE);
         var result = kpiRateAdapterService.save(KPI_RATE_REQUEST);
@@ -55,7 +56,9 @@ class KpiRateAdapterServiceTest {
     }
 
     @Test
-    void update() {
+    @Order(3)
+    @DisplayName("Update kpi rate")
+    void updateTest() {
         when(kpiRateService.update(any(), any())).thenReturn(KPI_RATE_ID);
         when(kpiRateRequestMapper.map(any())).thenReturn(KPI_RATE);
         var result = kpiRateAdapterService.update(KPI_RATE_REQUEST, KPI_RATE_ID);
@@ -65,7 +68,9 @@ class KpiRateAdapterServiceTest {
     }
 
     @Test
-    void delete() {
+    @Order(4)
+    @DisplayName("Delete kpi rate")
+    void deleteTest() {
         kpiRateAdapterService.delete(KPI_RATE_ID);
         verify(kpiRateService, times(1)).delete(KPI_RATE_ID);
     }

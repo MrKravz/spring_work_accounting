@@ -63,8 +63,11 @@ class EmployeeServiceTest {
     @Order(4)
     @DisplayName(value = "Delete employee by id")
     void deleteTest() {
+        when(employeeRepository.findById(any())).thenReturn(Optional.ofNullable(EMPLOYEE));
+        when(employeeRepository.save(any())).thenReturn(EMPLOYEE);
         employeeService.delete(EMPLOYEE_ID);
-        verify(employeeRepository).deleteById(EMPLOYEE_ID);
+        verify(employeeRepository, times(1)).findById(EMPLOYEE_ID);
+        verify(employeeRepository, times(1)).save(EMPLOYEE);
     }
 
 }

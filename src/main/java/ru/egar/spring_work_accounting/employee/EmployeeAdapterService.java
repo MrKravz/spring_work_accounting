@@ -38,15 +38,15 @@ public class EmployeeAdapterService implements CrudAdapterService<EmployeeReques
     @Override
     @Transactional
     public Long update(EmployeeRequest entity, Long id) {
-        return employeeService.update(employeeRequestMapper.map(entity), id);
+        Employee employee = employeeRequestMapper.map(entity);
+        employee.setIsDeleted(false);
+        return employeeService.update(employee, id);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        var employeeToDelete = employeeService.findById(id);
-        employeeToDelete.setIsDeleted(true);
-        employeeService.update(employeeToDelete, id);
+        employeeService.delete(id);
     }
 
 }

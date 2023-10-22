@@ -21,7 +21,7 @@ public class HourRateDtoMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to dto")
+    @DisplayName("Map to dto")
     public void mapTest() {
         var result = hourRateDtoMapper.map(HOUR_RATE);
         assertEquals(HOUR_RATE_DTO.getId(), result.getId());
@@ -35,7 +35,7 @@ public class HourRateDtoMapperTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Remap to entity")
+    @DisplayName("Remap to entity")
     public void remapTest() {
         var result = hourRateDtoMapper.remap(HOUR_RATE_DTO);
         assertEquals(HOUR_RATE.getId(), result.getId());

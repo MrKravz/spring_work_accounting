@@ -25,14 +25,14 @@ public class TaskRequestMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to entity")
+    @DisplayName("Map to entity")
     public void mapTest() {
         var result = taskRequestMapper.map(TASK_REQUEST);
-        assertEquals(TASK.getShortName(), result.getShortName());
-        assertEquals(TASK.getDescription(), result.getDescription());
-        assertEquals(TASK.getDateTimeStart(), result.getDateTimeStart());
-        assertEquals(TASK.getDateTimeEnd(), result.getDateTimeEnd());
-        assertEquals(TASK.getTaskPointsNumber(), result.getTaskPointsNumber());
+        assertEquals(FINISHED_TASK.getShortName(), result.getShortName());
+        assertEquals(FINISHED_TASK.getDescription(), result.getDescription());
+        assertEquals(FINISHED_TASK.getDateTimeStart(), result.getDateTimeStart());
+        assertEquals(FINISHED_TASK.getDateTimeEnd(), result.getDateTimeEnd());
+        assertEquals(FINISHED_TASK.getTaskPointsNumber(), result.getTaskPointsNumber());
     }
 
 }

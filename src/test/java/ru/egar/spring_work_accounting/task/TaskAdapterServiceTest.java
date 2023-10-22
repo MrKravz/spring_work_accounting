@@ -33,7 +33,7 @@ class TaskAdapterServiceTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Find all tasks")
+    @DisplayName("Find all tasks")
     void findAllTest() {
         when(taskService.findAll()).thenReturn(TASKS_LIST);
         when(taskDtoMapper.iterableMap(any())).thenReturn(TASK_DTO_LIST);
@@ -45,36 +45,36 @@ class TaskAdapterServiceTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Find task by id")
+    @DisplayName("Find task by id")
     void findByIdTest() {
-        when(taskService.findById(any())).thenReturn(TASK);
+        when(taskService.findById(any())).thenReturn(FINISHED_TASK);
         when(taskDtoMapper.map(any())).thenReturn(TASK_DTO);
         var result = taskAdapterService.findById(TASK_ID);
         verify(taskService, times(1)).findById(TASK_ID);
-        verify(taskDtoMapper, times(1)).map(TASK);
+        verify(taskDtoMapper, times(1)).map(FINISHED_TASK);
         assertEquals(TASK_DTO, result);
     }
 
     @Test
     @Order(3)
-    @DisplayName(value = "Update task")
+    @DisplayName("Update task")
     void updateTest() {
         when(taskService.update(any(), any())).thenReturn(TASK_ID);
-        when(taskRequestMapper.map(any())).thenReturn(TASK);
+        when(taskRequestMapper.map(any())).thenReturn(FINISHED_TASK);
         var result = taskAdapterService.update(TASK_REQUEST, TASK_ID);
-        verify(taskService, times(1)).update(TASK, TASK_ID);
+        verify(taskService, times(1)).update(FINISHED_TASK, TASK_ID);
         verify(taskRequestMapper, times(1)).map(TASK_REQUEST);
         assertEquals(TASK_ID, result);
     }
 
     @Test
     @Order(4)
-    @DisplayName(value = "Save task")
+    @DisplayName("Save task")
     void saveTest() {
         when(taskService.save(any())).thenReturn(TASK_ID);
-        when(taskRequestMapper.map(any())).thenReturn(TASK);
+        when(taskRequestMapper.map(any())).thenReturn(FINISHED_TASK);
         var result = taskAdapterService.save(TASK_REQUEST);
-        verify(taskService, times(1)).save(TASK);
+        verify(taskService, times(1)).save(FINISHED_TASK);
         verify(taskRequestMapper, times(1)).map(TASK_REQUEST);
         assertEquals(TASK_ID, result);
     }

@@ -3,7 +3,7 @@ package ru.egar.spring_work_accounting.total;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.egar.spring_work_accounting.employee.EmployeeDtoMapper;
+import ru.egar.spring_work_accounting.bonus.BonusDtoMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -11,10 +11,10 @@ import static ru.egar.spring_work_accounting.util.TestModels.TOTAL;
 import static ru.egar.spring_work_accounting.util.TestModels.TOTAL_DTO;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TotalResponseMapperTest {
+public class TotalDtoMapperTest {
 
     @Mock
-    private EmployeeDtoMapper employeeDtoMapper;
+    private BonusDtoMapper bonusDtoMapper;
 
     @InjectMocks
     private TotalDtoMapperImpl totalDtoMapper;
@@ -26,7 +26,7 @@ public class TotalResponseMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to response")
+    @DisplayName("Map to response")
     public void mapTest() {
         var result = totalDtoMapper.map(TOTAL);
         assertEquals(TOTAL_DTO.getId(), result.getId());

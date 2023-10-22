@@ -34,4 +34,5 @@ class ComputeKpiSalaryServiceTest {
         var result = computeKpiSalaryService.computeSalary(EMPLOYEE, DATE_START, DATE_END);
         assertEquals(EXPECTED_TOTAL_SALARY, result);
     }
+
 }

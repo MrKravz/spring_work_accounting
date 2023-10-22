@@ -16,11 +16,19 @@ public class KpiRateService implements CrudService<KpiRate, Long> {
 
     @Override
     public KpiRate findById(Long id) {
-        return kpiRateRepository.findById(id).orElseThrow(KpiRateNotFoundException::new);
+        var kpiRate = kpiRateRepository.findById(id).orElseThrow(KpiRateNotFoundException::new);
+        if (kpiRate.getIsDeleted()) {
+            throw new KpiRateNotFoundException();
+        }
+        return kpiRate;
     }
 
     public KpiRate findByPositionAndGrade(Position position, Grade grade) {
-        return kpiRateRepository.findByPositionAndGrade(position, grade).orElseThrow(KpiRateNotFoundException::new);
+        var kpiRate = kpiRateRepository.findByPositionAndGrade(position, grade).orElseThrow(KpiRateNotFoundException::new);
+        if (kpiRate.getIsDeleted()) {
+            throw new KpiRateNotFoundException();
+        }
+        return kpiRate;
     }
 
     @Override
@@ -32,13 +40,21 @@ public class KpiRateService implements CrudService<KpiRate, Long> {
     @Override
     @Transactional
     public Long update(KpiRate entity, Long id) {
-        return kpiRateRepository.save(entity).getId();
+        var kpiRateToUpdate = findById(id);
+        kpiRateToUpdate.setAgreedSalary(entity.getAgreedSalary());
+        kpiRateToUpdate.setAgreedTasksPointQuantity(entity.getAgreedTasksPointQuantity());
+        kpiRateToUpdate.setGrade(entity.getGrade());
+        kpiRateToUpdate.setPosition(entity.getPosition());
+        kpiRateToUpdate.setIsDeleted(entity.getIsDeleted());
+        return save(kpiRateToUpdate);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        kpiRateRepository.deleteById(id);
+        var kpiRateToDelete = findById(id);
+        kpiRateToDelete.setIsDeleted(true);
+        save(kpiRateToDelete);
     }
 
 }

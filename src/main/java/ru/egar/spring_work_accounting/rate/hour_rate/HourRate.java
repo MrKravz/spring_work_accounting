@@ -2,8 +2,7 @@ package ru.egar.spring_work_accounting.rate.hour_rate;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Cascade;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.employee.Grade;
 import ru.egar.spring_work_accounting.employee.Position;
@@ -24,22 +23,22 @@ public class HourRate {
     private Long id;
 
     @Column(name = "turnout_rate")
-    private Float turnoutRate;
+    private Integer turnoutRate;
 
     @Column(name = "vacation_rate")
-    private Float vacationRate;
+    private Integer vacationRate;
 
     @Column(name = "sick_days_rate")
-    private Float sickDaysRate;
+    private Integer sickDaysRate;
 
     @Column(name = "business_trip_rate")
-    private Float businessTripRate;
+    private Integer businessTripRate;
 
     @Column(name = "absence_rate")
-    private Float absenceRate;
+    private Integer absenceRate;
 
     @Column(name = "over_time_rate")
-    private Float overTimeRate;
+    private Integer overTimeRate;
 
     @Column(name = "position")
     @Enumerated(EnumType.STRING)
@@ -49,9 +48,12 @@ public class HourRate {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    @OneToMany(mappedBy = "hourRate")
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
+    @OneToMany(mappedBy = "hourRate", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @ToString.Exclude
-    @OnDelete(action = OnDeleteAction.SET_NULL)
     private List<Employee> employees;
 
 }

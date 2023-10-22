@@ -19,7 +19,7 @@ public class EmployeeInteractionService {
 
     private final EmployeeService employeeService;
     private final TaskService taskService;
-    private final TaskDtoMapper taskResponseMapper;
+    private final TaskDtoMapper taskDtoMapper;
     private final TaskStatus taskNotStarted = TaskStatus.NOT_STARTED;
     private final TaskStatus taskStatusInProcess = TaskStatus.IN_PROCESS;
     private final TaskStatus taskStatusFinished = TaskStatus.FINISHED;
@@ -29,7 +29,7 @@ public class EmployeeInteractionService {
                 .stream()
                 .filter(x->x.getTaskStatus().equals(taskNotStarted))
                 .toList();
-        return (List<TaskDto>) taskResponseMapper.iterableMap(startedTasks);
+        return (List<TaskDto>) taskDtoMapper.iterableMap(startedTasks);
     }
 
     @Transactional

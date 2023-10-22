@@ -33,7 +33,7 @@ class TimeSheetAdapterServiceTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Find employee by id")
+    @DisplayName("Find employee by id")
     void findByIdTest() {
         when(timeSheetService.findById(any())).thenReturn(TIME_SHEET);
         when(timeSheetDtoMapper.map(any())).thenReturn(TIME_SHEET_DTO);
@@ -45,7 +45,7 @@ class TimeSheetAdapterServiceTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Update employee")
+    @DisplayName("Update employee")
     void updateTest() {
         when(timeSheetService.update(any(), any())).thenReturn(TIME_SHEET_ID);
         when(timeSheetRequestMapper.map(any())).thenReturn(TIME_SHEET);
@@ -57,7 +57,7 @@ class TimeSheetAdapterServiceTest {
 
     @Test
     @Order(3)
-    @DisplayName(value = "Save employee")
+    @DisplayName("Save employee")
     void saveTest() {
         when(timeSheetService.save(any())).thenReturn(TIME_SHEET_ID);
         when(timeSheetRequestMapper.map(any())).thenReturn(TIME_SHEET);
@@ -69,7 +69,7 @@ class TimeSheetAdapterServiceTest {
 
     @Test
     @Order(4)
-    @DisplayName(value = "Delete employee by id")
+    @DisplayName("Delete employee by id")
     void deleteTest() {
         timeSheetAdapterService.delete(TIME_SHEET_ID);
         verify(timeSheetService).delete(TIME_SHEET_ID);

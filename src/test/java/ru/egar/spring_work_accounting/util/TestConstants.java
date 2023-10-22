@@ -35,6 +35,8 @@ public class TestConstants {
     public static final int TASK_POINTS_NUMBER = 35;
     public static final TaskStatus TASK_STATUS_FINISHED = TaskStatus.FINISHED;
     public static final long TOTAL_ID = 1;
+    public static final long BONUS_ID = 1;
+    public static final float BONUS_SALARY = 4;
     public static final int KPI_PERCENTAGE = 12;
     public static final int EXPECTED_TIME = 8;
     public static final float EXPECTED_SALARY = 840;
@@ -44,4 +46,5 @@ public class TestConstants {
     public static final int BUSINESS_TRIP_RATE = 125;
     public static final int ABSENCE_RATE = 0;
     public static final int OVER_TIME_RATE = 125;
+    public static final boolean IS_DELETED = false;
 }

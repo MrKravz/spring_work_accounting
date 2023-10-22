@@ -16,11 +16,19 @@ public class HourRateService implements CrudService<HourRate, Long> {
 
     @Override
     public HourRate findById(Long id) {
-        return hourRateRepository.findById(id).orElseThrow(HourRateNotFoundException::new);
+        var hourRate = hourRateRepository.findById(id).orElseThrow(HourRateNotFoundException::new);
+        if (hourRate.getIsDeleted()) {
+            throw new HourRateNotFoundException();
+        }
+        return hourRate;
     }
 
     public HourRate findByPositionAndGrade(Position position, Grade grade) {
-        return hourRateRepository.findByPositionAndGrade(position, grade).orElseThrow(HourRateNotFoundException::new);
+        var hourRate = hourRateRepository.findByPositionAndGrade(position, grade).orElseThrow(HourRateNotFoundException::new);
+        if (hourRate.getIsDeleted()) {
+            throw new HourRateNotFoundException();
+        }
+        return hourRate;
     }
 
     @Override
@@ -32,13 +40,25 @@ public class HourRateService implements CrudService<HourRate, Long> {
     @Override
     @Transactional
     public Long update(HourRate entity, Long id) {
-        return hourRateRepository.save(entity).getId();
+        var hourRateToUpdate = findById(id);
+        hourRateToUpdate.setBusinessTripRate(entity.getBusinessTripRate());
+        hourRateToUpdate.setAbsenceRate(entity.getAbsenceRate());
+        hourRateToUpdate.setTurnoutRate(entity.getTurnoutRate());
+        hourRateToUpdate.setVacationRate(entity.getVacationRate());
+        hourRateToUpdate.setOverTimeRate(entity.getOverTimeRate());
+        hourRateToUpdate.setSickDaysRate(entity.getSickDaysRate());
+        hourRateToUpdate.setGrade(entity.getGrade());
+        hourRateToUpdate.setPosition(entity.getPosition());
+        hourRateToUpdate.setIsDeleted(entity.getIsDeleted());
+        return save(hourRateToUpdate);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        hourRateRepository.deleteById(id);
+        var hourRateToDelete = findById(id);
+        hourRateToDelete.setIsDeleted(true);
+        save(hourRateToDelete);
     }
 
 }

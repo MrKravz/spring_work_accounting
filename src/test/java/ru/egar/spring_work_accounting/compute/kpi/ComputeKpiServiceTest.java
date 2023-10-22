@@ -21,6 +21,7 @@ public class ComputeKpiServiceTest {
 
     @Test
     @Order(1)
+    @DisplayName("Compute kpi")
     public void computeKpiTest() {
         var result = computeKpiService.computeKpi(EMPLOYEE, DATE_START, DATE_END);
         assertEquals(EXPECTED_TOTAL_KPI, result);

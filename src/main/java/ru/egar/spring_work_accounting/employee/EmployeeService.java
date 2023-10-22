@@ -38,8 +38,7 @@ public class EmployeeService implements CrudService<Employee, Long> {
     @Override
     @Transactional
     public Long save(Employee employee) {
-        var result = employeeRepository.save(employee);
-        return result.getId();
+        return employeeRepository.save(employee).getId();
     }
 
     @Override
@@ -47,7 +46,7 @@ public class EmployeeService implements CrudService<Employee, Long> {
     public void delete(Long id) {
         var employeeToDelete = findById(id);
         employeeToDelete.setIsDeleted(true);
-        update(employeeToDelete, id);
+        save(employeeToDelete);
     }
 
 }

@@ -7,7 +7,6 @@ import ru.egar.spring_work_accounting.compute.salary.ComputeHoursSalaryService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.employee.Employee;
 import ru.egar.spring_work_accounting.rate.hour_rate.HourRate;
-import ru.egar.spring_work_accounting.rate.hour_rate.HourRateNotFoundException;
 import ru.egar.spring_work_accounting.time_sheet.TimeStatus;
 
 import java.time.LocalDate;
@@ -23,9 +22,6 @@ public class ComputeHourlySalaryService implements ComputeSalary {
 
     @Override
     public float computeSalary(Employee employee, LocalDate dateStart, LocalDate dateEnd) {
-        if (employee.getHourRate() == null) {
-            throw new HourRateNotFoundException();
-        }
         var timeStatuses = EnumSet.allOf(TimeStatus.class);
         return (float) timeStatuses
                 .stream()

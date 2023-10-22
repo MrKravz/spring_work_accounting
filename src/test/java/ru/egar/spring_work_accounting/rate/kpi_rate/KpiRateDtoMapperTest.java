@@ -21,7 +21,7 @@ public class KpiRateDtoMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to dto")
+    @DisplayName("Map to dto")
     public void mapTest() {
         var result = kpiRateDtoMapper.map(KPI_RATE);
         assertEquals(KPI_RATE_DTO.getId(), result.getId());
@@ -31,7 +31,7 @@ public class KpiRateDtoMapperTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Remap to entity")
+    @DisplayName("Remap to entity")
     public void remapTest() {
         var result = kpiRateDtoMapper.remap(KPI_RATE_DTO);
         assertEquals(KPI_RATE.getId(), result.getId());

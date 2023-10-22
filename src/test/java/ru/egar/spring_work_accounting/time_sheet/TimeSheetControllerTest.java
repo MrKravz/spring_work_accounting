@@ -43,7 +43,7 @@ class TimeSheetControllerTest {
     @Order(2)
     @DisplayName("Find time sheet by id")
     public void findTimeSheetByIdTest() {
-        when(timeSheetAdapterService.findById(TIME_SHEET_ID)).thenReturn(TIME_SHEET_DTO);
+        when(timeSheetAdapterService.findById(any())).thenReturn(TIME_SHEET_DTO);
         var response = timeSheetController.findTimeSheetById(TIME_SHEET_ID);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(TIME_SHEET_DTO, response.getBody());
@@ -55,7 +55,7 @@ class TimeSheetControllerTest {
     @Order(3)
     @DisplayName("Update time sheet")
     public void updateTimeSheetTest() {
-        when(timeSheetAdapterService.update(TIME_SHEET_REQUEST, TIME_SHEET_ID)).thenReturn(TIME_SHEET_ID);
+        when(timeSheetAdapterService.update(any(), any())).thenReturn(TIME_SHEET_ID);
         var response = timeSheetController.updateTimeSheet(TIME_SHEET_REQUEST, TIME_SHEET_ID, mock(BindingResult.class));
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(TIME_SHEET_ID, response.getBody());

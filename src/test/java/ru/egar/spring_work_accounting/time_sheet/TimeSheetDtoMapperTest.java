@@ -26,7 +26,7 @@ public class TimeSheetDtoMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to dto")
+    @DisplayName("Map to dto")
     public void mapTest() {
         var result = timeSheetDtoMapper.map(TIME_SHEET);
         assertEquals(TIME_SHEET_DTO.getId(), result.getId());
@@ -37,7 +37,7 @@ public class TimeSheetDtoMapperTest {
 
     @Test
     @Order(2)
-    @DisplayName(value = "Remap to entity")
+    @DisplayName("Remap to entity")
     public void remapTest() {
         var result = timeSheetDtoMapper.remap(TIME_SHEET_DTO);
         assertEquals(TIME_SHEET.getId(), result.getId());

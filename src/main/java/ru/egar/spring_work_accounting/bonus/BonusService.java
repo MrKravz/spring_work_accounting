@@ -31,6 +31,11 @@ public class BonusService implements CrudService<Bonus, Long> {
     @Transactional
     public Long update(Bonus entity, Long id) {
         var bonusToUpdate = findById(id);
+        if (bonusToUpdate.getTotal() != null) {
+            var total = bonusToUpdate.getTotal();
+            total.setTotalSalary(total.getTotalSalary() - bonusToUpdate.getBonusSalary()
+                    + entity.getBonusSalary());
+        }
         bonusToUpdate.setBonusSalary(entity.getBonusSalary());
         bonusToUpdate.setIsDeleted(entity.getIsDeleted());
         return save(bonusToUpdate);
@@ -39,9 +44,9 @@ public class BonusService implements CrudService<Bonus, Long> {
     @Override
     @Transactional
     public void delete(Long id) {
-        var bonus = findById(id);
-        bonus.setIsDeleted(true);
-        update(bonus, id);
+        var bonusToDelete = findById(id);
+        bonusToDelete.setIsDeleted(true);
+        save(bonusToDelete);
     }
 
 }

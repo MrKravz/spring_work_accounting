@@ -7,14 +7,14 @@ import ru.egar.spring_work_accounting.compute.kpi.ComputeKpiService;
 import ru.egar.spring_work_accounting.compute.time.ComputeTimeService;
 import ru.egar.spring_work_accounting.define.salary_strategy.ComputeKpiSalaryService;
 import ru.egar.spring_work_accounting.define.salary_strategy.DefineComputeSalaryService;
-import ru.egar.spring_work_accounting.time_sheet.TimeSheetRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static ru.egar.spring_work_accounting.util.TestConstants.*;
-import static ru.egar.spring_work_accounting.util.TestModels.*;
+import static ru.egar.spring_work_accounting.util.TestModels.EMPLOYEE;
+import static ru.egar.spring_work_accounting.util.TestModels.TOTAL;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ComputeTotalServiceTest {
@@ -31,9 +31,6 @@ class ComputeTotalServiceTest {
     @Mock
     private DefineComputeSalaryService defineComputeSalaryService;
 
-    @Mock
-    private TimeSheetRepository timeSheetRepository;
-
     @InjectMocks
     private ComputeTotalService computeTotalService;
 
@@ -45,7 +42,7 @@ class ComputeTotalServiceTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Compute total")
+    @DisplayName("Compute total")
     void computeTotal() {
         when(defineComputeSalaryService.defineStrategy(any())).thenReturn(new ComputeKpiSalaryService(computeKpiService));
         when(computeKpiSalaryService.computeSalary(any(), any(), any())).thenReturn(EXPECTED_SALARY);

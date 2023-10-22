@@ -25,7 +25,7 @@ public class TimeSheetRequestMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to entity")
+    @DisplayName("Map to entity")
     public void mapTest() {
         var result = timeSheetRequestMapper.map(TIME_SHEET_REQUEST);
         assertEquals(TIME_SHEET.getTimeSpan(), result.getTimeSpan());

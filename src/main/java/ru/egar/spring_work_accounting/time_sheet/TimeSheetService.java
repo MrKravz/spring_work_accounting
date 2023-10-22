@@ -30,7 +30,11 @@ public class TimeSheetService implements CrudService<TimeSheet, Long> {
     @Transactional
     @Override
     public Long update(TimeSheet entity, Long id) {
-        return timeSheetRepository.save(entity).getId();
+        var timeSheetToUpdate = findById(id);
+        timeSheetToUpdate.setTimeSpan(entity.getTimeSpan());
+        timeSheetToUpdate.setTimeStatus(entity.getTimeStatus());
+        timeSheetToUpdate.setDate(entity.getDate());
+        return save(timeSheetToUpdate);
     }
 
     @Transactional

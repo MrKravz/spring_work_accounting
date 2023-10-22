@@ -21,7 +21,7 @@ public class KpiRateRequestMapperTest {
 
     @Test
     @Order(1)
-    @DisplayName(value = "Map to entity")
+    @DisplayName("Map to entity")
     public void mapTest() {
         var result = kpiRateRequestMapper.map(KPI_RATE_REQUEST);
         assertEquals(KPI_RATE.getAgreedSalary(), result.getAgreedSalary());
