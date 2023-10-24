@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS employees_totals;
 DROP TABLE IF EXISTS employees_time_sheets;
 DROP TABLE IF EXISTS employees_tasks;
-DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS totals;
+DROP TABLE IF EXISTS bonuses;
+DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS time_sheets;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS employees;
@@ -20,7 +21,8 @@ CREATE TABLE hour_rates
     absence_rate       FLOAT   NOT NULL,
     over_time_rate     FLOAT   NOT NULL,
     position           VARCHAR NOT NULL,
-    grade              VARCHAR NOT NULL
+    grade              VARCHAR NOT NULL,
+    is_deleted         BOOLEAN NOT NULL
 );
 
 CREATE TABLE kpi_rates
@@ -29,7 +31,8 @@ CREATE TABLE kpi_rates
     agreed_salary               FLOAT   NOT NULL,
     agreed_tasks_point_quantity FLOAT   NOT NULL,
     position                    VARCHAR NOT NULL,
-    grade                       VARCHAR NOT NULL
+    grade                       VARCHAR NOT NULL,
+    is_deleted                  BOOLEAN NOT NULL
 );
 
 CREATE TABLE employees
@@ -41,7 +44,8 @@ CREATE TABLE employees
     employee_grade    VARCHAR NOT NULL,
     payment_system    VARCHAR NOT NULL,
     hour_rate_id      BIGINT REFERENCES hour_rates (id),
-    kpi_rate_id       BIGINT REFERENCES hour_rates (id)
+    kpi_rate_id       BIGINT REFERENCES kpi_rates (id),
+    is_deleted        BOOLEAN NOT NULL
 );
 
 CREATE TABLE tasks
@@ -63,13 +67,22 @@ CREATE TABLE time_sheets
     date        DATE    NOT NULL
 );
 
+CREATE TABLE bonuses
+(
+    id           BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    bonus_salary FLOAT NOT NULL,
+    is_deleted   BOOLEAN NOT NULL
+);
+
 CREATE TABLE totals
 (
     id                BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     total_worked_time INT   NOT NULL,
     kpi_percentage    INT   NOT NULL,
+    bonus_id          BIGINT REFERENCES bonuses (id) UNIQUE,
     total_salary      FLOAT NOT NULL,
-    date              DATE  NOT NULL
+    date              DATE  NOT NULL,
+    is_deleted        BOOLEAN NOT NULL
 );
 
 CREATE TABLE accounts
@@ -77,7 +90,8 @@ CREATE TABLE accounts
     id       BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     login    VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
-    role     VARCHAR NOT NULL
+    role     VARCHAR NOT NULL,
+    is_deleted        BOOLEAN NOT NULL
 );
 
 CREATE TABLE employees_tasks
