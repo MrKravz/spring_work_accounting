@@ -7,31 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.egar.spring_work_accounting.abstraction.exceptions.EntityExceptionHandler;
 import ru.egar.spring_work_accounting.abstraction.exceptions.ExceptionResponse;
 
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class EmployeeExceptionHandler extends ResponseEntityExceptionHandler {
+public class EmployeeExceptionHandler extends ResponseEntityExceptionHandler implements EntityExceptionHandler<EmployeeException> {
 
     private final Logger logger = LoggerFactory.getLogger(EmployeeExceptionHandler.class);
 
-    @ExceptionHandler(value = EmployeeNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
+    @Override
+    @ExceptionHandler(value = EmployeeException.class)
+    public ResponseEntity<ExceptionResponse> handleEntityRelatedException(EmployeeException ex) {
         logger.error(ex.getMessage());
         return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), LocalDateTime.now()), HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(value = EmployeeNotCreatedException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotCreatedException(EmployeeNotCreatedException ex) {
-        logger.error(ex.getMessage());
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(), LocalDateTime.now()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = EmployeeNotUpdatedException.class)
-    public ResponseEntity<ExceptionResponse> handleEmployeeNotUpdatedException(EmployeeNotUpdatedException ex) {
-        logger.error(ex.getMessage());
-        return new ResponseEntity<>(new ExceptionResponse(ex.getMessage(),LocalDateTime.now()), HttpStatus.BAD_REQUEST);
-    }
-
 }
